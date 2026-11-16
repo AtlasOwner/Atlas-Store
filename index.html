@@ -3,17 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <meta name="google-site-verification" content="C3iaCo4hNVCo0_tFr8VHw1OpCWfVU-628nN5BQcF0NI" />
-  <meta name="theme-color" content="#061026" />
+  <meta name="theme-color" content="#050505" id="themeColorMeta" />
   <title>Atlas Store — Эксклюзивный стритвир в Актобе</title>
+  
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            page: 'var(--bg-page)',
+            panel: 'var(--bg-panel)',
+            panelSolid: 'var(--bg-panel-solid)',
+            borderGlass: 'var(--border-glass)',
+            borderHover: 'var(--border-glass-hover)',
+            textMain: 'var(--text-main)',
+            textMuted: 'var(--text-muted)',
+            accent: 'var(--accent-main)',
+            accentHover: 'var(--accent-hover)',
+            btnText: 'var(--btn-text)',
+            ambient: 'var(--ambient-glow)'
+          }
+        }
+      }
+    }
+  </script>
+
   <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Утилита для прямой загрузки фото с Google Drive без блокировок -->
   <script>
     window.extractDriveId = function(input) {
       if (!input) return "";
@@ -28,9 +50,7 @@
 
     window.getDirectDriveUrl = function(driveIdOrUrl, fallbackUrl) {
       const id = window.extractDriveId(driveIdOrUrl) || window.extractDriveId(fallbackUrl);
-      if (id) {
-        return `https://lh3.googleusercontent.com/d/${id}=w1600`;
-      }
+      if (id) return `https://lh3.googleusercontent.com/d/${id}=w1600`;
       return fallbackUrl || "https://placehold.co/600x750/0D2B6B/FFFFFF?text=ATLAS+STORE";
     };
 
@@ -50,285 +70,247 @@
       if (!imgEl.getAttribute("data-tried-placeholder")) {
         imgEl.setAttribute("data-tried-placeholder", "true");
         const safeLabel = encodeURIComponent(label || "ATLAS STORE");
-        imgEl.src = `https://placehold.co/600x750/0B1F4E/E2E8F0?text=${safeLabel}`;
+        imgEl.src = `https://placehold.co/600x750/222222/FFFFFF?text=${safeLabel}`;
       }
     };
   </script>
 
   <style>
+    /* CSS ТЕМЫ (Чёрно-Оранжевая и Бело-Тёмносиняя) */
     :root {
-      --atlas-bg: #050D21;
-      --atlas-navy: #0D2B6B;
+      /* DARK THEME (Black & Orange) */
+      --bg-page: #050505;
+      --bg-panel: rgba(20, 20, 20, 0.65);
+      --bg-panel-solid: #111111;
+      --border-glass: rgba(249, 115, 22, 0.3); /* Оранжевые грани */
+      --border-glass-hover: rgba(249, 115, 22, 0.8);
+      --text-main: #ffffff;
+      --text-muted: #a1a1aa; 
+      --accent-main: #f97316; /* Оранжевый */
+      --accent-hover: #ea580c; 
+      --btn-text: #050505;
+      --ambient-glow: rgba(249, 115, 22, 0.15);
     }
 
-    html, body {
-      max-width: 100%;
-      width: 100%;
-      overflow-x: hidden;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #050D21;
-      color: #F8FAFC;
+    .theme-light {
+      /* LIGHT THEME (White & Dark Blue) */
+      --bg-page: #f8fafc; 
+      --bg-panel: rgba(255, 255, 255, 0.75);
+      --bg-panel-solid: #ffffff;
+      --border-glass: rgba(13, 43, 107, 0.2); /* Темно-синие грани */
+      --border-glass-hover: rgba(13, 43, 107, 0.6);
+      --text-main: #071942;
+      --text-muted: #475569; 
+      --accent-main: #0D2B6B; /* Тёмно-синий */
+      --accent-hover: #071942; 
+      --btn-text: #ffffff;
+      --ambient-glow: rgba(13, 43, 107, 0.08);
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      transition: background-color 0.4s ease, color 0.4s ease;
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Атмосферный фон для проявления эффекта Liquid Glass */
-    .ambient-stage {
-      background:
-        radial-gradient(circle at 12% 14%, rgba(56, 189, 248, 0.24) 0%, transparent 40%),
-        radial-gradient(circle at 86% 18%, rgba(59, 130, 246, 0.28) 0%, transparent 44%),
-        radial-gradient(circle at 50% 52%, rgba(29, 78, 216, 0.18) 0%, transparent 50%),
-        radial-gradient(circle at 20% 85%, rgba(99, 102, 241, 0.20) 0%, transparent 45%),
-        linear-gradient(180deg, #050D21 0%, #081638 48%, #050E24 100%);
-    }
-
-    /* НАСТОЯЩИЙ ВИДИМЫЙ LIQUID GLASS */
+    /* Универсальный класс жидкого стекла под обе темы */
     .liquid-glass {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.06) 55%, rgba(186, 230, 253, 0.10) 100%);
+      background: var(--bg-panel);
       backdrop-filter: blur(26px) saturate(190%);
       -webkit-backdrop-filter: blur(26px) saturate(190%);
-      border: 1px solid rgba(255, 255, 255, 0.34);
-      box-shadow:
-        0 20px 50px -12px rgba(2, 6, 23, 0.7),
-        0 4px 20px 0 rgba(56, 189, 248, 0.08),
-        inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.55),
-        inset 0 -1.5px 2px 0 rgba(56, 189, 248, 0.18);
-    }
-
-    /* Плавающая капсула шапки */
-    .liquid-glass-nav {
-      background: linear-gradient(135deg, rgba(13, 35, 84, 0.72) 0%, rgba(7, 19, 48, 0.82) 100%);
-      backdrop-filter: blur(28px) saturate(200%);
-      -webkit-backdrop-filter: blur(28px) saturate(200%);
-      border: 1px solid rgba(255, 255, 255, 0.38);
-      box-shadow:
-        0 20px 45px -10px rgba(2, 6, 23, 0.75),
-        inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.6),
-        inset 0 -1px 1px 0 rgba(56, 189, 248, 0.25);
-    }
-
-    /* Стеклянная карточка товара */
-    .liquid-glass-card {
-      background: linear-gradient(160deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 60%, rgba(56, 189, 248, 0.08) 100%);
-      backdrop-filter: blur(24px) saturate(185%);
-      -webkit-backdrop-filter: blur(24px) saturate(185%);
-      border: 1px solid rgba(255, 255, 255, 0.30);
-      box-shadow:
-        0 22px 48px -14px rgba(2, 6, 23, 0.68),
-        inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.48),
-        inset 0 -1px 2px 0 rgba(56, 189, 248, 0.15);
-      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease, box-shadow 0.35s ease;
-      will-change: transform;
+      border: 1px solid var(--border-glass);
+      box-shadow: 0 10px 40px var(--ambient-glow), inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
     }
 
     @media (hover: hover) {
-      .liquid-glass-card:hover {
+      .liquid-glass-hoverable:hover {
         transform: translateY(-6px);
-        border-color: rgba(125, 211, 252, 0.65);
-        box-shadow:
-          0 28px 60px -12px rgba(14, 165, 233, 0.28),
-          inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.72);
+        border-color: var(--border-glass-hover);
+        box-shadow: 0 20px 50px var(--ambient-glow), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.2);
       }
     }
 
-    /* Акцентное стекло для блока «Дроп» */
-    .liquid-glass-drop {
-      background: linear-gradient(150deg, rgba(255, 255, 255, 0.17) 0%, rgba(30, 58, 138, 0.32) 55%, rgba(249, 115, 22, 0.14) 100%);
-      backdrop-filter: blur(26px) saturate(195%);
-      -webkit-backdrop-filter: blur(26px) saturate(195%);
-      border: 1px solid rgba(251, 146, 60, 0.50);
-      box-shadow:
-        0 24px 55px -12px rgba(2, 6, 23, 0.78),
-        0 0 35px -8px rgba(249, 115, 22, 0.22),
-        inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.55);
-      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+    @keyframes spinOrbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes floatGentle { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+
+    /* НОВЫЕ АНИМАЦИИ ДЛЯ СЛАЙДЕРА И СКРОЛЛА */
+    @keyframes fadeSlide {
+      0% { opacity: 0.5; transform: scale(0.97); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .animate-fade-slide { 
+      animation: fadeSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; 
+    }
+    
+    .reveal { 
+      opacity: 0; 
+      transform: translateY(30px); 
+      transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1); 
+    }
+    .reveal.active { 
+      opacity: 1; 
+      transform: translateY(0); 
     }
 
-    @media (hover: hover) {
-      .liquid-glass-drop:hover {
-        transform: translateY(-6px);
-        border-color: rgba(251, 146, 60, 0.85);
-        box-shadow:
-          0 30px 64px -12px rgba(249, 115, 22, 0.35),
-          inset 0 2px 2px 0 rgba(255, 255, 255, 0.75);
-      }
-    }
+    .animate-orbit { animation: spinOrbit 22s linear infinite; will-change: transform; }
+    .animate-float { animation: floatGentle 5s ease-in-out infinite; will-change: transform; }
 
-    /* Анимация вращения текста вокруг логотипа */
-    @keyframes spinOrbit {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    @keyframes floatGentle {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-8px); }
-    }
-
-    .animate-orbit {
-      animation: spinOrbit 22s linear infinite;
-      will-change: transform;
-    }
-    .animate-float {
-      animation: floatGentle 5s ease-in-out infinite;
-      will-change: transform;
-    }
-
-    /* Скроллбар */
     ::-webkit-scrollbar { width: 7px; height: 7px; }
-    ::-webkit-scrollbar-track { background: #050D21; }
-    ::-webkit-scrollbar-thumb { background: #1E40AF; border-radius: 9999px; }
-
+    ::-webkit-scrollbar-track { background: var(--bg-page); }
+    ::-webkit-scrollbar-thumb { background: var(--accent-main); border-radius: 9999px; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body class="ambient-stage antialiased selection:bg-sky-400 selection:text-slate-950 flex flex-col min-h-screen">
+<body class="antialiased selection:bg-accent selection:text-btnText flex flex-col min-h-screen">
 
-  <!-- ПЛАВАЮЩАЯ ЗАКРУГЛЕННАЯ ШАПКА LIQUID GLASS (НА ВСЮ ШИРИНУ КОНТЕЙНЕРА max-w-7xl) -->
+  <!-- ШАПКА -->
   <div class="sticky top-3 z-40 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-    <header class="liquid-glass-nav rounded-full px-3.5 sm:px-6 h-16 sm:h-[72px] flex items-center justify-between gap-2">
+    <header class="liquid-glass rounded-full px-3.5 sm:px-6 h-16 sm:h-[72px] flex items-center justify-between gap-2">
       
-      <!-- Оригинальный логотип пользователя в круге -->
+      <!-- Логотип -->
       <a href="#" class="flex items-center gap-3 group focus:outline-none select-none shrink-0">
-        <div class="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full p-0.5 bg-gradient-to-tr from-sky-400 via-white to-blue-500 shadow-lg shadow-sky-500/25 group-hover:scale-105 transition-transform">
+        <div class="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full p-0.5 bg-accent shadow-lg shadow-accent/25 group-hover:scale-105 transition-transform">
           <img
             src="https://lh3.googleusercontent.com/d/1uwFOXNosnS5KspVYvxb1pyVhCu5QPh-k=w600"
             data-drive-id="1uwFOXNosnS5KspVYvxb1pyVhCu5QPh-k"
             onerror="window.handleImgFallback(this, 'ATLAS')"
             alt="Atlas Store Logo"
-            class="w-full h-full rounded-full object-cover bg-[#071942]"
+            class="w-full h-full rounded-full object-cover bg-page"
           />
         </div>
         <div class="flex flex-col">
-          <span class="text-sm sm:text-lg font-black tracking-wider text-white leading-none">ATLAS STORE</span>
-          <span id="headerSub" class="text-[9px] sm:text-[10px] font-bold tracking-[0.22em] text-sky-300 uppercase mt-1">04 AKTOBE · STREETWEAR</span>
+          <span class="text-sm sm:text-lg font-black tracking-wider text-textMain leading-none">ATLAS STORE</span>
+          <span id="headerSub" class="text-[9px] sm:text-[10px] font-bold tracking-[0.22em] text-accent uppercase mt-1">04 AKTOBE · STREETWEAR</span>
         </div>
       </a>
 
-      <!-- Навигационные стеклянные таблетки (Десктоп) -->
-      <nav class="hidden lg:flex items-center gap-1.5 bg-white/5 p-1.5 rounded-full border border-white/20">
-        <a href="#incomingDropSection" id="navDrop" class="px-4 py-1.5 rounded-full text-xs font-extrabold text-orange-300 bg-orange-500/20 border border-orange-400/30 hover:bg-orange-500/30 transition flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-orange-400 animate-ping"></span>
-          <span>🔥 Приоритетный дроп</span>
+      <!-- Навигация (Десктоп) -->
+      <nav class="hidden lg:flex items-center gap-1.5 bg-panelSolid p-1.5 rounded-full border border-borderGlass">
+        <a href="#incomingDropSection" class="px-4 py-1.5 rounded-full text-xs font-extrabold text-accent bg-accent/10 hover:bg-accent/20 transition flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-accent animate-ping"></span>
+          <span>Эксклюзивная коллекция</span>
         </a>
-        <a href="#catalog" id="navCatalog" class="px-4 py-1.5 rounded-full text-xs font-bold text-slate-200 hover:text-white hover:bg-white/10 transition">Каталог</a>
-        <a href="#deliverySection" id="navDelivery" class="px-4 py-1.5 rounded-full text-xs font-bold text-slate-200 hover:text-white hover:bg-white/10 transition">Личная доставка</a>
-        <a href="#faqSection" id="navFaq" class="px-4 py-1.5 rounded-full text-xs font-bold text-slate-200 hover:text-white hover:bg-white/10 transition">Информация</a>
+        <a href="#catalog" class="px-4 py-1.5 rounded-full text-xs font-bold text-textMain hover:bg-panel transition">Каталог</a>
+        <a href="#deliverySection" class="px-4 py-1.5 rounded-full text-xs font-bold text-textMain hover:bg-panel transition">Доставка</a>
       </nav>
 
-      <!-- Правый блок кнопок -->
+      <!-- Правый блок -->
       <div class="flex items-center gap-1.5 sm:gap-2.5">
-        <!-- Переключатель языка RU / KZ -->
-        <div class="inline-flex items-center rounded-full bg-white/10 p-1 border border-white/25">
-          <button id="langRuBtn" onclick="setLanguage('ru')" class="px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-white text-[#071942] shadow transition">RU</button>
-          <button id="langKzBtn" onclick="setLanguage('kz')" class="px-2.5 py-1 rounded-full text-[11px] font-extrabold text-slate-200 hover:text-white transition">KZ</button>
-        </div>
-
-        <!-- Кнопка проверки статуса заказа -->
-        <button onclick="openTrackModal()" class="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white border border-white/30 px-3 sm:px-4 py-2 rounded-full text-xs font-extrabold transition active:scale-95">
-          <svg class="w-4 h-4 text-sky-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-          </svg>
-          <span id="trackBtnLabel" class="hidden md:inline">Статус заказа</span>
+        
+        <!-- Переключатель Тем (Солнце / Луна) -->
+        <button onclick="toggleTheme()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-panelSolid border border-borderGlass flex items-center justify-center text-textMain hover:border-accent transition active:scale-95 shadow-sm" title="Переключить тему">
+          <span id="themeIcon">☀️</span>
         </button>
 
-        <!-- Кнопка корзины -->
-        <button onclick="toggleCartModal(true)" class="relative flex items-center gap-2 bg-gradient-to-r from-sky-400 to-blue-600 hover:from-sky-300 hover:to-blue-500 text-white px-3.5 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-black shadow-lg shadow-sky-500/30 border border-white/40 transition active:scale-95">
+        <!-- Переключатель языка -->
+        <div class="hidden sm:inline-flex items-center rounded-full bg-panelSolid p-1 border border-borderGlass">
+          <button id="langRuBtn" onclick="setLanguage('ru')" class="px-2 py-1 rounded-full text-[11px] font-extrabold bg-textMain text-page shadow transition">RU</button>
+          <button id="langKzBtn" onclick="setLanguage('kz')" class="px-2 py-1 rounded-full text-[11px] font-extrabold text-textMuted hover:text-textMain transition">KZ</button>
+        </div>
+
+        <!-- Кнопка трекинга -->
+        <button onclick="openTrackModal()" class="flex items-center gap-1.5 bg-panelSolid hover:border-accent text-textMain border border-borderGlass px-3 sm:px-4 py-2 rounded-full text-xs font-extrabold transition active:scale-95 shadow-sm">
+          <svg class="w-4 h-4 text-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+          </svg>
+          <span class="hidden md:inline">Заказ</span>
+        </button>
+
+        <!-- Корзина -->
+        <button onclick="toggleCartModal(true)" class="relative flex items-center gap-2 bg-accent hover:bg-accentHover text-btnText px-3.5 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-black shadow-lg border border-borderGlass transition active:scale-95">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
           </svg>
-          <span id="cartBtnText" class="hidden sm:inline">Корзина</span>
-          <span id="cartCountBadge" class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 text-xs font-black bg-slate-950 text-sky-300 rounded-full border border-sky-400/40">0</span>
+          <span id="cartCountBadge" class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 text-[10px] sm:text-xs font-black bg-page text-textMain rounded-full border border-borderGlass">0</span>
         </button>
       </div>
     </header>
   </div>
 
-  <!-- ГЛАВНЫЙ ЭКРАН (HERO) С ОРИГИНАЛЬНЫМ КРУГЛЫМ ЛОГОТИПОМ И ВРАЩАЮЩИМСЯ КОЛЬЦОМ -->
+  <!-- ГЛАВНЫЙ ЭКРАН -->
   <section class="relative overflow-hidden pt-8 pb-10 sm:pt-14 sm:pb-16">
-    <!-- Декоративные светящиеся сферы для глубины стекла -->
-    <div class="absolute top-6 left-1/4 w-72 h-72 rounded-full bg-sky-500/20 blur-3xl pointer-events-none"></div>
-    <div class="absolute bottom-0 right-1/4 w-80 h-80 rounded-full bg-blue-600/25 blur-3xl pointer-events-none"></div>
+    <!-- Фоновые сферы для Liquid Glass -->
+    <div class="absolute top-6 left-1/4 w-72 h-72 rounded-full bg-accent blur-3xl opacity-20 pointer-events-none"></div>
+    <div class="absolute bottom-0 right-1/4 w-80 h-80 rounded-full bg-accent blur-3xl opacity-15 pointer-events-none"></div>
 
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="liquid-glass rounded-[2.5rem] sm:rounded-[3.2rem] p-6 sm:p-10 lg:p-12">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          <!-- Левая часть: Приветствие на «Вы» и преимущества -->
           <div class="lg:col-span-7 space-y-5 text-center lg:text-left order-2 lg:order-1">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/30 text-xs sm:text-sm font-bold text-sky-200">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-panelSolid border border-borderGlass text-xs sm:text-sm font-bold text-textMain">
               <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-              <span id="heroBadge">Личная доставка в руки по г. Актобе</span>
+              <span id="heroBadge">Быстрая доставка по г. Актобе</span>
             </div>
 
-            <h1 id="heroTitle" class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08] text-white">
-              Эксклюзивный стритвир в <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-white to-blue-300">Atlas Store</span>
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08] text-textMain">
+              Эксклюзивный стритвир в <span class="text-accent">Atlas Store</span>
             </h1>
 
-            <p id="heroDesc" class="text-slate-200/90 text-sm sm:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Мы отбираем для Вас лучшие позиции: объёмные худи и штаны <span class="text-white font-bold">Fear of God Essentials</span> с плотной вышивкой, культовые шапки и балаклавы. Личная доставка без сторонних курьеров.
+            <p class="text-textMuted text-sm sm:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              Мы отбираем для Вас лучшие позиции: объёмные худи и штаны <b class="text-textMain">Fear of God Essentials</b> с плотной вышивкой, культовые шапки и балаклавы. Быстрая доставка по городу.
             </p>
 
-            <!-- Кнопки действий -->
             <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3.5 pt-2">
-              <a href="#incomingDropSection" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 text-slate-950 font-black px-7 py-4 rounded-full shadow-xl shadow-orange-500/25 transition transform hover:-translate-y-0.5 text-sm sm:text-base active:scale-95">
-                <span id="heroBtnDrop">🔥 Смотреть дроп Essentials</span>
+              <a href="#incomingDropSection" class="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accentHover text-btnText font-black px-7 py-4 rounded-full shadow-xl transition transform hover:-translate-y-0.5 text-sm sm:text-base active:scale-95 border border-borderGlass">
+                <span>🌟 Эксклюзивная коллекция</span>
               </a>
-              <a href="#catalog" class="inline-flex items-center justify-center gap-2 bg-white/15 hover:bg-white/25 text-white border border-white/40 font-extrabold px-7 py-4 rounded-full backdrop-blur-md transition text-sm sm:text-base active:scale-95">
-                <span id="heroBtnCatalog">Перейти в каталог</span>
+              <a href="#catalog" class="inline-flex items-center justify-center gap-2 bg-panelSolid hover:border-accent text-textMain border border-borderGlass font-extrabold px-7 py-4 rounded-full transition text-sm sm:text-base active:scale-95 shadow-sm">
+                <span>Перейти в каталог</span>
               </a>
             </div>
 
-            <!-- Стеклянные мини-капсулы фактов -->
+            <!-- Мини-факты -->
             <div class="grid grid-cols-3 gap-2.5 sm:gap-4 pt-3">
               <div class="liquid-glass rounded-2xl p-3 sm:p-4 text-center">
-                <div class="text-sm sm:text-xl font-black text-white" id="stat1Val">Лично в руки</div>
-                <div id="stat1Label" class="text-[11px] sm:text-xs text-sky-200/80 mt-0.5">собственная доставка</div>
+                <div class="text-sm sm:text-xl font-black text-textMain">Быстрая доставка</div>
+                <div class="text-[11px] sm:text-xs text-textMuted mt-0.5">по г. Актобе</div>
               </div>
               <div class="liquid-glass rounded-2xl p-3 sm:p-4 text-center">
-                <div class="text-sm sm:text-xl font-black text-white" id="stat2Val">Тойота Центр</div>
-                <div id="stat2Label" class="text-[11px] sm:text-xs text-sky-200/80 mt-0.5">Батыс · 11/12 мкр · Авиа</div>
+                <div class="text-sm sm:text-xl font-black text-textMain">Эксклюзив</div>
+                <div class="text-[11px] sm:text-xs text-textMuted mt-0.5">премиум качество</div>
               </div>
               <div class="liquid-glass rounded-2xl p-3 sm:p-4 text-center">
-                <div class="text-sm sm:text-xl font-black text-white" id="stat3Val">Live Склад</div>
-                <div id="stat3Label" class="text-[11px] sm:text-xs text-sky-200/80 mt-0.5">актуальное наличие</div>
+                <div class="text-sm sm:text-xl font-black text-textMain">Live Склад</div>
+                <div class="text-[11px] sm:text-xs text-textMuted mt-0.5">актуальное наличие</div>
               </div>
             </div>
           </div>
 
-          <!-- Правая часть: ТВОЙ ОРИГИНАЛЬНЫЙ ЛОГОТИП В КРУГЕ + ВРАЩАЮЩЕЕСЯ КОЛЬЦО ВОКРУГ НЕГО -->
+          <!-- ВРАЩАЮЩИЙСЯ ТЕКСТ И ЛОГОТИП -->
           <div class="lg:col-span-5 flex justify-center order-1 lg:order-2">
             <div class="relative w-64 h-64 sm:w-80 sm:h-80 flex items-center justify-center animate-float select-none">
               
-              <!-- Светящийся стеклянный ореол позади логотипа -->
               <div class="absolute inset-4 rounded-full liquid-glass"></div>
-              <div class="absolute inset-10 rounded-full bg-sky-400/20 blur-2xl pointer-events-none"></div>
-
-              <!-- Вращающийся текст по кругу (SVG) -->
+              
+              <!-- ИСПРАВЛЕННЫЙ РАВНОМЕРНЫЙ ТЕКСТ -->
               <svg class="absolute inset-0 w-full h-full animate-orbit pointer-events-none" viewBox="0 0 260 260">
                 <defs>
                   <path id="textCirclePath" d="M 130, 130 m -106, 0 a 106,106 0 1,1 212,0 a 106,106 0 1,1 -212,0" />
                 </defs>
-                <circle cx="130" cy="130" r="120" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1" stroke-dasharray="5 7" />
-                <text fill="#E0F2FE" font-size="10.5" font-weight="800" letter-spacing="3.6px">
+                <circle cx="130" cy="130" r="120" fill="none" stroke="var(--border-glass)" stroke-width="1" stroke-dasharray="5 7" />
+                <text fill="var(--text-main)" font-size="11" font-weight="800" letter-spacing="4px">
                   <textPath href="#textCirclePath" startOffset="0%">
-                    ATLAS STORE • 04 AKTOBE • EXCLUSIVE STREETWEAR •
+                    ATLAS STORE • AKTOBE • ATLAS STORE • AKTOBE • ATLAS STORE • AKTOBE • 
                   </textPath>
                 </text>
               </svg>
 
-              <!-- Центральный круглый логотип пользователя -->
-              <div class="relative z-10 w-40 h-40 sm:w-48 sm:h-48 rounded-full p-1.5 bg-gradient-to-b from-white/80 via-sky-300/50 to-white/20 shadow-[0_0_50px_rgba(56,189,248,0.45)] overflow-hidden">
+              <div class="relative z-10 w-40 h-40 sm:w-48 sm:h-48 rounded-full p-1 bg-borderGlass shadow-lg overflow-hidden">
                 <img
                   src="https://lh3.googleusercontent.com/d/1uwFOXNosnS5KspVYvxb1pyVhCu5QPh-k=w1000"
                   data-drive-id="1uwFOXNosnS5KspVYvxb1pyVhCu5QPh-k"
                   onerror="window.handleImgFallback(this, 'ATLAS LOGO')"
-                  alt="Atlas Store Original Logo"
-                  class="w-full h-full rounded-full object-cover bg-[#071942]"
+                  alt="Atlas Store Logo"
+                  class="w-full h-full rounded-full object-cover bg-page"
                 />
               </div>
 
-              <!-- Нижняя стеклянная плашка поверх кольца -->
-              <div class="absolute -bottom-2 z-20 px-4 py-1.5 rounded-full liquid-glass text-[11px] font-black tracking-[0.2em] text-white uppercase shadow-lg">
+              <div class="absolute -bottom-2 z-20 px-4 py-1.5 rounded-full liquid-glass text-[11px] font-black tracking-[0.2em] text-textMain uppercase shadow-lg">
                 ATLAS · 2026
               </div>
             </div>
@@ -339,1428 +321,424 @@
     </div>
   </section>
 
-  <!-- ЗАМЕТНЫЙ СТАТИЧНЫЙ СТЕКЛЯННЫЙ БЛОК ОБНОВЛЕНИЯ «ATLAS STORE 2.0» (БЕЗ ВСПЛЫВАЮЩИХ ОКОН) -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 sm:pb-12">
-    <div class="liquid-glass rounded-[2rem] p-5 sm:p-7 relative overflow-hidden">
-      <div class="absolute -right-12 -top-12 w-48 h-48 bg-sky-400/20 rounded-full blur-2xl pointer-events-none"></div>
-      
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5 relative z-10">
+  <!-- БЛОК ОБНОВЛЕНИЯ -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 sm:pb-12 reveal">
+    <div class="liquid-glass rounded-[2rem] p-5 sm:p-7">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
         <div class="space-y-1.5 max-w-xl">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-400/20 border border-sky-300/40 text-sky-200 text-[11px] font-black uppercase tracking-wider">
-            <span>✨ Обновление платформы · ATLAS 2.0</span>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-[11px] font-black uppercase tracking-wider">
+            <span>✨ Обновление платформы</span>
           </div>
-          <h2 id="updateBannerTitle" class="text-lg sm:text-2xl font-black text-white">
-            Для Вас доступна обновлённая интерактивная витрина Atlas Store
-          </h2>
-          <p id="updateBannerDesc" class="text-xs sm:text-sm text-slate-200/85 leading-relaxed">
-            Мы полностью обновили сайт, чтобы сделать Ваш выбор максимально наглядным и удобным:
-          </p>
-        </div>
-
-        <!-- 3 плюшки для клиентов в отдельных стеклянных капсулах -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 lg:max-w-2xl w-full">
-          <div class="bg-white/10 border border-white/25 rounded-2xl p-3.5 backdrop-blur-md">
-            <div class="text-sky-300 font-black text-xs uppercase tracking-wider mb-1" id="updFeat1Title">01 · Детали и вышивка</div>
-            <p class="text-xs text-slate-200 leading-snug" id="updFeat1Desc">Листайте фото прямо на карточке: сначала общий вид вещи, затем макро-снимок вышивки.</p>
-          </div>
-          <div class="bg-white/10 border border-white/25 rounded-2xl p-3.5 backdrop-blur-md">
-            <div class="text-emerald-300 font-black text-xs uppercase tracking-wider mb-1" id="updFeat2Title">02 · Live-наличие</div>
-            <p class="text-xs text-slate-200 leading-snug" id="updFeat2Desc">Каталог синхронизирован с нашей базой в реальном времени — Вы видите актуальные размеры.</p>
-          </div>
-          <div class="bg-white/10 border border-white/25 rounded-2xl p-3.5 backdrop-blur-md">
-            <div class="text-amber-300 font-black text-xs uppercase tracking-wider mb-1" id="updFeat3Title">03 · Личный трекинг</div>
-            <p class="text-xs text-slate-200 leading-snug" id="updFeat3Desc">После заявки Вы получаете персональный код ATL-XXXX для отслеживания доставки.</p>
-          </div>
+          <h2 class="text-lg sm:text-2xl font-black text-textMain">Новая интерактивная витрина</h2>
+          <p class="text-xs sm:text-sm text-textMuted leading-relaxed">Листайте фото прямо в карточке для просмотра вышивки деталей и заказывайте с Live-склада.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ПРИОРИТЕТНЫЙ ДРОП (FEAR OF GOD ESSENTIALS + УШАНКА PATAGONIA) -->
-  <section id="incomingDropSection" class="py-8 sm:py-12 relative">
+  <!-- ЭКСКЛЮЗИВНАЯ КОЛЛЕКЦИЯ (В ОДИН РЯД ДЛЯ ХУДИ И ШТАНОВ) -->
+  <section id="incomingDropSection" class="py-8 sm:py-12 relative reveal">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-7">
         <div>
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-500/20 border border-orange-400/50 text-orange-300 text-xs font-extrabold uppercase tracking-wider mb-2.5">
-            <span class="w-2 h-2 rounded-full bg-orange-400 animate-ping"></span>
-            <span id="dropBadgeText">Лимитированный дроп · Доступно для Вашего бронирования</span>
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-extrabold uppercase tracking-wider mb-2.5">
+            <span class="w-2 h-2 rounded-full bg-accent animate-ping"></span>
+            <span>Для Вашего бронирования</span>
           </div>
-          <h2 id="dropSectionTitle" class="text-2xl sm:text-4xl font-black tracking-tight text-white">
-            Fear of God Essentials & Зимний дроп
+          <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-textMain">
+            Эксклюзивная коллекция
           </h2>
         </div>
-        <p id="dropSectionSub" class="text-xs sm:text-sm text-slate-300 max-w-md leading-relaxed">
-          Нажмите на стрелки <span class="text-white font-bold">‹ ›</span> на фотографии товара, чтобы рассмотреть вещь целиком и оценить качество фирменной вышивки <span class="text-orange-300 font-bold">Fear of God Essentials</span>.
-        </p>
       </div>
 
-      <!-- Сетка карточек дропа -->
-      <div id="incomingDropGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Сетка (md:grid-cols-2 обеспечит Худи и Штаны в одном ряду) -->
+      <div id="incomingDropGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Заполняется через JS -->
       </div>
     </div>
   </section>
 
-  <!-- ПОЛНЫЙ КАТАЛОГ ATLAS STORE -->
-  <main id="catalog" class="flex-1 py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+  <!-- ПОЛНЫЙ КАТАЛОГ (СЮДА УЙДУТ ШАПКИ И БАЛАКЛАВЫ) -->
+  <main id="catalog" class="flex-1 py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full reveal">
     <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
       <div>
-        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 border border-white/25 text-sky-300 text-xs font-extrabold uppercase tracking-widest">
-          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-          <span id="catalogOverline">Полная коллекция · Live витрина</span>
-        </div>
-        <h2 id="catalogTitle" class="text-2xl sm:text-4xl font-black text-white mt-2.5 tracking-tight">Каталог для Вас</h2>
+        <h2 class="text-2xl sm:text-4xl font-black text-textMain tracking-tight">Каталог</h2>
       </div>
 
-      <!-- Стеклянные круглые фильтры категорий -->
       <div class="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 no-scrollbar">
-        <button onclick="filterProducts('all')" id="filter-all" class="filter-btn shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-black bg-white text-[#071942] shadow-lg transition">
+        <button onclick="filterProducts('all')" id="filter-all" class="filter-btn shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-black bg-textMain text-page shadow-lg transition">
           Все
         </button>
-        <button onclick="filterProducts('clothes')" id="filter-clothes" class="filter-btn shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold liquid-glass text-white hover:border-sky-300 transition">
-          Essentials (Худи & Штаны)
+        <button onclick="filterProducts('clothes')" id="filter-clothes" class="filter-btn shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-panelSolid border border-borderGlass text-textMain transition hover:border-accent">
+          Одежда
         </button>
-        <button onclick="filterProducts('beanies')" id="filter-beanies" class="filter-btn shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold liquid-glass text-white hover:border-sky-300 transition">
+        <button onclick="filterProducts('beanies')" id="filter-beanies" class="filter-btn shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-panelSolid border border-borderGlass text-textMain transition hover:border-accent">
           Шапки
-        </button>
-        <button onclick="filterProducts('balaclavas')" id="filter-balaclavas" class="filter-btn shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold liquid-glass text-white hover:border-sky-300 transition">
-          Балаклавы
         </button>
       </div>
     </div>
 
-    <!-- Сетка всех товаров (На ПК — 3-4 в ряд, на планшете — 2, на телефоне — 1-2) -->
+    <!-- 3-4 товара в ряд для шапок -->
     <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6">
       <!-- Рендерится через JS -->
     </div>
   </main>
 
-  <!-- ЗОНЫ ЛИЧНОЙ ДОСТАВКИ И ПРАВИЛА БРОНИРОВАНИЯ -->
-  <section id="deliverySection" class="py-10 sm:py-16">
+  <!-- УСЛОВИЯ ЗАКАЗА И ДОСТАВКИ -->
+  <section id="deliverySection" class="py-10 sm:py-16 reveal">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="liquid-glass rounded-[2.5rem] p-6 sm:p-10">
         <div class="max-w-2xl mb-8">
-          <span class="text-xs font-extrabold uppercase tracking-widest text-sky-300 bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full" id="delivOverline">Персональный сервис Atlas Store</span>
-          <h2 id="delivTitle" class="text-2xl sm:text-3xl font-black text-white mt-3">Личная доставка в руки и условия заказа</h2>
-          <p id="delivSub" class="text-slate-300 mt-2 text-sm sm:text-base leading-relaxed">
-            Мы не передаём Ваши вещи случайным таксистам, в Яндекс или InDriver. Каждый заказ мы привозим и вручаем Вам лично, чтобы гарантировать сохранность и чистоту вещи.
+          <h2 class="text-2xl sm:text-3xl font-black text-textMain mt-3">Доставка по г. Актобе</h2>
+          <p class="text-textMuted mt-2 text-sm sm:text-base leading-relaxed">
+            Каждый заказ мы доставляем аккуратно и быстро, чтобы гарантировать сохранность вещи и премиальный сервис. Укажите свой адрес при оформлении, и мы привезём заказ в удобное для Вас время.
           </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <!-- Карточка 1: Зоны доставки -->
-          <div class="bg-white/10 border border-white/25 rounded-3xl p-6 backdrop-blur-md">
-            <div class="w-11 h-11 rounded-2xl bg-sky-400/20 border border-sky-300/40 text-sky-300 flex items-center justify-center font-black text-base mb-4">📍</div>
-            <h3 id="delivCard1Title" class="text-lg font-black text-white mb-2">Зоны нашей доставки</h3>
-            <p id="delivCard1Desc" class="text-xs sm:text-sm text-slate-200 leading-relaxed mb-3">
-              Мы находимся в районе <b class="text-white">Тойота Центра</b> и оперативно доставляем заказы лично в радиусе:
-            </p>
-            <div class="flex flex-wrap gap-1.5">
-              <span class="px-2.5 py-1 rounded-full bg-white/15 border border-white/25 text-[11px] font-bold text-white">Район Тойота Центра</span>
-              <span class="px-2.5 py-1 rounded-full bg-white/15 border border-white/25 text-[11px] font-bold text-white">Батыс</span>
-              <span class="px-2.5 py-1 rounded-full bg-white/15 border border-white/25 text-[11px] font-bold text-white">12 мкр</span>
-              <span class="px-2.5 py-1 rounded-full bg-white/15 border border-white/25 text-[11px] font-bold text-white">11 мкр</span>
-              <span class="px-2.5 py-1 rounded-full bg-white/15 border border-white/25 text-[11px] font-bold text-white">Авиагородок</span>
-            </div>
-          </div>
-
-          <!-- Карточка 2: Эксклюзивное бронирование -->
-          <div class="bg-white/10 border border-white/25 rounded-3xl p-6 backdrop-blur-md">
-            <div class="w-11 h-11 rounded-2xl bg-emerald-400/20 border border-emerald-300/40 text-emerald-300 flex items-center justify-center font-black text-base mb-4">🔒</div>
-            <h3 id="delivCard2Title" class="text-lg font-black text-white mb-2">Закрепление заказа за Вами</h3>
-            <p id="delivCard2Desc" class="text-xs sm:text-sm text-slate-200 leading-relaxed">
-              Все позиции выпускаются ограниченным тиражом. Заказы отгружаются по <b class="text-white">полной предоплате</b> после того, как мы лично подтвердим Ваш размер и детали доставки в WhatsApp.
-            </p>
-          </div>
-
-          <!-- Карточка 3: Проверка качества -->
-          <div class="bg-white/10 border border-white/25 rounded-3xl p-6 backdrop-blur-md">
-            <div class="w-11 h-11 rounded-2xl bg-amber-400/20 border border-amber-300/40 text-amber-300 flex items-center justify-center font-black text-base mb-4">✨</div>
-            <h3 id="delivCard3Title" class="text-lg font-black text-white mb-2">Гарантия качества деталей</h3>
-            <p id="delivCard3Desc" class="text-xs sm:text-sm text-slate-200 leading-relaxed">
-              Перед выездом к Вам каждая вещь проходит проверку: ровная объёмная вышивка <b class="text-white">Fear of God Essentials</b>, плотный футер, оригинальные бирки и упаковка.
-            </p>
-          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ВОПРОСЫ И ОТВЕТЫ (FAQ НА «ВЫ») -->
-  <section id="faqSection" class="py-8 sm:py-12">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-8">
-        <span class="text-xs font-extrabold uppercase tracking-widest text-sky-300 bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full">FAQ</span>
-        <h2 id="faqTitle" class="text-2xl sm:text-3xl font-black text-white mt-3">Ответы на Ваши вопросы</h2>
-      </div>
-
-      <div class="space-y-3.5">
-        <details class="group liquid-glass rounded-3xl p-5 cursor-pointer">
-          <summary class="flex items-center justify-between font-bold text-white list-none text-sm sm:text-base">
-            <span id="faqQ1">Как проходит оформление и подтверждение Вашего заказа?</span>
-            <span class="text-sky-300 group-open:rotate-180 transition-transform">▼</span>
-          </summary>
-          <p id="faqA1" class="text-xs sm:text-sm text-slate-200 mt-3 leading-relaxed">
-            Выберите понравившуюся вещь на сайте, укажите Ваш район доставки в корзине и нажмите кнопку оформления. Заявка мгновенно откроется в нашем WhatsApp с Вашим персональным кодом заказа — мы сразу ответим Вам, подтвердим наличие и вышлем реквизиты.
-          </p>
-        </details>
-
-        <details class="group liquid-glass rounded-3xl p-5 cursor-pointer">
-          <summary class="flex items-center justify-between font-bold text-white list-none text-sm sm:text-base">
-            <span id="faqQ2">В какие районы Актобе Вы доставляете заказы?</span>
-            <span class="text-sky-300 group-open:rotate-180 transition-transform">▼</span>
-          </summary>
-          <p id="faqA2" class="text-xs sm:text-sm text-slate-200 mt-3 leading-relaxed">
-            Мы доставляем заказы лично (без сторонних служб такси) в радиусе района Тойота Центра: Батыс, 12 микрорайон, 11 микрорайон и Авиагородок. Если Вы находитесь в другом районе, мы согласуем с Вами удобную точку встречи в WhatsApp.
-          </p>
-        </details>
-
-        <details class="group liquid-glass rounded-3xl p-5 cursor-pointer">
-          <summary class="flex items-center justify-between font-bold text-white list-none text-sm sm:text-base">
-            <span id="faqQ3">Как отследить статус моего заказа на сайте?</span>
-            <span class="text-sky-300 group-open:rotate-180 transition-transform">▼</span>
-          </summary>
-          <p id="faqA3" class="text-xs sm:text-sm text-slate-200 mt-3 leading-relaxed">
-            При оформлении заявки Вам присваивается уникальный трек-номер формата ATL-XXXX. Нажмите на кнопку «Статус заказа» в верхней стеклянной шапке сайта, чтобы увидеть этап сборки и выезда к Вам в реальном времени.
-          </p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- ПОДВАЛ САЙТА -->
-  <footer class="mt-auto pt-8 pb-12 border-t border-white/15 bg-slate-950/60 backdrop-blur-xl">
+  <!-- ПОДВАЛ -->
+  <footer class="mt-auto pt-8 pb-12 border-t border-borderGlass bg-page">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
       <div class="flex items-center gap-3.5">
-        <img
-          src="https://lh3.googleusercontent.com/d/1uwFOXNosnS5KspVYvxb1pyVhCu5QPh-k=w400"
-          data-drive-id="1uwFOXNosnS5KspVYvxb1pyVhCu5QPh-k"
-          onerror="window.handleImgFallback(this, 'ATLAS')"
-          alt="Atlas Logo"
-          class="w-11 h-11 rounded-full object-cover border border-white/40"
-        />
+        <div class="w-11 h-11 rounded-full p-0.5 bg-accent">
+          <img src="https://lh3.googleusercontent.com/d/1uwFOXNosnS5KspVYvxb1pyVhCu5QPh-k=w400" alt="Logo" class="w-full h-full rounded-full object-cover bg-page" />
+        </div>
         <div>
-          <div class="font-black tracking-wider text-base text-white">ATLAS STORE</div>
-          <div class="text-xs text-slate-400">Эксклюзивный стритвир · г. Актобе</div>
+          <div class="font-black tracking-wider text-base text-textMain">ATLAS STORE</div>
+          <div class="text-xs text-textMuted">Эксклюзивный стритвир · г. Актобе</div>
         </div>
       </div>
-
-      <div class="flex flex-wrap items-center justify-center gap-3">
-        <a href="https://wa.me/77085795493" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/40 text-emerald-200 font-bold px-5 py-2.5 rounded-full text-xs sm:text-sm transition">
-          <span>Связаться в WhatsApp</span>
-        </a>
-        <a href="https://www.instagram.com/atlas.store.aktobe?igsh=MW52bDR6b2xscnFy" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/25 text-white font-bold px-5 py-2.5 rounded-full text-xs sm:text-sm transition">
-          <span>Instagram: @atlas.store.aktobe</span>
-        </a>
-      </div>
-
-      <div class="text-center sm:text-right">
-        <p class="text-xs text-slate-400">© 2026 Atlas Store Aktobe. Все права защищены.</p>
+      <div class="flex gap-3">
+        <a href="https://wa.me/77085795493" class="bg-panelSolid border border-borderGlass hover:border-accent text-textMain font-bold px-5 py-2.5 rounded-full text-sm transition">WhatsApp</a>
+        <a href="https://www.instagram.com/atlas.store.aktobe" class="bg-panelSolid border border-borderGlass hover:border-accent text-textMain font-bold px-5 py-2.5 rounded-full text-sm transition">Instagram</a>
       </div>
     </div>
   </footer>
 
-  <!-- МОДАЛЬНОЕ ОКНО ДЕТАЛЬНОГО ПРОСМОТРА ТОВАРА (LIQUID GLASS) -->
-  <div id="productModal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-5 bg-slate-950/80 backdrop-blur-xl">
-    <div class="liquid-glass rounded-[2.2rem] max-w-3xl w-full overflow-hidden max-h-[92vh] flex flex-col border border-white/40">
-      <div class="grid grid-cols-1 md:grid-cols-2 overflow-y-auto">
-        
-        <!-- Левая колонка: Фото + Переключатель кадров (1. Полный вид, 2. Вышивка) -->
-        <div class="bg-slate-950/60 relative flex flex-col justify-between min-h-[320px] sm:min-h-[400px]">
-          <div class="relative flex-1 flex items-center justify-center overflow-hidden">
-            <img id="modalImg" src="" alt="" class="w-full h-full max-h-[380px] sm:max-h-[440px] object-cover transition-opacity duration-200" />
-            
-            <!-- Подпись текущего кадра (Общий вид / Макро вышивка) -->
-            <span id="modalPhotoCaption" class="absolute top-3.5 left-3.5 bg-slate-950/80 backdrop-blur-md border border-white/30 text-white text-[11px] font-extrabold px-3.5 py-1 rounded-full shadow"></span>
-            
-            <!-- Кнопки влево / вправо -->
-            <button id="modalPrevBtn" onclick="stepModalImage(-1)" class="hidden absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/75 hover:bg-slate-900 border border-white/30 text-white shadow-lg items-center justify-center font-black text-lg transition active:scale-90">‹</button>
-            <button id="modalNextBtn" onclick="stepModalImage(1)" class="hidden absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/75 hover:bg-slate-900 border border-white/30 text-white shadow-lg items-center justify-center font-black text-lg transition active:scale-90">›</button>
-          </div>
-
-          <!-- Полоса миниатюр -->
-          <div id="modalThumbnails" class="hidden px-4 py-3 bg-slate-950/80 border-t border-white/15 flex items-center justify-center gap-2.5 overflow-x-auto"></div>
-        </div>
-
-        <!-- Правая колонка: Информация и выбор размера -->
-        <div class="p-5 sm:p-7 flex flex-col justify-between text-white">
-          <div>
-            <div class="flex items-start justify-between gap-2">
-              <h3 id="modalTitle" class="text-xl sm:text-2xl font-black text-white leading-snug"></h3>
-              <button onclick="closeProductModal()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 border border-white/25 flex items-center justify-center text-white font-bold shrink-0">✕</button>
-            </div>
-
-            <div class="mt-2.5 flex items-baseline gap-2.5">
-              <span id="modalPrice" class="text-2xl sm:text-3xl font-black text-sky-300"></span>
-              <span id="modalOldPrice" class="text-sm text-slate-400 line-through"></span>
-            </div>
-
-            <p id="modalDesc" class="text-xs sm:text-sm text-slate-200 mt-3.5 leading-relaxed"></p>
-
-            <!-- Выбор размера / расцветки -->
-            <div class="mt-5">
-              <label id="modalColorLabel" class="block text-xs font-extrabold uppercase tracking-wider text-sky-300 mb-2">Выберите Ваш размер / вариант:</label>
-              <div id="modalColors" class="flex flex-wrap gap-2"></div>
-            </div>
-
-            <!-- Характеристики -->
-            <ul id="modalSpecs" class="mt-5 space-y-2 text-xs text-slate-200 border-t border-white/15 pt-4"></ul>
-          </div>
-
-          <div class="mt-6 pt-4 border-t border-white/15">
-            <button id="modalAddToCartBtn" class="w-full bg-gradient-to-r from-sky-400 to-blue-600 hover:from-sky-300 hover:to-blue-500 text-white font-black py-4 px-5 rounded-full shadow-xl transition text-sm active:scale-95">
-              Добавить в Ваш заказ
-            </button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- МОДАЛЬНОЕ ОКНО КОРЗИНЫ С ВЫБОРОМ РАЙОНА ДОСТАВКИ И БЕЗ НАЗВАНИЙ БАНКОВ -->
-  <div id="cartModal" class="fixed inset-0 z-50 hidden justify-end bg-slate-950/75 backdrop-blur-md">
-    <div class="liquid-glass w-full max-w-md h-full flex flex-col justify-between shadow-2xl overflow-hidden border-l border-white/35">
-      
-      <!-- Шапка корзины -->
-      <div class="p-5 bg-slate-950/50 border-b border-white/20 flex items-center justify-between">
-        <div class="flex items-center gap-2.5">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-sky-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-          </svg>
-          <h3 id="cartHeaderTitle" class="text-lg font-black text-white">Ваш заказ</h3>
-        </div>
-        <button onclick="toggleCartModal(false)" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 border border-white/25 flex items-center justify-center text-white font-bold">✕</button>
+  <!-- МОДАЛКИ КОРЗИНЫ И ТОВАРА (Упрощенный вызов) -->
+  <!-- КОРЗИНА -->
+  <div id="cartModal" class="fixed inset-0 z-50 hidden justify-end bg-page/80 backdrop-blur-md">
+    <div class="liquid-glass w-full max-w-md h-full flex flex-col justify-between shadow-2xl overflow-hidden border-l border-borderGlass">
+      <div class="p-5 bg-panel border-b border-borderGlass flex items-center justify-between">
+        <h3 class="text-lg font-black text-textMain">Ваш заказ</h3>
+        <button onclick="toggleCartModal(false)" class="w-8 h-8 rounded-full bg-panelSolid border border-borderGlass flex items-center justify-center text-textMain">✕</button>
       </div>
 
-      <!-- Список товаров и форма -->
       <div class="p-5 flex-1 overflow-y-auto space-y-4">
         <div id="cartItemsContainer" class="space-y-3"></div>
 
-        <!-- Форма персонального бронирования -->
-        <div id="checkoutForm" class="pt-4 border-t border-white/20 space-y-4 hidden">
-          
-          <!-- Интерактивный блок VIP-бронирования (на «Вы», без упоминания банков/налички) -->
-          <div class="p-4 rounded-2xl bg-sky-500/15 border border-sky-300/35 text-xs text-slate-100 space-y-1.5">
-            <div class="font-black text-sky-300 flex items-center gap-1.5 text-sm">
-              <span>✨ Персональное бронирование и доставка</span>
-            </div>
-            <p class="leading-relaxed text-slate-200">
-              Все заказы комплектуются и доставляются <b class="text-white">лично в руки</b> (без сторонних курьеров). После отправки заявки мы свяжемся с Вами в WhatsApp, подтвердим Ваш размер и направим реквизиты для <b class="text-white">полной предоплаты</b>.
-            </p>
-          </div>
-
-          <!-- Имя клиента -->
+        <div id="checkoutForm" class="pt-4 border-t border-borderGlass space-y-4 hidden">
           <div>
-            <label id="labelCustomerName" class="block text-xs font-extrabold text-sky-200 mb-1.5">Как к Вам обращаться?</label>
-            <input type="text" id="customerName" placeholder="Введите Ваше имя" class="w-full px-4 py-3 rounded-2xl bg-slate-950/60 border border-white/30 text-white placeholder-slate-400 text-sm focus:outline-none focus:border-sky-400" />
+            <label class="block text-xs font-extrabold text-accent mb-1.5">Как к Вам обращаться?</label>
+            <input type="text" id="customerName" placeholder="Ваше имя" class="w-full px-4 py-3 rounded-2xl bg-panelSolid border border-borderGlass text-textMain placeholder-textMuted text-sm focus:outline-none focus:border-accent" />
           </div>
-
-          <!-- Выбор зоны личной доставки в радиусе Тойота Центра -->
           <div>
-            <label id="labelDeliveryZone" class="block text-xs font-extrabold text-sky-200 mb-1.5">Выберите Ваш район доставки в Актобе:</label>
-            <div id="zoneButtonsContainer" class="grid grid-cols-2 gap-2">
-              <button type="button" onclick="selectDeliveryZone('Район Тойота Центра')" data-zone="Район Тойота Центра" class="zone-btn px-3 py-2.5 rounded-xl text-xs font-extrabold border text-left transition bg-sky-400 text-slate-950 border-white shadow">
-                📍 Тойота Центр
-              </button>
-              <button type="button" onclick="selectDeliveryZone('Батыс')" data-zone="Батыс" class="zone-btn px-3 py-2.5 rounded-xl text-xs font-bold border text-left transition bg-white/10 text-white border-white/25 hover:bg-white/20">
-                📍 Батыс
-              </button>
-              <button type="button" onclick="selectDeliveryZone('12 микрорайон')" data-zone="12 микрорайон" class="zone-btn px-3 py-2.5 rounded-xl text-xs font-bold border text-left transition bg-white/10 text-white border-white/25 hover:bg-white/20">
-                📍 12 микрорайон
-              </button>
-              <button type="button" onclick="selectDeliveryZone('11 микрорайон')" data-zone="11 микрорайон" class="zone-btn px-3 py-2.5 rounded-xl text-xs font-bold border text-left transition bg-white/10 text-white border-white/25 hover:bg-white/20">
-                📍 11 микрорайон
-              </button>
-              <button type="button" onclick="selectDeliveryZone('Авиагородок')" data-zone="Авиагородок" class="zone-btn px-3 py-2.5 rounded-xl text-xs font-bold border text-left transition bg-white/10 text-white border-white/25 hover:bg-white/20">
-                📍 Авиагородок
-              </button>
-              <button type="button" onclick="selectDeliveryZone('Другой район (по согласованию)')" data-zone="Другой район (по согласованию)" class="zone-btn px-3 py-2.5 rounded-xl text-xs font-bold border text-left transition bg-white/10 text-white border-white/25 hover:bg-white/20">
-                💬 Другой (уточнить)
-              </button>
-            </div>
+            <label class="block text-xs font-extrabold text-accent mb-1.5">Адрес доставки в Актобе:</label>
+            <input type="text" id="customerAddress" placeholder="Улица, дом, микрорайон" class="w-full px-4 py-3 rounded-2xl bg-panelSolid border border-borderGlass text-textMain placeholder-textMuted text-sm focus:outline-none focus:border-accent" />
           </div>
-
-          <!-- Точный адрес / ориентир -->
-          <div>
-            <div class="flex items-center justify-between mb-1.5">
-              <label id="labelCustomerAddress" class="block text-xs font-extrabold text-sky-200">Точный адрес или ориентир:</label>
-              <a href="https://2gis.kz/aktobe" target="_blank" rel="noopener noreferrer" class="text-[11px] font-bold text-sky-300 underline hover:text-white">Открыть 2ГИС</a>
-            </div>
-            <input type="text" id="customerAddress" placeholder="Например: дом, подъезд или удобное место встречи" class="w-full px-4 py-3 rounded-2xl bg-slate-950/60 border border-white/30 text-white placeholder-slate-400 text-sm focus:outline-none focus:border-sky-400" />
-          </div>
-
         </div>
       </div>
 
-      <!-- Футер корзины -->
-      <div class="p-5 bg-slate-950/70 border-t border-white/20 space-y-3">
+      <div class="p-5 bg-panel border-t border-borderGlass space-y-3">
         <div class="flex items-center justify-between">
-          <span id="cartTotalLabel" class="text-sm font-bold text-slate-300">Итого к бронированию:</span>
-          <span id="cartTotalPrice" class="text-2xl font-black text-sky-300">0 ₸</span>
+          <span class="text-sm font-bold text-textMuted">Итого:</span>
+          <span id="cartTotalPrice" class="text-2xl font-black text-accent">0 ₸</span>
         </div>
-        <button id="checkoutWaBtn" onclick="sendOrderToWhatsApp()" class="w-full bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 font-black py-4 px-5 rounded-full shadow-xl transition flex items-center justify-center gap-2 text-sm active:scale-95">
-          <span id="checkoutWaText">Закрепить заказ за Вами в WhatsApp</span>
+        <button onclick="sendOrderToWhatsApp()" class="w-full bg-accent hover:bg-accentHover text-btnText font-black py-4 px-5 rounded-full shadow-xl transition active:scale-95 border border-borderGlass">
+          Закрепить заказ в WhatsApp
         </button>
       </div>
-
     </div>
   </div>
 
-  <!-- МОДАЛЬНОЕ ОКНО ОТСЛЕЖИВАНИЯ СТАТУСА ЗАКАЗА (LIQUID GLASS) -->
-  <div id="trackModal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-xl">
-    <div class="liquid-glass rounded-[2.2rem] max-w-lg w-full overflow-hidden border border-white/40 text-white">
-      <div class="p-5 bg-slate-950/50 border-b border-white/20 flex items-center justify-between">
-        <div class="flex items-center gap-2.5">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-          <h3 id="trackModalTitle" class="text-base sm:text-lg font-black">Статус Вашего заказа</h3>
-        </div>
-        <button onclick="closeTrackModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white font-bold">✕</button>
-      </div>
-
-      <div class="p-5 sm:p-6 space-y-4 max-h-[82vh] overflow-y-auto">
-        <div>
-          <label id="trackInputLabel" class="block text-xs font-extrabold uppercase tracking-wider text-sky-300 mb-2">Введите Ваш персональный код заказа (ATL-XXXX):</label>
-          <div class="flex gap-2">
-            <input type="text" id="trackCodeInput" placeholder="ATL-XXXX" class="flex-1 px-4 py-3 rounded-full bg-slate-950/60 border border-white/30 text-white text-sm font-bold uppercase tracking-wider focus:outline-none focus:border-sky-400" />
-            <button onclick="searchOrderByCode()" id="trackSearchBtn" class="bg-white text-slate-950 hover:bg-sky-200 font-black px-6 py-3 rounded-full text-xs sm:text-sm transition">
-              Проверить
-            </button>
-          </div>
-          <div id="recentOrderChips" class="flex flex-wrap gap-1.5 mt-2.5"></div>
-        </div>
-
-        <div id="trackResultBox" class="hidden space-y-4 pt-3 border-t border-white/15">
-          <div class="flex items-center justify-between bg-white/10 p-4 rounded-2xl border border-white/20">
-            <div>
-              <div class="text-[11px] font-bold text-sky-200 uppercase">Код заказа</div>
-              <div id="trackResCode" class="text-lg font-black text-white">ATL-0000</div>
-            </div>
-            <div class="text-right">
-              <div class="text-[11px] font-bold text-sky-200 uppercase">Сумма</div>
-              <div id="trackResTotal" class="text-base font-extrabold text-sky-300">0 ₸</div>
-            </div>
-          </div>
-
-          <div class="relative pl-6 space-y-5 before:content-[''] before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-white/20" id="trackStepsList"></div>
-
-          <div id="trackCourierNoteBox" class="hidden p-3.5 rounded-2xl bg-amber-500/20 border border-amber-300/40 text-xs text-amber-100">
-            <span class="font-extrabold">💬 Сообщение для Вас от Atlas Store:</span>
-            <p id="trackCourierNoteText" class="mt-1 font-medium"></p>
-          </div>
-
-          <div class="p-3.5 rounded-2xl bg-white/10 border border-white/20 text-xs text-slate-200 space-y-1">
-            <div><b>Район и адрес:</b> <span id="trackResAddress"></span></div>
-            <div><b>Выбранные позиции:</b> <span id="trackResItems"></span></div>
-          </div>
-        </div>
-
-        <div id="trackNotFoundBox" class="hidden p-4 rounded-2xl bg-red-500/20 border border-red-400/40 text-xs text-red-100 font-semibold text-center">
-          Заказ с указанным кодом пока не найден. Проверьте правильность ввода (например, ATLAS-1234) или напишите нам в WhatsApp.
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Скрипт -->
   <script>
-    const WHATSAPP_NUMBER = "77085795493";
-    const API_URL = "https://atlas-api.turlanmanas.workers.dev";
-    let currentLang = "ru";
-    let selectedDeliveryZone = "Район Тойота Центра";
+    // ТЕМА - Смена черной(оранжевой) и белой(синей)
+    function toggleTheme() {
+      const isLight = document.body.classList.toggle('theme-light');
+      localStorage.setItem('atlas_theme', isLight ? 'light' : 'dark');
+      document.getElementById('themeIcon').textContent = isLight ? '🌙' : '☀️';
+      document.getElementById('themeColorMeta').setAttribute("content", isLight ? "#f8fafc" : "#050505");
+    }
 
-    // ПРАВИЛЬНЫЙ ПОРЯДОК ФОТО ДЛЯ ESSENTIALS:
-    // 1-м кадром идет САМА ВЕЩЬ ЦЕЛИКОМ (новые общие фото), 2-м — МАКРО ВЫШИВКИ FEAR OF GOD ESSENTIALS, 3-м — ДОП. РАКУРС
+    if(localStorage.getItem('atlas_theme') === 'light') {
+      document.body.classList.add('theme-light');
+      document.getElementById('themeIcon').textContent = '🌙';
+      document.getElementById('themeColorMeta').setAttribute("content", "#f8fafc");
+    }
+
+    // ИСХОДНЫЕ ДАННЫЕ
     const ESSENTIALS_GALLERIES = {
       hoodie: [
-        {
-          driveId: "1KkknDn8WOGoq1QVg9jgKZFtID2-Le75P",
-          imgUrl: "https://lh3.googleusercontent.com/d/1KkknDn8WOGoq1QVg9jgKZFtID2-Le75P=w1600",
-          captionRu: "1/3 · Общий вид худи",
-          captionKz: "1/3 · Худидің жалпы көрінісі"
-        },
-        {
-          driveId: "1aITSGogbvC4f2kGLA7OqZOyCyxCK5Mx4",
-          imgUrl: "https://lh3.googleusercontent.com/d/1aITSGogbvC4f2kGLA7OqZOyCyxCK5Mx4=w1600",
-          captionRu: "2/3 · Вышивка Fear of God Essentials",
-          captionKz: "2/3 · Fear of God Essentials кестесі"
-        },
-        {
-          driveId: "1i6T-0uQZ09Vht4b84lXotfNERkTBojHD",
-          imgUrl: "https://lh3.googleusercontent.com/d/1i6T-0uQZ09Vht4b84lXotfNERkTBojHD=w1600",
-          captionRu: "3/3 · Дополнительный ракурс",
-          captionKz: "3/3 · Қосымша көрініс"
-        }
+        { driveId: "1KkknDn8WOGoq1QVg9jgKZFtID2-Le75P", imgUrl: "https://lh3.googleusercontent.com/d/1KkknDn8WOGoq1QVg9jgKZFtID2-Le75P=w1600", captionRu: "1/3 · Общий вид худи" },
+        { driveId: "1aITSGogbvC4f2kGLA7OqZOyCyxCK5Mx4", imgUrl: "https://lh3.googleusercontent.com/d/1aITSGogbvC4f2kGLA7OqZOyCyxCK5Mx4=w1600", captionRu: "2/3 · Вышивка Fear of God" },
+        { driveId: "1i6T-0uQZ09Vht4b84lXotfNERkTBojHD", imgUrl: "https://lh3.googleusercontent.com/d/1i6T-0uQZ09Vht4b84lXotfNERkTBojHD=w1600", captionRu: "3/3 · Ракурс" }
       ],
       pants: [
-        {
-          driveId: "1HInWlkgUitKtP3HZz0yRBu6BG7YD_Bg_",
-          imgUrl: "https://lh3.googleusercontent.com/d/1HInWlkgUitKtP3HZz0yRBu6BG7YD_Bg_=w1600",
-          captionRu: "1/3 · Общий вид штанов",
-          captionKz: "1/3 · Шалбардың жалпы көрінісі"
-        },
-        {
-          driveId: "1A8E-eeEe7IMp1VSIlpb58AsLjJxggYZr",
-          imgUrl: "https://lh3.googleusercontent.com/d/1A8E-eeEe7IMp1VSIlpb58AsLjJxggYZr=w1600",
-          captionRu: "2/3 · Вышивка Fear of God Essentials",
-          captionKz: "2/3 · Fear of God Essentials кестесі"
-        },
-        {
-          driveId: "1qn_hE3n7PolLEt6mjWriAB_pmlTj-WWQ",
-          imgUrl: "https://lh3.googleusercontent.com/d/1qn_hE3n7PolLEt6mjWriAB_pmlTj-WWQ=w1600",
-          captionRu: "3/3 · Дополнительный ракурс",
-          captionKz: "3/3 · Қосымша көрініс"
-        }
+        { driveId: "1HInWlkgUitKtP3HZz0yRBu6BG7YD_Bg_", imgUrl: "https://lh3.googleusercontent.com/d/1HInWlkgUitKtP3HZz0yRBu6BG7YD_Bg_=w1600", captionRu: "1/3 · Общий вид штанов" },
+        { driveId: "1A8E-eeEe7IMp1VSIlpb58AsLjJxggYZr", imgUrl: "https://lh3.googleusercontent.com/d/1A8E-eeEe7IMp1VSIlpb58AsLjJxggYZr=w1600", captionRu: "2/3 · Вышивка Fear of God" },
+        { driveId: "1qn_hE3n7PolLEt6mjWriAB_pmlTj-WWQ", imgUrl: "https://lh3.googleusercontent.com/d/1qn_hE3n7PolLEt6mjWriAB_pmlTj-WWQ=w1600", captionRu: "3/3 · Ракурс" }
       ]
     };
 
-    // Полный каталог товаров по умолчанию
     const defaultProducts = [
       {
-        id: 101,
-        category: "clothes",
-        inDrop: true,
-        hidden: false,
-        availability: "preorder",
-        transitQty: 2,
-        badges: ["🔥 ТОП ДРОП", "FEAR OF GOD"],
-        price: 13490,
-        oldPrice: 16990,
-        driveId: "1KkknDn8WOGoq1QVg9jgKZFtID2-Le75P",
-        imgUrl: "https://lh3.googleusercontent.com/d/1KkknDn8WOGoq1QVg9jgKZFtID2-Le75P=w1600",
+        id: 101, category: "clothes", inDrop: true, hidden: false, availability: "preorder", transitQty: 2,
+        badges: ["FEAR OF GOD"], price: 13490, oldPrice: 16990,
+        driveId: "1KkknDn8WOGoq1QVg9jgKZFtID2-Le75P", imgUrl: "https://lh3.googleusercontent.com/d/1KkknDn8WOGoq1QVg9jgKZFtID2-Le75P=w1600",
         images: ESSENTIALS_GALLERIES.hoodie,
-        title: {
-          ru: "Essentials Hoodie (Fear of God)",
-          kz: "Essentials Hoodie (Fear of God)"
-        },
-        shortDesc: {
-          ru: "Объёмное худи Fear of God Essentials премиального качества. Сначала оцените посадку вещи целиком, а на 2-м фото — плотную вышивку логотипа.",
-          kz: "Премиум сападағы Fear of God Essentials көлемді худиі. 1-ші фотодан жалпы пішімін, ал 2-ші фотодан фирмалық кестесін көріңіз."
-        },
-        colors: {
-          ru: ["Размер S (1 шт.)", "Размер M (1 шт.)"],
-          kz: ["Өлшем S (1 дана)", "Өлшем M (1 дана)"]
-        },
-        colorStock: [true, true],
-        specs: {
-          ru: [
-            "1-е фото: полный вид вещи · 2-е фото: макро вышивки Fear of God Essentials · 3-е: доп. ракурс",
-            "Лимитированная партия: 2 шт. (размеры S и M)",
-            "Плотный премиальный футер с мягким начёсом, оверсайз крой"
-          ],
-          kz: [
-            "1-ші фото: толық көрінісі · 2-ші фото: Fear of God Essentials кестесі",
-            "Шектеулі партия: 2 дана (S және M өлшемдері)",
-            "Жұмсақ жылы футер, оверсайз пішім"
-          ]
-        }
+        title: { ru: "Essentials Hoodie" },
+        shortDesc: { ru: "Объёмное худи премиального качества." },
+        colors: { ru: ["Размер S", "Размер M"] }, colorStock: [true, true]
       },
       {
-        id: 102,
-        category: "clothes",
-        inDrop: true,
-        hidden: false,
-        availability: "preorder",
-        transitQty: 2,
-        badges: ["🔥 ТОП ДРОП", "FEAR OF GOD"],
-        price: 12990,
-        oldPrice: 15990,
-        driveId: "1HInWlkgUitKtP3HZz0yRBu6BG7YD_Bg_",
-        imgUrl: "https://lh3.googleusercontent.com/d/1HInWlkgUitKtP3HZz0yRBu6BG7YD_Bg_=w1600",
+        id: 102, category: "clothes", inDrop: true, hidden: false, availability: "preorder", transitQty: 2,
+        badges: ["FEAR OF GOD"], price: 12990, oldPrice: 15990,
+        driveId: "1HInWlkgUitKtP3HZz0yRBu6BG7YD_Bg_", imgUrl: "https://lh3.googleusercontent.com/d/1HInWlkgUitKtP3HZz0yRBu6BG7YD_Bg_=w1600",
         images: ESSENTIALS_GALLERIES.pants,
-        title: {
-          ru: "Essentials Pants (Fear of God)",
-          kz: "Essentials Pants (Fear of God)"
-        },
-        shortDesc: {
-          ru: "Свободные штаны Fear of God Essentials идеального кроя. На 1-м фото — общий силуэт модели, на 2-м фото — макро фирменной вышивки.",
-          kz: "Еркін пішімді Fear of God Essentials спорттық шалбары. 1-ші фотода — жалпы силуэт, 2-ші фотода — фирмалық кесте."
-        },
-        colors: {
-          ru: ["Размер S (1 шт.)", "Размер M (1 шт.)"],
-          kz: ["Өлшем S (1 дана)", "Өлшем M (1 дана)"]
-        },
-        colorStock: [true, true],
-        specs: {
-          ru: [
-            "1-е фото: общий вид штанов · 2-е фото: вышивка Fear of God Essentials · 3-е: доп. ракурс",
-            "Идеально собираются в костюм с худи Essentials",
-            "Плотный хлопок, удлинённые шнурки и комфортная посадка"
-          ],
-          kz: [
-            "1-ші фото: жалпы көрінісі · 2-ші фото: Fear of God Essentials кестесі",
-            "Essentials худиімен костюм ретінде тамаша үйлеседі",
-            "Қалың мақта, ыңғайлы посадка"
-          ]
-        }
+        title: { ru: "Essentials Pants" },
+        shortDesc: { ru: "Свободные штаны идеального кроя." },
+        colors: { ru: ["Размер S", "Размер M"] }, colorStock: [true, true]
       },
       {
-        id: 1,
-        category: "beanies",
-        inDrop: false,
-        hidden: false,
-        availability: "instock",
-        transitQty: 0,
-        badges: ["STREETWEAR"],
-        price: 5990,
-        oldPrice: 7990,
-        driveId: "1v1B-c5nQ71M_s8jA9r0tG2h5L6k-mN9p",
-        imgUrl: "https://lh3.googleusercontent.com/d/1v1B-c5nQ71M_s8jA9r0tG2h5L6k-mN9p=w1200",
-        title: {
-          ru: "Шапка Corteiz (CRTZ)",
-          kz: "Corteiz (CRTZ) бас киімі"
-        },
-        shortDesc: {
-          ru: "Узнаваемая шапка лондонского бренда Corteiz с детализированной вышивкой Alcatraz.",
-          kz: "Alcatraz кестесі бар Corteiz стритвир бас кимі."
-        },
-        colors: {
-          ru: ["Чёрный", "Графит"],
-          kz: ["Қара", "Графит"]
-        },
-        colorStock: [true, true],
-        specs: {
-          ru: ["Объёмная вышивка спереди", "Плотная эластичная вязка"],
-          kz: ["Көлемді сапалы кесте", "Қалың созылғыш мата"]
-        }
-      },
-      {
-        id: 3,
-        category: "beanies",
-        inDrop: false,
-        hidden: false,
-        availability: "instock",
-        transitQty: 0,
-        badges: ["КЛАССИКА"],
-        price: 4990,
-        oldPrice: 6500,
-        driveId: "1x8D-e2fR45P_q1wZ3y7uJ9k0M2n-bV4c",
-        imgUrl: "https://lh3.googleusercontent.com/d/1x8D-e2fR45P_q1wZ3y7uJ9k0M2n-bV4c=w1200",
-        title: {
-          ru: "Шапка Stüssy Big Stock",
-          kz: "Stüssy Big Stock бас киімі"
-        },
-        shortDesc: {
-          ru: "Стильная шапка Stüssy на каждый день с глубокой посадкой и контрастной вышивкой логотипа.",
-          kz: "Күнделікті киюге арналған стильді Stüssy бас киімі."
-        },
-        colors: {
-          ru: ["Чёрный", "Молочный"],
-          kz: ["Қара", "Сүтті ақ"]
-        },
-        colorStock: [true, true],
-        specs: {
-          ru: ["Мягкая фактурная вязка", "Фирменная вышивка Stüssy"],
-          kz: ["Жұмсақ тоқыма", "Фирмалық Stüssy кестесі"]
-        }
-      },
-      {
-        id: 4,
-        category: "beanies",
-        inDrop: false,
-        hidden: false,
-        availability: "instock",
-        transitQty: 0,
-        badges: ["LUXURY VIBE"],
-        price: 7990,
-        oldPrice: 9990,
-        driveId: "1t1mB5LhaE95kW-P2_f6p9Q8uV3r-xZ1a",
-        imgUrl: "https://lh3.googleusercontent.com/d/1t1mB5LhaE95kW-P2_f6p9Q8uV3r-xZ1a=w1200",
-        title: {
-          ru: "Шапка Chrome Hearts",
-          kz: "Chrome Hearts бас киімі"
-        },
-        shortDesc: {
-          ru: "Акцентная шапка с готическими крестами и фирменной символикой Chrome Hearts.",
-          kz: "Готикалық кресттер мен Chrome Hearts символикасы бар бас киім."
-        },
-        colors: {
-          ru: ["Чёрный с вышивкой"],
-          kz: ["Кестелі қара"]
-        },
-        colorStock: [true],
-        specs: {
-          ru: ["Детализированная вышивка крестов", "Премиум плотность материала"],
-          kz: ["Детальді крест кестелері", "Премиум тығыз материал"]
-        }
-      },
-      {
-        id: 5,
-        category: "balaclavas",
-        inDrop: false,
-        hidden: false,
-        availability: "instock",
-        transitQty: 0,
-        badges: ["TECHWEAR"],
-        price: 6990,
-        oldPrice: 8990,
-        driveId: "1z4M-n8pL12K_j5hG7f3dS6a9Q0w-eR2t",
-        imgUrl: "https://lh3.googleusercontent.com/d/1z4M-n8pL12K_j5hG7f3dS6a9Q0w-eR2t=w1200",
-        title: {
-          ru: "Балаклава Nike × Nocta",
-          kz: "Nike × Nocta балаклавасы"
-        },
-        shortDesc: {
-          ru: "Функциональная балаклава в стиле коллаборации Nike × Nocta. Надёжно защищает лицо и шею от ветра.",
-          kz: "Nike × Nocta коллаборациясы стиліндегі функционалды балаклава."
-        },
-        colors: {
-          ru: ["Чёрный Tech"],
-          kz: ["Қара Tech"]
-        },
-        colorStock: [true],
-        specs: {
-          ru: ["Эластичный дышащий материал", "Трансформируется в бафф"],
-          kz: ["Тыныс алатын созылғыш материал", "Бафф ретінде киюге ыңғайлы"]
-        }
+        id: 1, category: "beanies", inDrop: false, hidden: false, availability: "instock", transitQty: 0,
+        badges: ["STREETWEAR"], price: 5990, oldPrice: 7990,
+        driveId: "1v1B-c5nQ71M_s8jA9r0tG2h5L6k-mN9p", imgUrl: "https://lh3.googleusercontent.com/d/1v1B-c5nQ71M_s8jA9r0tG2h5L6k-mN9p=w1200",
+        title: { ru: "Шапка Corteiz" },
+        shortDesc: { ru: "Шапка бренда Corteiz с вышивкой." },
+        colors: { ru: ["Чёрный", "Графит"] }, colorStock: [true, true]
       }
     ];
 
-    // Гарантирует правильный порядок фото (сначала полная вещь, затем вышивка) даже после синхронизации с базой
-    function normalizeProduct(p) {
-      const titleRu = (p.title && p.title.ru ? p.title.ru : (p.titleRu || "")).toLowerCase();
-
-      if (p.id === 101 || titleRu.includes("hoodie") || titleRu.includes("худи")) {
-        p.images = ESSENTIALS_GALLERIES.hoodie;
-        p.driveId = ESSENTIALS_GALLERIES.hoodie[0].driveId;
-        p.imgUrl = ESSENTIALS_GALLERIES.hoodie[0].imgUrl;
-      } else if (p.id === 102 || titleRu.includes("pants") || titleRu.includes("штаны")) {
-        p.images = ESSENTIALS_GALLERIES.pants;
-        p.driveId = ESSENTIALS_GALLERIES.pants[0].driveId;
-        p.imgUrl = ESSENTIALS_GALLERIES.pants[0].imgUrl;
-      } else {
-        const directUrl = window.getDirectDriveUrl(p.driveId, p.imgUrl);
-        const extractedId = window.extractDriveId(p.driveId) || window.extractDriveId(p.imgUrl);
-        p.driveId = extractedId;
-        p.imgUrl = directUrl;
-        if (!Array.isArray(p.images) || p.images.length === 0) {
-          p.images = [{
-            driveId: extractedId,
-            imgUrl: directUrl,
-            captionRu: "Вид изделия",
-            captionKz: "Бұйым көрінісі"
-          }];
-        }
-      }
-
-      if (!p.title || typeof p.title !== "object") {
-        p.title = { ru: p.titleRu || "Товар Atlas", kz: p.titleKz || p.titleRu || "Atlas тауары" };
-      }
-      if (!p.shortDesc || typeof p.shortDesc !== "object") {
-        p.shortDesc = { ru: p.shortDescRu || "", kz: p.shortDescKz || p.shortDescRu || "" };
-      }
-      if (!p.colors || typeof p.colors !== "object") {
-        p.colors = { ru: ["Стандарт"], kz: ["Стандарт"] };
-      }
-      if (!Array.isArray(p.colorStock) || p.colorStock.length === 0) {
-        p.colorStock = p.colors.ru.map(() => true);
-      }
-      if (!p.specs || typeof p.specs !== "object") {
-        p.specs = {
-          ru: ["Проверка качества перед личной доставкой", "Доступно для заказа в Актобе"],
-          kz: ["Жеткізу алдында сапаны тексеру", "Ақтөбеде тапсырыс беруге болады"]
-        };
-      }
-      return p;
-    }
-
-    let products = JSON.parse(JSON.stringify(defaultProducts)).map(normalizeProduct);
-    let currentCategory = "all";
-    let cart = [];
+    // КОРЗИНА И СОХРАНЕНИЕ
+    const API_URL = "https://atlas-api.turlanmanas.workers.dev";
+    let cart = JSON.parse(localStorage.getItem('atlas_cart') || '[]');
+    let products = JSON.parse(JSON.stringify(defaultProducts));
     let selectedColors = {};
+    let currentCategory = "all";
     let activeCardImageIndex = {};
-    let currentModalProductId = null;
-    let currentModalImgIdx = 0;
 
-    function formatPrice(num) {
-      return Number(num || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₸";
+    async function fetchProducts() {
+      try {
+        const res = await fetch(`${API_URL}/api/products`);
+        if (!res.ok) return;
+        const data = await res.json();
+        
+        // Обновляем товары из твоей базы данных Cloudflare
+        products = data.filter(p => !p.hidden).map(p => {
+          // Принудительно подшиваем новые фото галереи для Essentials, 
+          // чтобы они не слетели при загрузке старых данных из базы
+          if (p.title && p.title.ru.includes("Hoodie")) {
+            p.images = ESSENTIALS_GALLERIES.hoodie;
+            p.imgUrl = ESSENTIALS_GALLERIES.hoodie[0].imgUrl;
+            p.inDrop = true; // Оставляем их в верхнем ряду
+          } else if (p.title && p.title.ru.includes("Pants")) {
+            p.images = ESSENTIALS_GALLERIES.pants;
+            p.imgUrl = ESSENTIALS_GALLERIES.pants[0].imgUrl;
+            p.inDrop = true; // Оставляем их в верхнем ряду
+          }
+          return p;
+        });
+        renderProducts();
+      } catch (err) {
+        console.error("Ошибка загрузки каталога:", err);
+      }
     }
 
-    // Переключение фото прямо на карточке (1-й кадр — вещь целиком, 2-й кадр — вышивка)
+    function formatPrice(num) { return Number(num || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₸"; }
+
     function switchCardPhoto(event, cardKey, productId, stepOrIdx, isDirect = false) {
       if (event) event.stopPropagation();
       const p = products.find(item => item.id === productId);
-      if (!p || !Array.isArray(p.images) || p.images.length <= 1) return;
-
+      if (!p || !p.images || p.images.length <= 1) return;
       const curr = activeCardImageIndex[cardKey] || 0;
       const next = isDirect ? stepOrIdx : (curr + stepOrIdx + p.images.length) % p.images.length;
       activeCardImageIndex[cardKey] = next;
-
-      const slide = p.images[next];
+      
       const imgEl = document.getElementById(`img-${cardKey}`);
-      if (imgEl && slide) {
-        imgEl.removeAttribute("data-tried-thumb");
-        imgEl.removeAttribute("data-tried-uc");
-        imgEl.removeAttribute("data-tried-placeholder");
-        imgEl.setAttribute("data-drive-id", slide.driveId || "");
-        imgEl.src = slide.imgUrl;
-      }
-
-      const capEl = document.getElementById(`cap-${cardKey}`);
-      if (capEl && slide) {
-        capEl.textContent = currentLang === "kz" ? (slide.captionKz || slide.captionRu) : slide.captionRu;
-      }
-
+      // Перезапуск анимации перелистывания
+      imgEl.classList.remove('animate-fade-slide');
+      void imgEl.offsetWidth; // триггер reflow
+      imgEl.src = p.images[next].imgUrl;
+      imgEl.classList.add('animate-fade-slide');
+      
+      const cap = document.getElementById(`cap-${cardKey}`);
+      if(cap) cap.textContent = p.images[next].captionRu;
+      
       const dotsEl = document.getElementById(`dots-${cardKey}`);
       if (dotsEl) {
         Array.from(dotsEl.children).forEach((btn, idx) => {
-          btn.className = idx === next
-            ? "w-6 h-2 rounded-full bg-sky-300 shadow transition-all"
-            : "w-2 h-2 rounded-full bg-white/45 hover:bg-white/80 transition-all";
+          btn.className = idx === next ? "w-6 h-2 rounded-full bg-accent transition-all duration-300" : "w-2 h-2 rounded-full bg-borderGlass transition-all duration-300";
         });
       }
     }
 
-    // Рендер верхнего дропа
-    function renderIncomingDrop() {
-      const section = document.getElementById("incomingDropSection");
-      const grid = document.getElementById("incomingDropGrid");
-      if (!section || !grid) return;
-
-      const dropItems = products.filter(p => !p.hidden && p.inDrop);
-      if (dropItems.length === 0) {
-        section.classList.add("hidden");
-        return;
-      }
-      section.classList.remove("hidden");
-
-      grid.innerHTML = dropItems.map(p => buildProductCardHTML(p, "drop", true)).join("");
-    }
-
-    // Универсальный генератор стеклянной карточки товара
     function buildProductCardHTML(p, prefix, isDropStyle) {
-      normalizeProduct(p);
       const cardKey = `${prefix}-${p.id}`;
       const currIdx = activeCardImageIndex[cardKey] || 0;
-      const slide = p.images[currIdx] || p.images[0];
-      const hasGallery = p.images.length > 1;
-
-      if (selectedColors[p.id] === undefined) {
-        const firstAvail = p.colorStock.findIndex(Boolean);
-        selectedColors[p.id] = firstAvail !== -1 ? firstAvail : 0;
-      }
-      const activeColorIdx = selectedColors[p.id];
-      const isOut = p.availability === "out" || !p.colorStock.some(Boolean);
-      const titleText = p.title[currentLang] || p.title.ru;
-      const descText = p.shortDesc[currentLang] || p.shortDesc.ru;
-      const colorsList = p.colors[currentLang] || p.colors.ru;
-      const slideCaption = currentLang === "kz" ? (slide.captionKz || slide.captionRu) : slide.captionRu;
-
-      const cardClass = isDropStyle ? "liquid-glass-drop" : "liquid-glass-card";
-
+      const slide = p.images && p.images[currIdx] ? p.images[currIdx] : p;
+      const hasGallery = p.images && p.images.length > 1;
+      const activeColorIdx = selectedColors[p.id] || 0;
+      
       return `
-        <div class="${cardClass} rounded-[2rem] overflow-hidden flex flex-col justify-between group ${isOut ? 'opacity-70' : ''}">
-          <div>
-            <!-- Область изображения -->
-            <div class="relative aspect-[4/4.4] bg-slate-950/60 overflow-hidden cursor-pointer" onclick="openProductModal(${p.id})">
-              <img
-                id="img-${cardKey}"
-                src="${slide.imgUrl}"
-                data-drive-id="${slide.driveId || ''}"
-                alt="${titleText}"
-                loading="lazy"
-                decoding="async"
-                onerror="window.handleImgFallback(this, '${titleText.replace(/'/g, "")}')"
-                class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/30 pointer-events-none"></div>
-
-              <!-- Бейджи сверху слева -->
-              <div class="absolute top-3.5 left-3.5 flex flex-wrap gap-1.5 max-w-[75%] pointer-events-none">
-                ${(p.badges || []).map(b => `
-                  <span class="${isDropStyle ? 'bg-orange-500 text-slate-950' : 'bg-sky-400 text-slate-950'} text-[10px] font-black px-3 py-1 rounded-full shadow uppercase tracking-wider">${b}</span>
-                `).join("")}
-              </div>
-
-              ${hasGallery ? `
-                <!-- Плашка текущего кадра (1/2 Общий вид -> 2/2 Вышивка) -->
-                <span id="cap-${cardKey}" class="absolute bottom-3.5 left-3.5 bg-slate-950/80 backdrop-blur-md border border-white/30 text-sky-200 text-[11px] font-bold px-3 py-1 rounded-full pointer-events-none">
-                  ${slideCaption || `Фото ${currIdx + 1}/${p.images.length}`}
-                </span>
-
-                <!-- Стрелки переключения фото -->
-                <button onclick="switchCardPhoto(event, '${cardKey}', ${p.id}, -1)" class="absolute left-2.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-950/75 hover:bg-slate-900 text-white border border-white/35 flex items-center justify-center font-black text-lg shadow-lg active:scale-90 transition" title="Предыдущее фото">‹</button>
-                <button onclick="switchCardPhoto(event, '${cardKey}', ${p.id}, 1)" class="absolute right-2.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-950/75 hover:bg-slate-900 text-white border border-white/35 flex items-center justify-center font-black text-lg shadow-lg active:scale-90 transition" title="Следующее фото (Вышивка)">›</button>
-
-                <!-- Точки-индикаторы -->
-                <div id="dots-${cardKey}" class="absolute bottom-3.5 right-3.5 flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-slate-950/75 backdrop-blur-md border border-white/25">
-                  ${p.images.map((_, idx) => `
-                    <button onclick="switchCardPhoto(event, '${cardKey}', ${p.id}, ${idx}, true)" class="${idx === currIdx ? 'w-6 h-2 bg-sky-300' : 'w-2 h-2 bg-white/45 hover:bg-white/80'} rounded-full transition-all"></button>
-                  `).join("")}
-                </div>
-              ` : `
-                <span class="absolute bottom-3.5 left-3.5 bg-slate-950/75 backdrop-blur-md border border-white/25 text-emerald-300 text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                  <span>Доступно для Вас</span>
-                </span>
-              `}
+        <div class="liquid-glass liquid-glass-hoverable rounded-[2rem] overflow-hidden flex flex-col justify-between group reveal">
+          <div class="relative aspect-[4/4.4] bg-page overflow-hidden cursor-pointer">
+            <img id="img-${cardKey}" src="${slide.imgUrl}" class="w-full h-full object-cover transition duration-500" />
+            <div class="absolute top-3.5 left-3.5 flex gap-1.5 pointer-events-none z-10">
+              ${(p.badges||[]).map(b=> `<span class="bg-accent text-btnText text-[10px] font-black px-3 py-1 rounded-full shadow uppercase">${b}</span>`).join("")}
             </div>
-
-            <!-- Описание и размеры -->
-            <div class="p-5">
-              <div class="flex items-start justify-between gap-2">
-                <h3 class="text-base sm:text-lg font-black text-white group-hover:text-sky-300 transition cursor-pointer leading-snug" onclick="openProductModal(${p.id})">
-                  ${titleText}
-                </h3>
-                ${hasGallery ? `
-                  <button onclick="switchCardPhoto(event, '${cardKey}', ${p.id}, 1)" class="shrink-0 text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-sky-400/20 text-sky-200 border border-sky-300/40 hover:bg-sky-400/30 transition">
-                    🔍 Вышивка →
-                  </button>
-                ` : ""}
+            ${hasGallery ? `
+              <span id="cap-${cardKey}" class="absolute bottom-3.5 left-3.5 bg-panelSolid/90 backdrop-blur-md text-textMain text-[11px] font-bold px-3.5 py-1.5 rounded-full z-10 shadow-sm">${slide.captionRu}</span>
+              
+              <button onclick="switchCardPhoto(event, '${cardKey}', ${p.id}, -1)" class="absolute left-2.5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-panelSolid/80 backdrop-blur-md text-textMain border border-borderGlass shadow-lg flex items-center justify-center active:scale-90 transition-transform z-10 hover:border-accent">
+                <svg class="w-5 h-5 pr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+              </button>
+              
+              <button onclick="switchCardPhoto(event, '${cardKey}', ${p.id}, 1)" class="absolute right-2.5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-panelSolid/80 backdrop-blur-md text-textMain border border-borderGlass shadow-lg flex items-center justify-center active:scale-90 transition-transform z-10 hover:border-accent">
+                <svg class="w-5 h-5 pl-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+              </button>
+              
+              <div id="dots-${cardKey}" class="absolute bottom-3.5 right-3.5 flex gap-1.5 px-3 py-2 rounded-full bg-panelSolid border border-borderGlass z-10 shadow-sm">
+                ${p.images.map((_, i) => `<button class="${i===currIdx?'w-6 bg-accent':'w-2 bg-borderGlass'} h-2 rounded-full transition-all duration-300"></button>`).join("")}
               </div>
-
-              <p class="text-xs text-slate-300 mt-1.5 line-clamp-2 leading-relaxed">${descText}</p>
-
-              <!-- Выбор размера/цвета -->
-              <div class="mt-4">
-                <span class="block text-[11px] font-bold text-sky-200/80 mb-1.5">Выберите вариант:</span>
-                <div class="flex flex-wrap gap-1.5">
-                  ${colorsList.map((c, idx) => {
-                    const isAvail = p.colorStock[idx] !== false;
-                    return `
-                      <button
-                        type="button"
-                        onclick="selectCardColor(${p.id}, ${idx})"
-                        ${!isAvail ? "disabled" : ""}
-                        class="text-xs px-3 py-1.5 rounded-full font-bold border transition ${
-                          !isAvail
-                            ? "bg-white/5 text-slate-500 border-white/10 line-through cursor-not-allowed"
-                            : idx === activeColorIdx
-                              ? "bg-white text-slate-950 border-white shadow"
-                              : "bg-white/10 text-slate-200 border-white/25 hover:border-sky-300"
-                        }"
-                      >
-                        ${c}
-                      </button>
-                    `;
-                  }).join("")}
-                </div>
-              </div>
+            ` : ""}
+          </div>
+          <div class="p-5 sm:p-6 flex-1 flex flex-col">
+            <h3 class="text-base sm:text-lg font-black text-textMain leading-snug">${p.title.ru}</h3>
+            <p class="text-xs sm:text-sm text-textMuted mt-1.5 line-clamp-2">${p.shortDesc.ru}</p>
+            <div class="mt-auto pt-5 flex items-center justify-between gap-2">
+              <div class="text-lg sm:text-xl font-black text-textMain">${formatPrice(p.price)}</div>
+              <button onclick="addToCart(${p.id}, this)" class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-black transition shadow-lg active:scale-95 bg-accent text-btnText border border-borderGlass hover:bg-accentHover">В заказ +</button>
             </div>
           </div>
-
-          <!-- Нижняя панель с ценой и кнопками -->
-          <div class="px-5 pb-5 pt-3.5 border-t border-white/15 flex items-center justify-between gap-2">
-            <div>
-              <div class="text-lg sm:text-xl font-black text-white">${formatPrice(p.price)}</div>
-              ${p.oldPrice ? `<div class="text-xs text-slate-400 line-through">${formatPrice(p.oldPrice)}</div>` : ""}
-            </div>
-
-            <div class="flex items-center gap-2">
-              <button
-                type="button"
-                onclick="openProductModal(${p.id})"
-                class="px-3.5 py-2.5 rounded-full text-xs font-bold text-white bg-white/10 hover:bg-white/20 border border-white/25 transition"
-              >
-                Детали
-              </button>
-              <button
-                type="button"
-                onclick="addToCart(${p.id}, this)"
-                ${isOut ? "disabled" : ""}
-                class="px-4 py-2.5 rounded-full text-xs font-black transition shadow-lg active:scale-95 ${
-                  isOut
-                    ? "bg-white/10 text-slate-500 cursor-not-allowed"
-                    : isDropStyle
-                      ? "bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 text-slate-950"
-                      : "bg-gradient-to-r from-sky-400 to-blue-600 hover:from-sky-300 hover:to-blue-500 text-white"
-                }"
-              >
-                ${isOut ? "Нет в наличии" : "В заказ +"}
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
+        </div>`;
     }
 
-    // Рендер основного каталога
+    // Инициализация красивого появления при скролле
+    function initScrollReveal() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }
+
     function renderProducts() {
-      renderIncomingDrop();
-      const grid = document.getElementById("productsGrid");
-      if (!grid) return;
-
-      const visible = products.filter(p => !p.hidden);
-      const filtered = currentCategory === "all"
-        ? visible
-        : visible.filter(p => p.category === currentCategory);
-
-      grid.innerHTML = filtered.map(p => buildProductCardHTML(p, "cat", false)).join("");
+      const dropGrid = document.getElementById("incomingDropGrid");
+      const catGrid = document.getElementById("productsGrid");
+      
+      const dropItems = products.filter(p => p.inDrop);
+      dropGrid.innerHTML = dropItems.map(p => buildProductCardHTML(p, "drop", true)).join("");
+      
+      const catItems = products.filter(p => !p.inDrop && (currentCategory === 'all' || p.category === currentCategory));
+      catGrid.innerHTML = catItems.map(p => buildProductCardHTML(p, "cat", false)).join("");
+      
+      // Активируем анимации для новых карточек
+      setTimeout(initScrollReveal, 50);
     }
 
     function filterProducts(cat) {
       currentCategory = cat;
-      document.querySelectorAll(".filter-btn").forEach(btn => {
-        btn.className = "filter-btn shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold liquid-glass text-white hover:border-sky-300 transition";
-      });
-      const activeBtn = document.getElementById(`filter-${cat}`);
-      if (activeBtn) {
-        activeBtn.className = "filter-btn shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-black bg-white text-[#071942] shadow-lg transition";
-      }
+      document.querySelectorAll(".filter-btn").forEach(b => b.className = "filter-btn shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-panelSolid border border-borderGlass text-textMain transition hover:border-accent");
+      document.getElementById(`filter-${cat}`).className = "filter-btn shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-black bg-textMain text-page shadow-lg transition";
       renderProducts();
     }
 
-    function selectCardColor(productId, colorIndex) {
-      selectedColors[productId] = colorIndex;
-      renderProducts();
+    // ЛОГИКА СОХРАНЕНИЯ В КОРЗИНУ (ИСПРАВЛЕНИЕ БАГА)
+    function saveCart() {
+      localStorage.setItem('atlas_cart', JSON.stringify(cart));
+      updateCartUI();
     }
 
-    // Модальное окно детального просмотра товара
-    function setModalImageIndex(idx) {
-      const p = products.find(item => item.id === currentModalProductId);
-      if (!p || !Array.isArray(p.images) || p.images.length === 0) return;
-
-      currentModalImgIdx = (idx + p.images.length) % p.images.length;
-      const slide = p.images[currentModalImgIdx];
-
-      const modalImg = document.getElementById("modalImg");
-      modalImg.removeAttribute("data-tried-thumb");
-      modalImg.removeAttribute("data-tried-uc");
-      modalImg.removeAttribute("data-tried-placeholder");
-      modalImg.setAttribute("data-drive-id", slide.driveId || "");
-      modalImg.src = slide.imgUrl;
-      modalImg.onerror = function() { window.handleImgFallback(this, p.title.ru); };
-
-      const cap = document.getElementById("modalPhotoCaption");
-      if (cap) {
-        cap.textContent = currentLang === "kz"
-          ? (slide.captionKz || slide.captionRu || `Фото ${currentModalImgIdx + 1}`)
-          : (slide.captionRu || `Фото ${currentModalImgIdx + 1}`);
-      }
-
-      const thumbs = document.getElementById("modalThumbnails");
-      if (thumbs && p.images.length > 1) {
-        thumbs.classList.remove("hidden");
-        thumbs.innerHTML = p.images.map((im, i) => `
-          <button type="button" onclick="setModalImageIndex(${i})" class="px-2.5 py-1.5 rounded-xl border transition flex items-center gap-2 shrink-0 ${
-            i === currentModalImgIdx
-              ? "border-sky-300 bg-sky-400/20 text-white shadow"
-              : "border-white/20 bg-white/5 text-slate-300 opacity-75 hover:opacity-100"
-          }">
-            <img src="${im.imgUrl}" data-drive-id="${im.driveId || ''}" onerror="window.handleImgFallback(this, 'THUMB')" class="w-10 h-10 rounded-lg object-cover" />
-            <span class="text-[11px] font-bold">${i === 0 ? "1. Общий вид" : i === 1 ? "2. Вышивка FOG" : "3. Ракурс"}</span>
-          </button>
-        `).join("");
-      } else if (thumbs) {
-        thumbs.classList.add("hidden");
-      }
-    }
-
-    function stepModalImage(step) {
-      setModalImageIndex(currentModalImgIdx + step);
-    }
-
-    function openProductModal(productId) {
-      const p = products.find(item => item.id === productId);
-      if (!p) return;
-      normalizeProduct(p);
-      currentModalProductId = productId;
-      currentModalImgIdx = 0;
-
-      const prevBtn = document.getElementById("modalPrevBtn");
-      const nextBtn = document.getElementById("modalNextBtn");
-      if (p.images.length > 1) {
-        prevBtn.classList.remove("hidden");
-        prevBtn.classList.add("flex");
-        nextBtn.classList.remove("hidden");
-        nextBtn.classList.add("flex");
-      } else {
-        prevBtn.classList.add("hidden");
-        prevBtn.classList.remove("flex");
-        nextBtn.classList.add("hidden");
-        nextBtn.classList.remove("flex");
-      }
-
-      setModalImageIndex(0);
-
-      document.getElementById("modalTitle").textContent = p.title[currentLang] || p.title.ru;
-      document.getElementById("modalPrice").textContent = formatPrice(p.price);
-      document.getElementById("modalOldPrice").textContent = p.oldPrice ? formatPrice(p.oldPrice) : "";
-      document.getElementById("modalDesc").textContent = p.shortDesc[currentLang] || p.shortDesc.ru;
-
-      const activeColorIdx = selectedColors[p.id] || 0;
-      const colorsList = p.colors[currentLang] || p.colors.ru;
-      document.getElementById("modalColors").innerHTML = colorsList.map((c, idx) => `
-        <button
-          type="button"
-          onclick="selectedColors[${p.id}] = ${idx}; openProductModal(${p.id}); renderProducts();"
-          class="text-xs px-4 py-2 rounded-full font-bold border transition ${
-            idx === activeColorIdx
-              ? "bg-white text-slate-950 border-white shadow"
-              : "bg-white/10 text-white border-white/25 hover:border-sky-300"
-          }"
-        >
-          ${c}
-        </button>
-      `).join("");
-
-      const specs = (p.specs && (p.specs[currentLang] || p.specs.ru)) || [];
-      document.getElementById("modalSpecs").innerHTML = specs.map(s => `
-        <li class="flex items-start gap-2">
-          <span class="w-1.5 h-1.5 rounded-full bg-sky-300 mt-1.5 shrink-0"></span>
-          <span>${s}</span>
-        </li>
-      `).join("");
-
-      const addBtn = document.getElementById("modalAddToCartBtn");
-      addBtn.onclick = () => {
-        addToCart(p.id);
-        closeProductModal();
-      };
-
-      const modal = document.getElementById("productModal");
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
-    }
-
-    function closeProductModal() {
-      const modal = document.getElementById("productModal");
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
-    }
-
-    // Выбор зоны личной доставки в корзине
-    function selectDeliveryZone(zoneName) {
-      selectedDeliveryZone = zoneName;
-      document.querySelectorAll(".zone-btn").forEach(btn => {
-        if (btn.getAttribute("data-zone") === zoneName) {
-          btn.className = "zone-btn px-3 py-2.5 rounded-xl text-xs font-extrabold border text-left transition bg-sky-400 text-slate-950 border-white shadow";
-        } else {
-          btn.className = "zone-btn px-3 py-2.5 rounded-xl text-xs font-bold border text-left transition bg-white/10 text-white border-white/25 hover:bg-white/20";
-        }
-      });
-    }
-
-    // Добавление в корзину (с визуальным откликом на самой кнопке, без всплывающих тостов)
     function addToCart(productId, btnEl) {
-      const p = products.find(item => item.id === productId);
+      const p = products.find(i => i.id === productId);
       if (!p) return;
       const colorIdx = selectedColors[productId] || 0;
-
-      const existing = cart.find(item => item.productId === p.id && item.colorIdx === colorIdx);
-      if (existing) {
-        existing.qty += 1;
-      } else {
-        cart.push({
-          productId: p.id,
-          colorIdx,
-          price: p.price,
-          driveId: p.driveId,
-          imgUrl: p.images && p.images[0] ? p.images[0].imgUrl : p.imgUrl,
-          qty: 1
-        });
-      }
-
-      updateCartUI();
-
+      
+      const exist = cart.find(i => i.productId === p.id && i.colorIdx === colorIdx);
+      if (exist) exist.qty += 1;
+      else cart.push({ productId: p.id, colorIdx, price: p.price, imgUrl: p.imgUrl, qty: 1 });
+      
+      saveCart(); // Теперь товары не пропадают при обновлении!
+      
       if (btnEl) {
-        const oldText = btnEl.textContent;
+        const old = btnEl.textContent;
         btnEl.textContent = "✓ Добавлено";
-        setTimeout(() => {
-          btnEl.textContent = oldText;
-        }, 900);
+        setTimeout(() => btnEl.textContent = old, 1000);
       }
     }
 
     function changeQty(idx, delta) {
       cart[idx].qty += delta;
       if (cart[idx].qty <= 0) cart.splice(idx, 1);
-      updateCartUI();
+      saveCart();
     }
 
     function updateCartUI() {
-      const totalCount = cart.reduce((s, i) => s + i.qty, 0);
-      const totalPrice = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      const totCount = cart.reduce((s, i) => s + i.qty, 0);
+      const totPrice = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      document.getElementById("cartCountBadge").textContent = totCount;
+      document.getElementById("cartTotalPrice").textContent = formatPrice(totPrice);
 
-      document.getElementById("cartCountBadge").textContent = totalCount;
-      document.getElementById("cartTotalPrice").textContent = formatPrice(totalPrice);
-
-      const container = document.getElementById("cartItemsContainer");
+      const box = document.getElementById("cartItemsContainer");
       const form = document.getElementById("checkoutForm");
-
       if (cart.length === 0) {
-        container.innerHTML = `
-          <div class="text-center py-12 text-slate-300 text-sm">
-            Ваша корзина пока пуста. Выберите понравившуюся позицию в каталоге!
-          </div>
-        `;
+        box.innerHTML = `<div class="text-center py-10 text-textMuted text-sm">Корзина пуста</div>`;
         form.classList.add("hidden");
         return;
       }
-
       form.classList.remove("hidden");
-      container.innerHTML = cart.map((item, idx) => {
-        const p = products.find(prod => prod.id === item.productId);
-        const title = p ? (p.title[currentLang] || p.title.ru) : "Позиция Atlas";
-        const colorName = p && p.colors[currentLang] ? p.colors[currentLang][item.colorIdx] : "";
-
+      box.innerHTML = cart.map((c, i) => {
+        const p = products.find(pr => pr.id === c.productId);
+        const t = p ? p.title.ru : "Товар";
         return `
-          <div class="flex items-center justify-between gap-3 p-3 rounded-2xl bg-white/10 border border-white/20">
-            <img src="${item.imgUrl}" data-drive-id="${item.driveId || ''}" onerror="window.handleImgFallback(this, 'ITEM')" class="w-14 h-14 rounded-xl object-cover bg-slate-900 shrink-0" />
-            <div class="flex-1 min-w-0">
-              <h4 class="text-xs sm:text-sm font-black text-white truncate">${title}</h4>
-              <p class="text-[11px] text-sky-200">${colorName || ""}</p>
-              <div class="text-xs font-extrabold text-white mt-0.5">${formatPrice(item.price)}</div>
+          <div class="flex gap-3 p-3 rounded-xl bg-panelSolid border border-borderGlass">
+            <img src="${c.imgUrl}" class="w-12 h-12 rounded object-cover" />
+            <div class="flex-1">
+              <div class="text-xs font-black text-textMain">${t}</div>
+              <div class="text-xs font-bold text-accent">${formatPrice(c.price)}</div>
             </div>
             <div class="flex items-center gap-1.5">
-              <button type="button" onclick="changeQty(${idx}, -1)" class="w-7 h-7 rounded-full bg-white/10 border border-white/25 font-bold text-white hover:bg-white/20">-</button>
-              <span class="text-xs font-extrabold w-5 text-center text-white">${item.qty}</span>
-              <button type="button" onclick="changeQty(${idx}, 1)" class="w-7 h-7 rounded-full bg-white/10 border border-white/25 font-bold text-white hover:bg-white/20">+</button>
+              <button onclick="changeQty(${i}, -1)" class="w-6 h-6 rounded bg-panelSolid border border-borderGlass text-textMain">-</button>
+              <span class="text-xs font-bold text-textMain">${c.qty}</span>
+              <button onclick="changeQty(${i}, 1)" class="w-6 h-6 rounded bg-panelSolid border border-borderGlass text-textMain">+</button>
             </div>
-          </div>
-        `;
+          </div>`;
       }).join("");
     }
 
-    function toggleCartModal(show) {
-      const modal = document.getElementById("cartModal");
-      if (show) {
-        updateCartUI();
-        modal.classList.remove("hidden");
-        modal.classList.add("flex");
-      } else {
-        modal.classList.add("hidden");
-        modal.classList.remove("flex");
-      }
+    function toggleCartModal(s) {
+      document.getElementById("cartModal").classList[s ? "remove" : "add"]("hidden");
+      document.getElementById("cartModal").classList[s ? "add" : "remove"]("flex");
+      if(s) updateCartUI();
     }
 
-    // ОТСЛЕЖИВАНИЕ ЗАКАЗА И ОТПРАВКА В БАЗУ CLOUDFLARE D1 + WHATSAPP
-    let orders = [];
-    let activeTrackedCode = "";
-
-    function generateTrackCode() {
-      return `ATLAS-${Math.floor(1000 + Math.random() * 9000)}`;
-    }
-
-    async function sendOrderToWhatsApp() {
+    function sendOrderToWhatsApp() {
       if (cart.length === 0) return;
-
-      const name = document.getElementById("customerName").value.trim() || "Уважаемый клиент";
-      const extraAddress = document.getElementById("customerAddress").value.trim();
-      const fullAddress = extraAddress ? `${selectedDeliveryZone}, ${extraAddress}` : selectedDeliveryZone;
-
-      let total = 0;
-      const summaryArr = [];
-      const lines = cart.map((item, i) => {
-        const p = products.find(prod => prod.id === item.productId);
-        const title = p ? p.title.ru : "Товар";
-        const colorName = p && p.colors.ru ? p.colors.ru[item.colorIdx] : "";
-        const sub = item.price * item.qty;
-        total += sub;
-        summaryArr.push(`${title} (${colorName}) × ${item.qty}`);
-        return `${i + 1}. ${title} (${colorName}) × ${item.qty} шт. — ${formatPrice(sub)}`;
+      const addr = document.getElementById("customerAddress").value || "Актобе";
+      let tot = 0, lines = cart.map((c, i) => {
+        const p = products.find(pr => pr.id === c.productId);
+        tot += c.price * c.qty;
+        return `${i+1}. ${p?p.title.ru:"Товар"} x${c.qty} = ${formatPrice(c.price*c.qty)}`;
       });
-
-      const trackCode = generateTrackCode();
-      const newOrder = {
-        trackCode,
-        status: 0,
-        customerName: name,
-        address: fullAddress,
-        paymentMethod: "Полная предоплата (персональная бронь)",
-        itemsSummary: summaryArr.join(", "),
-        total,
-        courierNote: "Ваша заявка принята! Мы свяжемся с Вами в WhatsApp для подтверждения и личной доставки.",
-        createdAt: Date.now()
-      };
-
-      orders.unshift(newOrder);
-      try {
-        localStorage.setItem("atlas_last_order_code", trackCode);
-        const myCodes = JSON.parse(localStorage.getItem("atlas_my_order_codes") || "[]");
-        myCodes.unshift(trackCode);
-        localStorage.setItem("atlas_my_order_codes", JSON.stringify(myCodes.slice(0, 6)));
-      } catch (e) {}
-
-      try {
-        await fetch(`${API_URL}/api/orders`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(newOrder)
-        });
-      } catch (e) {
-        console.warn("Заказ сохранен локально:", e);
-      }
-
-      const waText =
-        `Здравствуйте, Atlas Store! 👋\n` +
-        `Хочу закрепить за собой заказ (г. Актобе):\n` +
-        `🆔 Код заказа: *${trackCode}*\n\n` +
-        lines.join("\n") +
-        `\n\n💰 Итого: ${formatPrice(total)}\n` +
-        `👤 Имя: ${name}\n` +
-        `📍 Зона личной доставки: ${fullAddress}\n\n` +
-        `Готов(а) внести предоплату после Вашего подтверждения.`;
-
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waText)}`, "_blank");
-
-      cart = [];
-      updateCartUI();
-      toggleCartModal(false);
-      openTrackModal(trackCode);
+      const txt = `Здравствуйте!\nХочу оформить заказ:\n${lines.join('\n')}\nИтого: ${formatPrice(tot)}\nАдрес доставки: ${addr}`;
+      window.open(`https://wa.me/77085795493?text=${encodeURIComponent(txt)}`, "_blank");
+      cart = []; saveCart(); toggleCartModal(false);
     }
 
-    function openTrackModal(prefillCode) {
-      const modal = document.getElementById("trackModal");
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
-
-      const chipsContainer = document.getElementById("recentOrderChips");
-      try {
-        const myCodes = JSON.parse(localStorage.getItem("atlas_my_order_codes") || "[]");
-        chipsContainer.innerHTML = myCodes.map(c => `
-          <button type="button" onclick="openTrackModal('${c}')" class="text-[11px] font-extrabold px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 border border-white/25 text-sky-200 transition">
-            📦 ${c}
-          </button>
-        `).join("");
-      } catch (e) {}
-
-      if (prefillCode) {
-        document.getElementById("trackCodeInput").value = prefillCode;
-        searchOrderByCode();
-      }
-    }
-
-    function closeTrackModal() {
-      const modal = document.getElementById("trackModal");
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
-    }
-
-    function searchOrderByCode() {
-      const code = (document.getElementById("trackCodeInput").value || "").trim().toUpperCase();
-      const resBox = document.getElementById("trackResultBox");
-      const notFound = document.getElementById("trackNotFoundBox");
-      if (!code) return;
-
-      const found = orders.find(o => String(o.trackCode).toUpperCase() === code);
-      if (!found) {
-        resBox.classList.add("hidden");
-        notFound.classList.remove("hidden");
-        return;
-      }
-
-      activeTrackedCode = found.trackCode;
-      notFound.classList.add("hidden");
-      resBox.classList.remove("hidden");
-
-      document.getElementById("trackResCode").textContent = found.trackCode;
-      document.getElementById("trackResTotal").textContent = formatPrice(found.total);
-      document.getElementById("trackResAddress").textContent = found.address || "г. Актобе";
-      document.getElementById("trackResItems").textContent = found.itemsSummary || "";
-
-      const noteBox = document.getElementById("trackCourierNoteBox");
-      if (found.courierNote) {
-        noteBox.classList.remove("hidden");
-        document.getElementById("trackCourierNoteText").textContent = found.courierNote;
-      } else {
-        noteBox.classList.add("hidden");
-      }
-
-      const steps = [
-        { title: "Заявка принята", desc: "Заказ зарегистрирован, подтверждаем детали с Вами в WhatsApp" },
-        { title: "Заказ подготовлен", desc: "Проверили вышивку, бирки и упаковали Вашу вещь" },
-        { title: "Выехали к Вам", desc: "Личная доставка по Вашему району (Тойота Центр / Батыс / 11-12 мкр / Авиагородок)" },
-        { title: "Вручен лично в руки", desc: "Заказ успешно передан Вам. Благодарим за выбор Atlas Store!" }
-      ];
-
-      const currentStep = Number(found.status) || 0;
-      document.getElementById("trackStepsList").innerHTML = steps.map((st, idx) => {
-        const done = idx <= currentStep;
-        return `
-          <div class="relative flex items-start gap-3">
-            <span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black border ${
-              done ? "bg-emerald-400 border-emerald-300 text-slate-950" : "bg-slate-900 border-white/25 text-slate-400"
-            }">
-              ${done ? "✓" : idx + 1}
-            </span>
-            <div>
-              <div class="text-xs sm:text-sm font-black ${done ? "text-white" : "text-slate-400"}">${st.title}</div>
-              <div class="text-[11px] ${done ? "text-slate-200" : "text-slate-500"}">${st.desc}</div>
-            </div>
-          </div>
-        `;
-      }).join("");
-    }
-
-    // Переключение языка RU / KZ (с уважительным обращением на «Вы» / «Сіз»)
-    function setLanguage(lang) {
-      currentLang = lang;
-      const ruBtn = document.getElementById("langRuBtn");
-      const kzBtn = document.getElementById("langKzBtn");
-
-      if (lang === "ru") {
-        ruBtn.className = "px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-white text-[#071942] shadow transition";
-        kzBtn.className = "px-2.5 py-1 rounded-full text-[11px] font-extrabold text-slate-200 hover:text-white transition";
-        document.getElementById("heroBadge").textContent = "Личная доставка в руки по г. Актобе";
-        document.getElementById("updateBannerTitle").textContent = "Для Вас доступна обновлённая интерактивная витрина Atlas Store";
-        document.getElementById("catalogTitle").textContent = "Каталог для Вас";
-      } else {
-        kzBtn.className = "px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-white text-[#071942] shadow transition";
-        ruBtn.className = "px-2.5 py-1 rounded-full text-[11px] font-extrabold text-slate-200 hover:text-white transition";
-        document.getElementById("heroBadge").textContent = "Ақтөбе қ. бойынша жеке қолыңызға жеткізу";
-        document.getElementById("updateBannerTitle").textContent = "Сіз үшін жаңартылған интерактивті Atlas Store витринасы ашық";
-        document.getElementById("catalogTitle").textContent = "Сізге арналған каталог";
-      }
-
-      renderProducts();
-      updateCartUI();
-    }
-
-    // ЖИВАЯ СИНХРОНИЗАЦИЯ С ОБЛАКОМ CLOUDFLARE D1 КАЖДЫЕ 15 СЕКУНД
-    async function syncFromCloud() {
-      try {
-        const [prodRes, ordRes] = await Promise.all([
-          fetch(`${API_URL}/api/products`),
-          fetch(`${API_URL}/api/orders`)
-        ]);
-
-        if (prodRes.ok) {
-          const cloudProducts = await prodRes.json();
-          if (Array.isArray(cloudProducts) && cloudProducts.length > 0) {
-            // Объединяем товары из базы и гарантируем наличие Essentials Hoodie (101) и Pants (102) с правильным порядком фото
-            const normalizedCloud = cloudProducts.map(normalizeProduct);
-            const hasHoodie = normalizedCloud.some(p => p.id === 101 || (p.title.ru || "").toLowerCase().includes("hoodie"));
-            const hasPants = normalizedCloud.some(p => p.id === 102 || (p.title.ru || "").toLowerCase().includes("pants"));
-
-            if (!hasHoodie) normalizedCloud.unshift(normalizeProduct(JSON.parse(JSON.stringify(defaultProducts[0]))));
-            if (!hasPants) normalizedCloud.splice(1, 0, normalizeProduct(JSON.parse(JSON.stringify(defaultProducts[1]))));
-
-            products = normalizedCloud;
-            renderProducts();
-          }
-        }
-
-        if (ordRes.ok) {
-          const cloudOrders = await ordRes.json();
-          if (Array.isArray(cloudOrders)) {
-            orders = cloudOrders;
-            if (!document.getElementById("trackModal").classList.contains("hidden") && activeTrackedCode) {
-              searchOrderByCode();
-            }
-          }
-        }
-      } catch (e) {
-        console.warn("Работаем с локальной витриной:", e);
-      }
-    }
-
-    // Закрытие модалок по клику на подложку
-    document.getElementById("productModal").addEventListener("click", (e) => {
-      if (e.target.id === "productModal") closeProductModal();
-    });
-    document.getElementById("cartModal").addEventListener("click", (e) => {
-      if (e.target.id === "cartModal") toggleCartModal(false);
-    });
-    document.getElementById("trackModal").addEventListener("click", (e) => {
-      if (e.target.id === "trackModal") closeTrackModal();
-    });
-
-    // Запуск витрины
-    renderProducts();
+    renderProducts(); 
     updateCartUI();
-    syncFromCloud();
-    setInterval(syncFromCloud, 15000);
+    setTimeout(initScrollReveal, 100);
+    
+    // Запускаем подгрузку твоих шапок и других товаров из базы
+    fetchProducts();
+    // Обновляем витрину каждые 15 секунд
+    setInterval(fetchProducts, 15000);
   </script>
 </body>
 </html>
