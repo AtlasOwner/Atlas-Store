@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#0D2B6B" />
+  <title>Atlas Control</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #F1F5F9; color: #0F172A; -webkit-tap-highlight-color: transparent; }
+    input, select, textarea { font-size: 16px !important; }
+  </style>
+</head>
+<body class="min-h-screen pb-24">
+
+  <!-- ЭКРАН ВХОДА -->
+  <div id="loginScreen" class="fixed inset-0 z-50 bg-[#071942] flex items-center justify-center p-4">
+    <div class="w-full max-w-sm rounded-3xl bg-white p-6 text-center space-y-5 shadow-2xl">
+      <div class="w-16 h-16 rounded-2xl bg-[#0D2B6B] text-white font-black text-2xl flex items-center justify-center mx-auto shadow-lg">A</div>
+      <div>
+        <h1 class="text-xl font-black text-slate-900">Atlas Control</h1>
+        <p class="text-sm text-slate-500 mt-1">Управление магазином с телефона</p>
+      </div>
+      <input type="password" inputmode="numeric" id="pinInput" placeholder="••••"
+        class="w-full text-center tracking-[0.5em] text-2xl font-black min-h-[54px] px-4 rounded-2xl border-2 border-slate-200 focus:outline-none focus:border-[#0D2B6B]"
+        onkeydown="if(event.key==='Enter') handleLogin()" />
+      <p id="loginError" class="text-sm font-bold text-red-500 hidden">Неверный PIN-код</p>
+      <button id="loginBtn" onclick="handleLogin()" class="w-full min-h-[52px] rounded-2xl bg-[#0D2B6B] hover:bg-[#143988] text-white font-extrabold text-base shadow-lg transition">
+        Войти
+      </button>
+    </div>
+  </div>
+
+  <!-- РАБОЧИЙ ЭКРАН -->
+  <div id="appScreen" class="hidden max-w-2xl mx-auto">
+    <header class="sticky top-0 z-30 bg-[#0D2B6B] text-white px-4 py-3.5 shadow-md flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <span id="syncDot" class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+        <div>
+          <h1 class="font-black text-base leading-none">ATLAS CONTROL</h1>
+          <p id="syncStatusText" class="text-[11px] text-blue-200 mt-0.5">Синхронизировано</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="forceSyncAll()" class="min-h-[40px] px-3 rounded-xl bg-white/15 hover:bg-white/25 text-xs font-extrabold transition">🔄 Обновить</button>
+        <button onclick="logout()" class="min-h-[40px] px-3 rounded-xl bg-red-500/20 hover:bg-red-500/40 text-red-200 text-xs font-extrabold transition">Выйти</button>
+      </div>
+    </header>
+
+    <!-- СТАТИСТИКА -->
+    <div class="grid grid-cols-3 gap-2 p-3">
+      <div class="p-3 rounded-2xl bg-white border border-slate-200 text-center shadow-sm">
+        <p class="text-[11px] font-bold uppercase text-slate-400">В работе</p>
+        <p id="statActive" class="text-lg font-black text-amber-600 mt-0.5">0</p>
+      </div>
+      <div class="p-3 rounded-2xl bg-white border border-slate-200 text-center shadow-sm">
+        <p class="text-[11px] font-bold uppercase text-slate-400">Доставлено</p>
+        <p id="statDone" class="text-lg font-black text-emerald-600 mt-0.5">0</p>
+      </div>
+      <div class="p-3 rounded-2xl bg-white border border-slate-200 text-center shadow-sm">
+        <p class="text-[11px] font-bold uppercase text-slate-400">Касса (₸)</p>
+        <p id="statRevenue" class="text-base sm:text-lg font-black text-[#0D2B6B] mt-0.5">0 ₸</p>
+      </div>
+    </div>
+
+    <!-- ВКЛАДКА 1: ЗАКАЗЫ -->
+    <main id="tabOrders" class="px-3 space-y-3">
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex gap-1.5">
+          <button onclick="setOrderFilter('active')" id="fActive" class="min-h-[40px] px-3.5 rounded-xl bg-[#0D2B6B] text-white text-xs font-extrabold">Активные</button>
+          <button onclick="setOrderFilter('done')" id="fDone" class="min-h-[40px] px-3.5 rounded-xl bg-white text-slate-700 text-xs font-extrabold border border-slate-200">Архив</button>
+          <button onclick="setOrderFilter('all')" id="fAll" class="min-h-[40px] px-3.5 rounded-xl bg-white text-slate-700 text-xs font-extrabold border border-slate-200">Все</button>
+        </div>
+        <button onclick="toggleManualForm()" class="min-h-[40px] px-3.5 rounded-xl bg-emerald-600 text-white text-xs font-extrabold shadow">+ Заказ</button>
+      </div>
+
+      <!-- РУЧНОЙ ЗАКАЗ -->
+      <div id="manualForm" class="hidden p-4 rounded-2xl bg-white border-2 border-emerald-500 space-y-3 shadow-lg">
+        <div class="flex justify-between items-center">
+          <h3 class="font-black text-sm text-emerald-900">Создать заказ (WhatsApp / Instagram)</h3>
+          <button onclick="toggleManualForm()" class="text-slate-400 font-bold px-2">✕</button>
+        </div>
+        <input id="mName" type="text" placeholder="Имя клиента" class="w-full min-h-[44px] px-3 rounded-xl border border-slate-300" />
+        <input id="mAddress" type="text" placeholder="Адрес в Актобе" class="w-full min-h-[44px] px-3 rounded-xl border border-slate-300" />
+        <input id="mItems" type="text" placeholder="Товар (напр: Шапка Corteiz x1)" class="w-full min-h-[44px] px-3 rounded-xl border border-slate-300" />
+        <div class="grid grid-cols-2 gap-2">
+          <input id="mTotal" type="number" inputmode="numeric" placeholder="Сумма (₸)" class="min-h-[44px] px-3 rounded-xl border border-slate-300 font-bold" />
+          <select id="mStatus" class="min-h-[44px] px-3 rounded-xl border border-slate-300 font-bold bg-white">
+            <option value="1">✅ Оплачен (В работу)</option>
+            <option value="0">⏳ Ждёт оплату</option>
+          </select>
+        </div>
+        <button onclick="submitManualOrder()" class="w-full min-h-[46px] rounded-xl bg-emerald-600 text-white font-extrabold text-sm">Создать трек-код</button>
+      </div>
+
+      <div id="ordersList" class="space-y-3"></div>
+    </main>
+
+    <!-- ВКЛАДКА 2: ТОВАРКА И ВИТРИНА -->
+    <main id="tabProducts" class="hidden px-3 space-y-3">
+      <div id="seedBox" class="hidden p-4 rounded-2xl bg-amber-50 border-2 border-amber-300 text-center space-y-2">
+        <p class="text-sm font-bold text-amber-950">База товаров в облаке пока пустая.</p>
+        <button onclick="seedInitialProducts()" class="w-full min-h-[46px] rounded-xl bg-amber-500 text-slate-950 font-extrabold text-sm shadow">
+          📤 Выгрузить базовый каталог (8 шт.) в облако
+        </button>
+      </div>
+      <div id="productsList" class="space-y-3"></div>
+    </main>
+
+    <!-- ВКЛАДКА 3: ДОБАВИТЬ ТОВАР -->
+    <main id="tabAdd" class="hidden px-3">
+      <div class="p-4 rounded-2xl bg-white border border-slate-200 space-y-3.5 shadow-sm">
+        <h2 class="font-black text-base text-slate-900">➕ Добавить товар на сайт</h2>
+        <input id="nTitle" type="text" placeholder="Название (напр: Худи Stüssy Black)" class="w-full min-h-[46px] px-3.5 rounded-xl border border-slate-300" />
+        <input id="nDesc" type="text" placeholder="Краткое описание" class="w-full min-h-[46px] px-3.5 rounded-xl border border-slate-300" />
+        <div class="grid grid-cols-2 gap-2">
+          <input id="nPrice" type="number" inputmode="numeric" placeholder="Цена (₸)" class="min-h-[46px] px-3 rounded-xl border border-slate-300 font-bold" />
+          <input id="nOldPrice" type="number" inputmode="numeric" placeholder="Старая цена" class="min-h-[46px] px-3 rounded-xl border border-slate-300" />
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <select id="nCategory" class="min-h-[46px] px-3 rounded-xl border border-slate-300 font-bold bg-white">
+            <option value="clothes">Одежда</option>
+            <option value="beanies">Шапки</option>
+            <option value="balaclavas">Балаклавы</option>
+          </select>
+          <select id="nSection" class="min-h-[46px] px-3 rounded-xl border border-slate-300 font-bold bg-white">
+            <option value="main">В каталог (В наличии)</option>
+            <option value="drop">В «Товар в пути»</option>
+          </select>
+        </div>
+        <input id="nColors" type="text" placeholder="Цвета / размеры (напр: M, L или Чёрный)" class="w-full min-h-[46px] px-3.5 rounded-xl border border-slate-300" />
+        <input id="nImg" type="text" placeholder="Ссылка на фото (Google Drive или URL)" class="w-full min-h-[46px] px-3.5 rounded-xl border border-slate-300" />
+        <button id="addProdBtn" onclick="addNewProduct()" class="w-full min-h-[50px] rounded-2xl bg-[#0D2B6B] text-white font-extrabold text-base shadow-lg">Опубликовать на сайте</button>
+      </div>
+    </main>
+
+    <!-- НИЖНЯЯ НАВИГАЦИЯ -->
+    <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 px-3 py-2 flex justify-around max-w-2xl mx-auto shadow-lg">
+      <button onclick="switchTab('orders')" id="navOrders" class="flex-1 py-1.5 rounded-xl bg-blue-50 text-[#0D2B6B] font-extrabold text-xs flex flex-col items-center gap-0.5">
+        <span class="text-lg">📦</span><span>Заказы</span>
+      </button>
+      <button onclick="switchTab('products')" id="navProducts" class="flex-1 py-1.5 rounded-xl text-slate-500 font-bold text-xs flex flex-col items-center gap-0.5">
+        <span class="text-lg">🏷</span><span>Витрина</span>
+      </button>
+      <button onclick="switchTab('add')" id="navAdd" class="flex-1 py-1.5 rounded-xl text-slate-500 font-bold text-xs flex flex-col items-center gap-0.5">
+        <span class="text-lg">➕</span><span>Добавить</span>
+      </button>
+    </nav>
+  </div>
+
+  <script>
+    const API_BASE = "https://atlas-api.turlanmanas.workers.dev";
+    const PIN_KEY = "atlas_admin_pin_token";
+    let adminPin = localStorage.getItem(PIN_KEY) || "";
+    let orders = [];
+    let products = [];
+    let orderFilter = "active";
+
+    const steps = [
+      { id: 0, label: "⏳ Ждёт оплату" },
+      { id: 1, label: "📦 Упакован" },
+      { id: 2, label: "🚗 Выехал" },
+      { id: 3, label: "💨 В пути" },
+      { id: 4, label: "📍 Подъезжаю" },
+      { id: 5, label: "🎉 Доставлен" }
+    ];
+
+    function setSyncState(state, text) {
+      const dot = document.getElementById("syncDot");
+      const txt = document.getElementById("syncStatusText");
+      txt.textContent = text;
+      dot.className = state === "loading"
+        ? "w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"
+        : state === "error"
+          ? "w-2.5 h-2.5 rounded-full bg-red-500"
+          : "w-2.5 h-2.5 rounded-full bg-emerald-400";
+    }
+
+    function normalizeDriveUrl(raw) {
+      const url = String(raw || "").trim();
+      if (!url) return { imgUrl: "https://placehold.co/600x750/0D2B6B/FFFFFF?text=ATLAS+STORE", driveId: "" };
+      const m = url.match(/\/d\/([a-zA-Z0-9_-]{15,})/) || url.match(/[?&]id=([a-zA-Z0-9_-]{15,})/);
+      if (m && m[1]) return { imgUrl: `https://lh3.googleusercontent.com/d/${m[1]}=w1600`, driveId: m[1] };
+      return { imgUrl: url, driveId: "" };
+    }
+
+    async function handleLogin() {
+      const val = document.getElementById("pinInput").value.trim();
+      const err = document.getElementById("loginError");
+      const btn = document.getElementById("loginBtn");
+      err.classList.add("hidden");
+      btn.textContent = "Проверка...";
+
+      try {
+        const res = await fetch(`${API_BASE}/api/auth`, {
+          method: "POST",
+          headers: { "X-Admin-Pin": val }
+        });
+        if (!res.ok) throw new Error();
+        adminPin = val;
+        localStorage.setItem(PIN_KEY, val);
+        showApp();
+      } catch (e) {
+        err.classList.remove("hidden");
+      } finally {
+        btn.textContent = "Войти";
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem(PIN_KEY);
+      adminPin = "";
+      document.getElementById("appScreen").classList.add("hidden");
+      document.getElementById("loginScreen").classList.remove("hidden");
+    }
+
+    async function showApp() {
+      document.getElementById("loginScreen").classList.add("hidden");
+      document.getElementById("appScreen").classList.remove("hidden");
+      await forceSyncAll();
+    }
+
+    async function forceSyncAll() {
+      setSyncState("loading", "Синхронизация...");
+      try {
+        const [ordRes, prodRes] = await Promise.all([
+          fetch(`${API_BASE}/api/orders`),
+          fetch(`${API_BASE}/api/products`)
+        ]);
+        orders = await ordRes.json();
+        products = await prodRes.json();
+        document.getElementById("seedBox").classList.toggle("hidden", products.length > 0);
+        renderStats();
+        renderOrders();
+        renderProducts();
+        setSyncState("ok", "Обновлено в " + new Date().toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" }));
+      } catch (e) {
+        setSyncState("error", "Ошибка сети");
+      }
+    }
+
+    function switchTab(tab) {
+      ["orders", "products", "add"].forEach(t => {
+        document.getElementById("tab" + t.charAt(0).toUpperCase() + t.slice(1)).classList.toggle("hidden", t !== tab);
+        const nav = document.getElementById("nav" + t.charAt(0).toUpperCase() + t.slice(1));
+        nav.className = t === tab
+          ? "flex-1 py-1.5 rounded-xl bg-blue-50 text-[#0D2B6B] font-extrabold text-xs flex flex-col items-center gap-0.5"
+          : "flex-1 py-1.5 rounded-xl text-slate-500 font-bold text-xs flex flex-col items-center gap-0.5";
+      });
+    }
+
+    function fmt(n) {
+      return (Number(n) || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₸";
+    }
+
+    function renderStats() {
+      const active = orders.filter(o => Number(o.status) < 5).length;
+      const done = orders.filter(o => Number(o.status) === 5);
+      const rev = done.reduce((s, o) => s + (Number(o.total) || 0), 0);
+      document.getElementById("statActive").textContent = active;
+      document.getElementById("statDone").textContent = done.length;
+      document.getElementById("statRevenue").textContent = fmt(rev);
+    }
+
+    function setOrderFilter(f) {
+      orderFilter = f;
+      ["active", "done", "all"].forEach(k => {
+        const b = document.getElementById("f" + k.charAt(0).toUpperCase() + k.slice(1));
+        b.className = k === f
+          ? "min-h-[40px] px-3.5 rounded-xl bg-[#0D2B6B] text-white text-xs font-extrabold"
+          : "min-h-[40px] px-3.5 rounded-xl bg-white text-slate-700 text-xs font-extrabold border border-slate-200";
+      });
+      renderOrders();
+    }
+
+    function renderOrders() {
+      const list = document.getElementById("ordersList");
+      const filtered = orders.filter(o => {
+        const st = Number(o.status || 0);
+        if (orderFilter === "active") return st < 5;
+        if (orderFilter === "done") return st === 5;
+        return true;
+      });
+
+      if (!filtered.length) {
+        list.innerHTML = `<div class="p-8 rounded-2xl bg-white text-center text-slate-400 font-bold text-sm">Заказов пока нет</div>`;
+        return;
+      }
+
+      list.innerHTML = filtered.map(o => {
+        const st = Number(o.status || 0);
+        const mapUrl = `https://2gis.kz/aktobe/search/${encodeURIComponent(o.address || "Актобе")}`;
+        const quickNotes = ["Буду через 10 мин", "Буду через 20 мин", "Ожидаю у подъезда"];
+
+        return `
+          <div class="p-4 rounded-2xl bg-white border-2 ${st === 0 ? "border-amber-400" : "border-slate-200"} shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-mono font-black text-sm px-2.5 py-1 rounded-lg bg-[#0D2B6B] text-white">${o.trackCode}</span>
+              <div class="flex items-center gap-2">
+                <span class="font-black text-base text-slate-900">${fmt(o.total)}</span>
+                <button onclick="deleteOrder('${o.trackCode}')" class="w-9 h-9 rounded-lg bg-red-50 text-red-600 font-bold text-xs">🗑</button>
+              </div>
+            </div>
+
+            <div class="text-sm space-y-1 bg-slate-50 p-3 rounded-xl">
+              <p class="font-bold text-slate-900">👤 ${o.customerName || "Клиент"} <span class="text-xs text-slate-400">(${o.paymentMethod || "Kaspi"})</span></p>
+              <p class="text-slate-600">🛍 ${o.itemsSummary || ""}</p>
+              <div class="flex items-center justify-between pt-1">
+                <span class="text-xs font-bold text-slate-700">📍 ${o.address || "Актобе"}</span>
+                <a href="${mapUrl}" target="_blank" class="px-2.5 py-1 rounded-lg bg-blue-100 text-[#0D2B6B] text-xs font-extrabold">🗺 2GIS</a>
+              </div>
+            </div>
+
+            ${st === 0 ? `<button onclick="updateOrder('${o.trackCode}', { status: 1 })" class="w-full min-h-[46px] rounded-xl bg-emerald-600 text-white font-extrabold text-sm shadow">✅ Оплата прошла — В работу</button>` : ""}
+
+            <div class="grid grid-cols-3 gap-1.5">
+              ${steps.slice(1).map(s => `
+                <button onclick="updateOrder('${o.trackCode}', { status: ${s.id} })"
+                  class="min-h-[42px] px-2 rounded-xl text-xs font-extrabold border ${st === s.id ? "bg-[#0D2B6B] text-white border-[#0D2B6B]" : "bg-slate-50 text-slate-700 border-slate-200"}">
+                  ${s.label}
+                </button>
+              `).join("")}
+            </div>
+
+            <div class="space-y-1.5 pt-1">
+              <div class="flex gap-1.5 overflow-x-auto pb-1">
+                ${quickNotes.map(txt => `
+                  <button onclick="updateOrder('${o.trackCode}', { courierNote: '${txt}' })" class="px-2.5 py-1.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-[11px] font-bold whitespace-nowrap">
+                    💬 ${txt}
+                  </button>
+                `).join("")}
+              </div>
+              <div class="flex gap-1.5">
+                <input id="note_${o.trackCode}" type="text" value="${o.courierNote || ""}" placeholder="Комментарий клиенту..." class="flex-1 min-h-[40px] px-3 rounded-xl border border-slate-300 text-xs" />
+                <button onclick="updateOrder('${o.trackCode}', { courierNote: document.getElementById('note_${o.trackCode}').value })" class="px-3 rounded-xl bg-slate-800 text-white text-xs font-bold">ОК</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    async function updateOrder(trackCode, patch) {
+      setSyncState("loading", "Сохранение...");
+      orders = orders.map(o => o.trackCode === trackCode ? { ...o, ...patch } : o);
+      renderStats();
+      renderOrders();
+      const res = await fetch(`${API_BASE}/api/orders/${encodeURIComponent(trackCode)}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", "X-Admin-Pin": adminPin },
+        body: JSON.stringify(patch)
+      });
+      if (res.status === 401) return logout();
+      setSyncState("ok", "Обновлено");
+    }
+
+    async function deleteOrder(trackCode) {
+      if (!confirm(`Удалить заказ ${trackCode}?`)) return;
+      orders = orders.filter(o => o.trackCode !== trackCode);
+      renderStats();
+      renderOrders();
+      await fetch(`${API_BASE}/api/orders/${encodeURIComponent(trackCode)}`, {
+        method: "DELETE",
+        headers: { "X-Admin-Pin": adminPin }
+      });
+    }
+
+    function toggleManualForm() {
+      document.getElementById("manualForm").classList.toggle("hidden");
+    }
+
+    async function submitManualOrder() {
+      const trackCode = "ATL-" + Math.floor(1000 + Math.random() * 9000);
+      const newOrder = {
+        trackCode,
+        status: Number(document.getElementById("mStatus").value),
+        customerName: document.getElementById("mName").value.trim() || "Клиент",
+        address: document.getElementById("mAddress").value.trim() || "Актобе",
+        paymentMethod: "Kaspi",
+        itemsSummary: document.getElementById("mItems").value.trim() || "Заказ",
+        total: Number(document.getElementById("mTotal").value) || 0,
+        courierNote: ""
+      };
+      orders.unshift(newOrder);
+      renderStats();
+      renderOrders();
+      toggleManualForm();
+      await fetch(`${API_BASE}/api/orders`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newOrder)
+      });
+    }
+
+    function renderProducts() {
+      const list = document.getElementById("productsList");
+      const modes = [
+        { k: "instock", l: "✅ В наличии" },
+        { k: "preorder", l: "🔥 В пути" },
+        { k: "reserved", l: "⏳ Бронь" },
+        { k: "out", l: "❌ Нет" }
+      ];
+
+      list.innerHTML = products.map(p => `
+        <div class="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3 ${p.hidden ? 'opacity-60' : ''}">
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-3 min-w-0">
+              <img src="${p.imgUrl}" class="w-12 h-12 rounded-xl object-cover bg-slate-900 shrink-0" />
+              <div class="min-w-0">
+                <p class="font-black text-sm text-slate-900 truncate">${p.title?.ru || ""}</p>
+                <p class="text-xs text-slate-500">${p.inDrop ? "🔥 Блок «В пути»" : "🧢 Основной каталог"}</p>
+              </div>
+            </div>
+            <div class="flex gap-1.5 shrink-0">
+              <button onclick="quickToggleProduct(${p.id}, { hidden: !${Boolean(p.hidden)} })" class="px-2.5 h-9 rounded-lg bg-slate-100 text-xs font-bold">${p.hidden ? "👁 Показать" : "🙈 Скрыть"}</button>
+              <button onclick="deleteProduct(${p.id})" class="w-9 h-9 rounded-lg bg-red-50 text-red-600 text-xs font-bold">🗑</button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-4 gap-1.5">
+            ${modes.map(m => `
+              <button onclick="quickToggleProduct(${p.id}, { availability: '${m.k}' })"
+                class="min-h-[40px] rounded-xl text-[11px] font-extrabold border ${p.availability === m.k ? "bg-[#0D2B6B] text-white border-[#0D2B6B]" : "bg-slate-50 text-slate-700 border-slate-200"}">
+                ${m.l}
+              </button>
+            `).join("")}
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <input id="pPrice_${p.id}" type="number" inputmode="numeric" value="${p.price}" class="min-h-[42px] px-3 rounded-xl border border-slate-300 font-black text-sm text-[#0D2B6B]" />
+            <input id="pOld_${p.id}" type="number" inputmode="numeric" value="${p.oldPrice || ''}" placeholder="Старая цена" class="min-h-[42px] px-3 rounded-xl border border-slate-300 text-sm" />
+          </div>
+          <div class="flex gap-2">
+            <button onclick="quickToggleProduct(${p.id}, { inDrop: !${Boolean(p.inDrop)} })" class="flex-1 min-h-[42px] rounded-xl bg-orange-50 border border-orange-200 text-orange-900 text-xs font-extrabold">
+              ${p.inDrop ? "⬇️ Убрать из дропа" : "🔥 В верхний дроп"}
+            </button>
+            <button onclick="saveProductPrice(${p.id})" class="flex-1 min-h-[42px] rounded-xl bg-[#0D2B6B] text-white text-xs font-extrabold">💾 Сохранить цену</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    async function quickToggleProduct(id, patch) {
+      const idx = products.findIndex(x => x.id === id);
+      if (idx === -1) return;
+      products[idx] = { ...products[idx], ...patch };
+      renderProducts();
+      await pushProductUpdate(products[idx]);
+    }
+
+    async function saveProductPrice(id) {
+      const idx = products.findIndex(x => x.id === id);
+      if (idx === -1) return;
+      products[idx].price = Number(document.getElementById(`pPrice_${id}`).value) || 0;
+      products[idx].oldPrice = Number(document.getElementById(`pOld_${id}`).value) || 0;
+      await pushProductUpdate(products[idx]);
+    }
+
+    async function pushProductUpdate(prod) {
+      setSyncState("loading", "Обновление витрины...");
+      const res = await fetch(`${API_BASE}/api/products/${prod.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", "X-Admin-Pin": adminPin },
+        body: JSON.stringify(prod)
+      });
+      if (res.status === 401) return logout();
+      setSyncState("ok", "Витрина обновлена");
+    }
+
+    async function deleteProduct(id) {
+      if (!confirm("Удалить товар с сайта?")) return;
+      products = products.filter(p => p.id !== id);
+      renderProducts();
+      await fetch(`${API_BASE}/api/products/${id}`, {
+        method: "DELETE",
+        headers: { "X-Admin-Pin": adminPin }
+      });
+    }
+
+    async function addNewProduct() {
+      const title = document.getElementById("nTitle").value.trim();
+      const price = Number(document.getElementById("nPrice").value);
+      if (!title || !price) return alert("Укажи название и цену!");
+
+      const btn = document.getElementById("addProdBtn");
+      btn.disabled = true;
+      btn.textContent = "Публикация...";
+
+      const inDrop = document.getElementById("nSection").value === "drop";
+      const colors = document.getElementById("nColors").value.split(",").map(s => s.trim()).filter(Boolean);
+      const img = normalizeDriveUrl(document.getElementById("nImg").value);
+
+      const newProd = {
+        id: Date.now(),
+        category: document.getElementById("nCategory").value,
+        inDrop,
+        hidden: false,
+        availability: inDrop ? "preorder" : "instock",
+        transitQty: 2,
+        badges: ["new"],
+        price,
+        oldPrice: Number(document.getElementById("nOldPrice").value) || 0,
+        driveId: img.driveId,
+        imgUrl: img.imgUrl,
+        title: { ru: title, kz: title },
+        shortDesc: { ru: document.getElementById("nDesc").value.trim() || "Atlas Store Aktobe", kz: document.getElementById("nDesc").value.trim() || "Atlas Store Aktobe" },
+        colors: { ru: colors.length ? colors : ["Универсальный"], kz: colors.length ? colors : ["Әмбебап"] },
+        colorStock: (colors.length ? colors : [1]).map(() => true),
+        specs: { ru: ["Актобе · Быстрая доставка"], kz: ["Ақтөбе · Жылдам жеткізу"] }
+      };
+
+      await fetch(`${API_BASE}/api/products`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Admin-Pin": adminPin },
+        body: JSON.stringify(newProd)
+      });
+
+      document.getElementById("nTitle").value = "";
+      document.getElementById("nDesc").value = "";
+      document.getElementById("nPrice").value = "";
+      document.getElementById("nOldPrice").value = "";
+      document.getElementById("nColors").value = "";
+      document.getElementById("nImg").value = "";
+      btn.disabled = false;
+      btn.textContent = "Опубликовать на сайте";
+      await forceSyncAll();
+      switchTab("products");
+    }
+
+    async function seedInitialProducts() {
+      const defaults = [
+        { id: 1, category: "beanies", inDrop: false, hidden: false, availability: "instock", transitQty: 2, badges: ["hit"], price: 4990, oldPrice: 0, driveId: "1PkoPmfkuJxgN31Y8SybFzBF8MD_cWYFr", imgUrl: "https://lh3.googleusercontent.com/d/1PkoPmfkuJxgN31Y8SybFzBF8MD_cWYFr=w1600", title: { ru: "Шапка Mea Culpa", kz: "Mea Culpa бас киімі" }, shortDesc: { ru: "Плотная двойная вязка, мягко сидит по голове.", kz: "Тығыз қос тоқыма, басқа жұмсақ отырады." }, colors: { ru: ["Серая", "Чёрная"], kz: ["Сұр", "Қара"] }, colorStock: [true, true], specs: { ru: ["Универсальный размер", "Двойная вязка"], kz: ["Әмбебап өлшем", "Қос тоқыма"] } },
+        { id: 2, category: "beanies", inDrop: false, hidden: false, availability: "instock", transitQty: 2, badges: ["exclusive"], price: 5990, oldPrice: 0, driveId: "1qkF6nuwSlOP0gqD6nR8Ob9FPigEPNLKv", imgUrl: "https://lh3.googleusercontent.com/d/1qkF6nuwSlOP0gqD6nR8Ob9FPigEPNLKv=w1600", title: { ru: "Шапка Corteiz", kz: "Corteiz бас киімі" }, shortDesc: { ru: "Удобная посадка бини, контрастный графический логотип.", kz: "Ыңғайлы бини пішіні, контрастты логотип." }, colors: { ru: ["Чёрная"], kz: ["Қара"] }, colorStock: [true], specs: { ru: ["Универсальный размер", "Плотный акрил"], kz: ["Әмбебап өлшем", "Тығыз акрил"] } },
+        { id: 3, category: "beanies", inDrop: false, hidden: false, availability: "instock", transitQty: 2, badges: ["restock"], price: 4990, oldPrice: 0, driveId: "1VPjsYa6lECcBzGAsHF4CNqsn7_pZ6Wbf", imgUrl: "https://lh3.googleusercontent.com/d/1VPjsYa6lECcBzGAsHF4CNqsn7_pZ6Wbf=w1600", title: { ru: "Шапка Stüssy", kz: "Stüssy бас киімі" }, shortDesc: { ru: "Лёгкая и тёплая шапка на каждый день.", kz: "Күн сайын киюге арналған жеңіл әрі жылы." }, colors: { ru: ["Белая", "Чёрная"], kz: ["Ақ", "Қара"] }, colorStock: [true, true], specs: { ru: ["Эластичная ткань", "Фирменный логотип"], kz: ["Созылғыш мата", "Фирмалық логотип"] } },
+        { id: 4, category: "beanies", inDrop: false, hidden: false, availability: "instock", transitQty: 2, badges: ["rare", "limited"], price: 7990, oldPrice: 0, driveId: "18tO5RfiQIEQX_mZialDC3OYbYOUDlqRr", imgUrl: "https://lh3.googleusercontent.com/d/18tO5RfiQIEQX_mZialDC3OYbYOUDlqRr=w1600", title: { ru: "Шапка Chrome Hearts", kz: "Chrome Hearts бас киімі" }, shortDesc: { ru: "Модель с широким отворотом и вышивкой крестов.", kz: "Кең қайырмасы мен крест кестесі бар модель." }, colors: { ru: ["Только чёрный"], kz: ["Тек қара түс"] }, colorStock: [true], specs: { ru: ["Широкий отворот", "Детальная вышивка"], kz: ["Кең қайырма", "Сапалы кесте"] } },
+        { id: 5, category: "balaclavas", inDrop: false, hidden: false, availability: "transit", transitQty: 2, badges: ["fire"], price: 6990, oldPrice: 0, driveId: "15plvlNHmAHqmLXAIMNQ5JPzt6CqirNTL", imgUrl: "https://lh3.googleusercontent.com/d/15plvlNHmAHqmLXAIMNQ5JPzt6CqirNTL=w1600", title: { ru: "Балаклава Nike Nocta", kz: "Nike Nocta балаклавасы" }, shortDesc: { ru: "Эластичная ветрозащитная ткань с лазерной перфорацией.", kz: "Перфорациясы бар желден қорғайтын мата." }, colors: { ru: ["Чёрная"], kz: ["Қара"] }, colorStock: [false], specs: { ru: ["Защита от ветра", "Дышащая сетка"], kz: ["Желден қорғайды", "Тор мата"] } },
+        { id: 101, category: "clothes", inDrop: true, hidden: false, availability: "preorder", transitQty: 2, badges: ["new", "hit"], price: 13490, oldPrice: 0, driveId: "1KkknDn8WOGoq1QVg9jgKZFtID2-Le75P", imgUrl: "https://lh3.googleusercontent.com/d/1KkknDn8WOGoq1QVg9jgKZFtID2-Le75P=w1600", title: { ru: "Essentials Hoodie", kz: "Essentials Hoodie худиі" }, shortDesc: { ru: "Оверсайз крой, плотный футер с объёмным логотипом Fear of God Essentials.", kz: "Оверсайз пішім, көлемді Fear of God Essentials логотипі бар тығыз мата." }, colors: { ru: ["Размер: M"], kz: ["Өлшемі: M"] }, colorStock: [true], specs: { ru: ["Размер: M (оверсайз)", "Плотный мягкий футер"], kz: ["Өлшемі: M (оверсайз)", "Тығыз жұмсақ мата"] } },
+        { id: 102, category: "clothes", inDrop: true, hidden: false, availability: "preorder", transitQty: 2, badges: ["new"], price: 12990, oldPrice: 0, driveId: "1HInWlkgUitKtP3HZz0yRBu6BG7YD_Bg_", imgUrl: "https://lh3.googleusercontent.com/d/1HInWlkgUitKtP3HZz0yRBu6BG7YD_Bg_=w1600", title: { ru: "Essentials Pants", kz: "Essentials Pants шалбары" }, shortDesc: { ru: "Свободные трико Essentials Fear of God в сером цвете, мягкая ткань и фирменная нашивка.", kz: "Сұр түсті еркін Essentials Fear of God трикосы, жұмсақ мата және фирмалық жапсырма." }, colors: { ru: ["Серый · Размер: M"], kz: ["Сұр · Өлшемі: M"] }, colorStock: [true], specs: { ru: ["Размер: M", "Серый цвет · свободный крой"], kz: ["Өлшемі: M", "Сұр түс · еркін пішім"] } },
+        { id: 103, category: "beanies", inDrop: true, hidden: false, availability: "preorder", transitQty: 2, badges: ["new", "gift"], price: 6990, oldPrice: 0, driveId: "1pQ6UHkn3qXK-vVZ3bQgemRjKR9vg11_3", imgUrl: "https://lh3.googleusercontent.com/d/1pQ6UHkn3qXK-vVZ3bQgemRjKR9vg11_3=w1600", title: { ru: "Шапка-ушанка Patagonia", kz: "Patagonia құлақшын бас киімі" }, shortDesc: { ru: "Тёплая зимняя ушанка Patagonia с мягким мехом и защитой от ветра Актобе.", kz: "Ақтөбенің желінен қорғайтын жұмсақ үлбірлі жылы қысқы Patagonia бас киімі." }, colors: { ru: ["Универсальный размер"], kz: ["Әмбебап өлшем"] }, colorStock: [true], specs: { ru: ["Универсальный размер", "Мягкий тёплый мех"], kz: ["Әмбебап өлшем", "Жұмсақ жылы үлбір"] } }
+      ];
+      setSyncState("loading", "Выгрузка каталога...");
+      await fetch(`${API_BASE}/api/products`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Admin-Pin": adminPin },
+        body: JSON.stringify(defaults)
+      });
+      await forceSyncAll();
+    }
+
+    if (adminPin) showApp();
+  </script>
+</body>
+</html>
