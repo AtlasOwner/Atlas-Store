@@ -293,8 +293,8 @@
 <body class="bg-alabaster text-obsidian selection:bg-obsidian selection:text-alabaster">
 
     <!-- Top Announcement Bar -->
-    <div class="bg-obsidian text-alabaster text-[11px] sm:text-xs tracking-[0.18em] uppercase py-2.5 px-4 text-center font-medium">
-        <span>ARCHIVE COLLECTION 04 — ДОСТАВКА ПО АКТОБЕ И ВСЕМУ КАЗАХСТАНУ • <button onclick="scrollToDelivery()" class="underline decoration-stoneLight underline-offset-4 hover:text-white transition-colors uppercase">УСЛОВИЯ DELIVERY &amp; GOOD LUCK DELIVERY</button></span>
+    <div class="bg-obsidian text-alabaster text-[11px] sm:text-xs tracking-[0.14em] uppercase py-2.5 px-4 text-center font-medium">
+        <span>СРОЧНАЯ СКИДКА НА ШАПКИ CORTEIZ, MEA CULPA &amp; STUSSY — ВСЁ ПО <strong class="text-amber-300">2 490 ₸</strong> • <button onclick="scrollToCatalog()" class="underline decoration-stoneLight underline-offset-4 hover:text-white transition-colors uppercase">СМОТРЕТЬ</button></span>
     </div>
 
     <!-- ========================================== -->
@@ -308,8 +308,9 @@
                 <button onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 rounded-btn bg-milk flex items-center justify-center text-obsidian hover:bg-black/10 btn-luxury" aria-label="Открыть меню">
                     <i class="ph ph-list text-xl"></i>
                 </button>
-                <a href="#" onclick="switchView('home'); resetAllFilters(); return false;" class="font-display font-extrabold text-xl sm:text-2xl tracking-[0.06em] uppercase text-obsidian">
-                    ATLAS STORE
+                <a href="#" onclick="switchView('home'); resetAllFilters(); return false;" class="inline-flex flex-col items-start justify-center leading-none select-none group">
+                    <span class="font-display font-extrabold text-xl sm:text-2xl tracking-[-0.03em] uppercase text-obsidian leading-[0.85]">ATLAS</span>
+                    <span class="font-display font-bold text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-obsidian/75 group-hover:text-obsidian transition-colors leading-none mt-[2px] pl-[1px]">STORE</span>
                 </a>
             </div>
 
@@ -392,10 +393,13 @@
 
     <!-- Mobile Navigation Slide-Over Menu -->
     <div id="mobile-menu-overlay" class="fixed inset-0 z-50 pointer-events-none opacity-0 transition-opacity duration-300 bg-obsidian/40 backdrop-blur-xs" onclick="toggleMobileMenu()"></div>
-    <aside id="mobile-menu-drawer" class="fixed top-2.5 left-2.5 bottom-2.5 max-h-[calc(100dvh-20px)] w-[88vw] max-w-sm z-50 bg-alabaster rounded-modal p-5 flex flex-col justify-between -translate-x-[115%] transition-transform duration-500 ease-luxury shadow-2xl border border-black/5 overflow-y-auto overscroll-contain">
+    <aside id="mobile-menu-drawer" class="fixed top-0 left-0 bottom-0 sm:top-2.5 sm:left-2.5 sm:bottom-2.5 h-[100dvh] sm:h-auto sm:max-h-[calc(100dvh-20px)] w-[86vw] max-w-sm z-50 bg-alabaster rounded-r-modal sm:rounded-modal p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] flex flex-col justify-between -translate-x-full transition-transform duration-400 ease-luxury shadow-2xl border-r sm:border border-black/5 overflow-y-auto overscroll-contain">
         <div>
             <div class="flex items-center justify-between pb-6 border-b border-black/10">
-                <span class="font-display font-extrabold text-xl tracking-[0.06em] uppercase">ATLAS STORE</span>
+                <span class="inline-flex flex-col items-start leading-none select-none">
+                    <span class="font-display font-extrabold text-xl tracking-[-0.03em] uppercase text-obsidian leading-[0.85]">ATLAS</span>
+                    <span class="font-display font-bold text-[10px] tracking-[0.28em] uppercase text-obsidian/75 leading-none mt-[2px] pl-[1px]">STORE</span>
+                </span>
                 <button onclick="toggleMobileMenu()" class="w-10 h-10 rounded-btn bg-milk flex items-center justify-center text-obsidian hover:bg-black/10 btn-luxury">
                     <i class="ph ph-x text-lg"></i>
                 </button>
@@ -620,7 +624,7 @@
                         <input 
                             id="price-range-slider"
                             type="range" 
-                            min="4990" 
+                            min="2000" 
                             max="15000" 
                             step="500" 
                             value="15000"
@@ -628,8 +632,8 @@
                             class="w-full accent-obsidian cursor-pointer h-1.5 bg-milk rounded-lg"
                         >
                         <div class="flex justify-between text-[11px] text-stoneMuted mt-1.5">
-                            <span>4 990 ₸</span>
-                            <span>10 000 ₸</span>
+                            <span>2 490 ₸</span>
+                            <span>8 000 ₸</span>
                             <span>15 000 ₸</span>
                         </div>
                     </div>
@@ -763,7 +767,7 @@
                     </p>
                 </div>
                 <span id="selected-zone-summary" class="self-start md:self-auto px-4 py-2 rounded-pill bg-milk text-xs font-semibold text-obsidian">
-                    Выбрано: Авиагородок (1 000 ₸)
+                    Выбрано: Авиагородок (500 ₸)
                 </span>
             </div>
 
@@ -999,17 +1003,17 @@
     <!-- ========================================== -->
     <!-- SLIDE-OVER CART DRAWER                     -->
     <!-- ========================================== -->
-    <div id="cart-overlay" onclick="toggleCart(false)" class="fixed inset-0 z-50 bg-obsidian/45 backdrop-blur-xs opacity-0 pointer-events-none transition-opacity duration-400"></div>
+    <div id="cart-overlay" onclick="toggleCart(false)" class="fixed inset-0 z-50 bg-obsidian/45 backdrop-blur-xs opacity-0 pointer-events-none transition-opacity duration-300"></div>
     
-    <aside id="cart-drawer" class="fixed top-2.5 right-2.5 bottom-2.5 max-h-[calc(100dvh-20px)] w-[94vw] max-w-md z-50 bg-alabaster rounded-modal shadow-2xl border border-black/10 flex flex-col justify-between translate-x-[115%] transition-transform duration-500 ease-luxury overflow-hidden">
+    <aside id="cart-drawer" class="fixed inset-0 sm:inset-auto sm:top-3 sm:right-3 sm:bottom-3 h-[100dvh] sm:h-auto sm:max-h-[calc(100dvh-24px)] w-full sm:w-[94vw] sm:max-w-md z-50 bg-alabaster rounded-none sm:rounded-modal shadow-2xl border-0 sm:border sm:border-black/10 flex flex-col justify-between translate-x-full transition-transform duration-400 ease-luxury overflow-hidden">
         <!-- Cart Header -->
-        <div class="px-5 py-4 bg-white border-b border-black/[0.06] flex items-center justify-between shrink-0">
+        <div class="px-5 py-4 pt-[calc(1rem+env(safe-area-inset-top))] sm:pt-4 bg-white border-b border-black/[0.06] flex items-center justify-between shrink-0">
             <div class="flex items-center gap-2.5">
                 <h2 class="font-display font-bold text-lg tracking-tight text-obsidian">Корзина</h2>
                 <span id="cart-drawer-count" class="px-2.5 py-0.5 rounded-full bg-milk text-obsidian text-xs font-semibold">0</span>
             </div>
-            <button onclick="toggleCart(false)" class="w-9 h-9 rounded-btn bg-milk hover:bg-black/10 flex items-center justify-center text-obsidian btn-luxury" aria-label="Закрыть корзину">
-                <i class="ph ph-x text-base"></i>
+            <button onclick="toggleCart(false)" class="w-10 h-10 rounded-btn bg-milk hover:bg-black/10 flex items-center justify-center text-obsidian btn-luxury" aria-label="Закрыть корзину">
+                <i class="ph ph-x text-lg"></i>
             </button>
         </div>
 
@@ -1054,17 +1058,18 @@
     <!-- ========================================== -->
     <!-- ORDER DELIVERY CHECKOUT MODAL              -->
     <!-- ========================================== -->
-    <div id="checkout-modal-overlay" class="fixed inset-0 z-50 bg-obsidian/55 backdrop-blur-xs hidden items-end sm:items-center justify-center p-2 sm:p-4">
-        <div class="bg-alabaster border border-black/10 rounded-modal max-w-2xl w-full max-h-[92dvh] overflow-y-auto overscroll-contain p-5 sm:p-10 pb-[calc(1.25rem+env(safe-area-inset-bottom))] shadow-2xl animate-[fadeUpLuxury_0.35s_ease-out]">
+    <div id="checkout-modal-overlay" class="fixed inset-0 z-[60] bg-alabaster sm:bg-obsidian/55 sm:backdrop-blur-xs hidden overflow-y-auto overscroll-contain">
+        <div class="min-h-[100dvh] sm:min-h-full w-full flex items-start sm:items-center justify-center sm:p-4">
+            <div class="bg-alabaster sm:border sm:border-black/10 rounded-none sm:rounded-modal max-w-2xl w-full p-5 sm:p-10 pt-[calc(1.25rem+env(safe-area-inset-top))] sm:pt-10 pb-[calc(2rem+env(safe-area-inset-bottom))] sm:pb-10 sm:my-6 sm:shadow-2xl">
             
             <!-- Checkout Form View -->
             <div id="checkout-form-container">
-                <div class="flex items-center justify-between pb-5 border-b border-black/10">
+                <div class="sticky top-0 z-20 -mx-5 px-5 py-3.5 sm:static sm:mx-0 sm:px-0 sm:py-0 sm:pb-5 bg-alabaster/95 backdrop-blur-md sm:bg-transparent flex items-center justify-between border-b border-black/10">
                     <div>
                         <span class="text-[10px] uppercase tracking-[0.2em] text-stoneMuted">ATLAS STORE • ORDER DELIVERY</span>
-                        <h3 class="font-display text-2xl font-bold text-obsidian mt-0.5">Оформление заказа и доставки</h3>
+                        <h3 class="font-display text-xl sm:text-2xl font-bold text-obsidian mt-0.5">Оформление заказа</h3>
                     </div>
-                    <button onclick="closeCheckoutModal()" class="w-10 h-10 rounded-btn bg-milk hover:bg-black/10 flex items-center justify-center text-obsidian btn-luxury">
+                    <button type="button" onclick="closeCheckoutModal()" class="w-10 h-10 rounded-btn bg-milk hover:bg-black/10 flex items-center justify-center text-obsidian btn-luxury shrink-0" aria-label="Закрыть оформление">
                         <i class="ph ph-x text-lg"></i>
                     </button>
                 </div>
@@ -1129,11 +1134,11 @@
                             <label class="block text-[11px] uppercase tracking-[0.14em] text-stoneMuted font-semibold mb-1.5">Район доставки *</label>
                             <div class="relative">
                                 <select id="order-delivery-zone" onchange="selectDeliveryZone(this.value)" class="w-full appearance-none bg-white border border-black/15 rounded-btn pl-4 pr-10 py-3 text-sm text-obsidian font-medium focus:outline-none focus:border-obsidian cursor-pointer">
-                                    <option value="aviagorodok">Авиагородок — 1 000 ₸</option>
-                                    <option value="batys2">Батыс-2 — 1 200 ₸</option>
-                                    <option value="mkr12">12-й микрорайон — 1 500 ₸</option>
-                                    <option value="mkr11">11-й микрорайон — 1 500 ₸</option>
-                                    <option value="other">Другие районы города — от 2 000 ₸</option>
+                                    <option value="aviagorodok">Авиагородок — 500 ₸</option>
+                                    <option value="batys2">Батыс-2 — 500 ₸</option>
+                                    <option value="mkr12">12-й микрорайон — 500 ₸</option>
+                                    <option value="mkr11">11-й микрорайон — 500 ₸</option>
+                                    <option value="other">Другие районы города — 1 000 ₸</option>
                                 </select>
                                 <i class="ph ph-caret-down text-sm text-obsidian absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
                             </div>
@@ -1183,7 +1188,7 @@
                         </div>
                         <div class="flex justify-between text-stoneLight">
                             <span>Доставка (<span id="checkout-delivery-label">Стандартная</span>):</span>
-                            <span id="checkout-delivery-fee" class="text-white font-semibold">1 000 ₸</span>
+                            <span id="checkout-delivery-fee" class="text-white font-semibold">500 ₸</span>
                         </div>
                         <div class="flex justify-between items-baseline text-base font-bold text-white pt-2 border-t border-white/15">
                             <span>Итого к оплате:</span>
@@ -1233,48 +1238,6 @@
                     </button>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- ORDER TRACKING MODAL (TEMP UNAVAILABLE)    -->
-    <!-- ========================================== -->
-    <div id="tracking-modal" class="fixed inset-0 z-50 bg-obsidian/55 backdrop-blur-xs hidden items-center justify-center p-4" onclick="if(event.target===this) closeTrackingModal()">
-        <div class="bg-alabaster border border-black/10 rounded-modal max-w-md w-full p-6 sm:p-8 shadow-2xl">
-            <div class="flex items-center justify-between pb-4 border-b border-black/10">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-btn bg-obsidian text-white flex items-center justify-center">
-                        <i class="ph ph-package text-lg"></i>
-                    </div>
-                    <div>
-                        <span class="text-[10px] uppercase tracking-[0.18em] text-stoneMuted block">ATLAS LOGISTICS</span>
-                        <h3 class="font-display text-lg font-bold text-obsidian">Отслеживание заказа</h3>
-                    </div>
-                </div>
-                <button onclick="closeTrackingModal()" class="w-9 h-9 rounded-btn bg-milk hover:bg-black/10 flex items-center justify-center text-obsidian btn-luxury">
-                    <i class="ph ph-x text-base"></i>
-                </button>
-            </div>
-
-            <div class="mt-5 bg-white border border-black/[0.06] rounded-card p-5">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-pill bg-amber-50 border border-amber-200 text-amber-800 text-[11px] font-semibold mb-3">
-                    <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
-                    <span>Временно недоступно</span>
-                </div>
-                <h4 class="font-display font-bold text-base text-obsidian">Онлайн-отслеживание на сайте временно отключено по техническим причинам</h4>
-                <p class="text-xs text-stoneMuted mt-2 leading-relaxed">
-                    Сейчас статус сборки, фото перед отправкой и трек-номер отправляются вручную напрямую в WhatsApp после оформления заказа.
-                </p>
-            </div>
-
-            <div class="mt-5 flex flex-col gap-2.5">
-                <a href="https://wa.me/77064449457?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A5%D0%BE%D1%87%D1%83%20%D1%83%D1%82%D0%BE%D1%87%D0%BD%D0%B8%D1%82%D1%8C%20%D1%81%D1%82%D0%B0%D1%82%D1%83%D1%81%20%D0%BC%D0%BE%D0%B5%D0%B3%D0%BE%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%20%D0%B2%20ATLAS%20STORE." target="_blank" rel="noopener noreferrer" class="w-full py-3.5 bg-obsidian hover:bg-graphite text-white rounded-btn text-xs uppercase tracking-[0.15em] font-semibold btn-luxury flex items-center justify-center gap-2">
-                    <i class="ph ph-whatsapp-logo text-base text-emerald-400"></i>
-                    <span>Уточнить статус в WhatsApp</span>
-                </a>
-                <button onclick="closeTrackingModal()" class="w-full py-3 bg-milk hover:bg-black/10 text-obsidian rounded-btn text-xs uppercase tracking-[0.14em] font-semibold btn-luxury">
-                    Понятно
-                </button>
             </div>
         </div>
     </div>
@@ -1338,7 +1301,10 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-14 border-b border-white/10">
                 <!-- Brand Column -->
                 <div class="lg:col-span-5 space-y-4">
-                    <span class="font-display font-extrabold text-2xl tracking-[0.06em] uppercase text-white block">ATLAS STORE</span>
+                    <div class="inline-flex flex-col items-start leading-none select-none">
+                        <span class="font-display font-extrabold text-2xl sm:text-3xl tracking-[-0.03em] uppercase text-white leading-[0.85]">ATLAS</span>
+                        <span class="font-display font-bold text-[11px] sm:text-xs tracking-[0.3em] uppercase text-alabaster/75 leading-none mt-[3px] pl-[1px]">STORE</span>
+                    </div>
                     <p class="text-xs sm:text-sm text-stoneLight max-w-sm leading-relaxed font-light">
                         Кураторский магазин современного streetwear и лимитированных головных уборов. Essentials, Chrome Hearts, Corteiz, Stussy, Mea Culpa и Nike Nocta.
                     </p>
@@ -2009,11 +1975,11 @@
         ];
 
         let DELIVERY_ZONES = [
-            { id: 'aviagorodok', name: 'Авиагородок', price: 1000, priceLabel: '1 000 ₸', isFrom: false, goodLuckEligible: true, isActive: true, note: 'Входит в зону Good Luck Delivery' },
-            { id: 'batys2', name: 'Батыс-2', price: 1200, priceLabel: '1 200 ₸', isFrom: false, goodLuckEligible: true, isActive: true, note: 'Входит в зону Good Luck Delivery' },
-            { id: 'mkr12', name: '12-й микрорайон', price: 1500, priceLabel: '1 500 ₸', isFrom: false, goodLuckEligible: true, isActive: true, note: 'Входит в зону Good Luck Delivery' },
-            { id: 'mkr11', name: '11-й микрорайон', price: 1500, priceLabel: '1 500 ₸', isFrom: false, goodLuckEligible: true, isActive: true, note: 'Входит в зону Good Luck Delivery' },
-            { id: 'other', name: 'Другие районы города', price: 2000, priceLabel: 'от 2 000 ₸', isFrom: true, goodLuckEligible: false, isActive: true, note: 'За пределами бесплатной зоны • Стандартный тариф' }
+            { id: 'aviagorodok', name: 'Авиагородок', price: 500, priceLabel: '500 ₸', isFrom: false, goodLuckEligible: true, isActive: true, note: 'Входит в зону Good Luck Delivery' },
+            { id: 'batys2', name: 'Батыс-2', price: 500, priceLabel: '500 ₸', isFrom: false, goodLuckEligible: true, isActive: true, note: 'Входит в зону Good Luck Delivery' },
+            { id: 'mkr12', name: '12-й микрорайон', price: 500, priceLabel: '500 ₸', isFrom: false, goodLuckEligible: true, isActive: true, note: 'Входит в зону Good Luck Delivery' },
+            { id: 'mkr11', name: '11-й микрорайон', price: 500, priceLabel: '500 ₸', isFrom: false, goodLuckEligible: true, isActive: true, note: 'Входит в зону Good Luck Delivery' },
+            { id: 'other', name: 'Другие районы города', price: 1000, priceLabel: '1 000 ₸', isFrom: false, goodLuckEligible: false, isActive: true, note: 'За пределами бесплатной зоны • Стандартный тариф' }
         ];
 
         let PRODUCTS = [
@@ -2141,21 +2107,21 @@
             {
                 id: 6,
                 title: 'Mea Culpa Black',
-                subtitle: 'Вязаная бини Mea Culpa • Только чёрный цвет',
+                subtitle: 'Вязаная бини Mea Culpa • Срочная скидка',
                 category: 'headwear',
                 categoryLabel: 'Головные уборы',
-                price: 4990,
-                oldPrice: null,
+                price: 2490,
+                oldPrice: 4990,
                 status: 'in-stock',
                 statusLabel: 'В наличии',
-                stockNote: 'Цвет: Только чёрный (последняя штука в наличии)',
-                badge: 'Осталась 1 шт.',
+                stockNote: 'Срочная скидка -50% • Только чёрный (последняя штука)',
+                badge: 'SALE -50%',
                 sizes: ['ONE SIZE'],
                 selectedSize: 'ONE SIZE',
                 maxQty: 1,
-                popularity: 93,
+                popularity: 97,
                 isActive: true,
-                description: 'Фирменная шапка-бини Mea Culpa с контрастным графическим принтом. В наличии последняя штука в чёрном цвете.',
+                description: 'Фирменная шапка-бини Mea Culpa с контрастным графическим принтом. Отдаём срочно по скидке — в наличии последняя штука в чёрном цвете.',
                 composition: '100% мягкий трикотаж двойной вязки.',
                 images: [
                     'https://lh3.googleusercontent.com/d/1PkoPmfkuJxgN31Y8SybFzBF8MD_cWYFr'
@@ -2164,21 +2130,21 @@
             {
                 id: 7,
                 title: 'Corteiz Beanie',
-                subtitle: 'CRTZ RTW • Фирменная шапка-бини',
+                subtitle: 'CRTZ RTW • Срочная скидка на бини',
                 category: 'headwear',
                 categoryLabel: 'Головные уборы',
-                price: 5990,
-                oldPrice: null,
+                price: 2490,
+                oldPrice: 5990,
                 status: 'in-stock',
                 statusLabel: 'В наличии',
-                stockNote: 'В наличии • Готово к отправке сегодня',
-                badge: 'В наличии',
+                stockNote: 'Срочная скидка -58% • В наличии, отправка сегодня',
+                badge: 'SALE -58%',
                 sizes: ['ONE SIZE'],
                 selectedSize: 'ONE SIZE',
                 maxQty: 5,
-                popularity: 92,
+                popularity: 96,
                 isActive: true,
-                description: 'Классическая бини с отворотом от лондонского бренда Corteiz (CRTZ RTW) с фирменной вышивкой.',
+                description: 'Классическая бини с отворотом от лондонского бренда Corteiz (CRTZ RTW) с фирменной вышивкой. Срочная распродажа по спеццене 2 490 ₸.',
                 composition: '100% плотная вязка.',
                 images: [
                     'https://lh3.googleusercontent.com/d/1qkF6nuwSlOP0gqD6nR8Ob9FPigEPNLKv'
@@ -2187,21 +2153,21 @@
             {
                 id: 8,
                 title: 'Stussy Beanie',
-                subtitle: 'Stüssy Stock Logo • Классическая бини',
+                subtitle: 'Stüssy Stock Logo • Срочная скидка',
                 category: 'headwear',
                 categoryLabel: 'Головные уборы',
-                price: 4990,
-                oldPrice: null,
+                price: 2490,
+                oldPrice: 4990,
                 status: 'in-stock',
                 statusLabel: 'В наличии',
-                stockNote: 'В наличии • Готово к отправке сегодня',
-                badge: 'В наличии',
+                stockNote: 'Срочная скидка -50% • В наличии, отправка сегодня',
+                badge: 'SALE -50%',
                 sizes: ['ONE SIZE'],
                 selectedSize: 'ONE SIZE',
                 maxQty: 5,
-                popularity: 90,
+                popularity: 95,
                 isActive: true,
-                description: 'Классическая шапка-бини Stüssy с вышитым логотипом Stock Logo на отвороте.',
+                description: 'Классическая шапка-бини Stüssy с вышитым логотипом Stock Logo на отвороте. Срочная скидка — отдаём за 2 490 ₸.',
                 composition: '100% мягкий трикотаж.',
                 images: [
                     'https://lh3.googleusercontent.com/d/1VPjsYa6lECcBzGAsHF4CNqsn7_pZ6Wbf'
@@ -2268,24 +2234,51 @@
             const adminView = document.getElementById('view-admin');
             const trackView = document.getElementById('view-track');
 
-            [homeView, pdpView, adminView, trackView].forEach(el => {
-                if (el) el.classList.add('view-hidden');
-            });
+            if (homeView) homeView.classList.add('view-hidden');
+            if (pdpView) pdpView.classList.add('view-hidden');
+            if (adminView) adminView.classList.add('view-hidden');
+            if (trackView) trackView.classList.add('view-hidden');
 
             if (route === '/admin') {
                 if (adminView) adminView.classList.remove('view-hidden');
                 await checkOwnerSessionAndMfa();
             } else if (route === '/track') {
                 if (trackView) trackView.classList.remove('view-hidden');
-                const params = new URLSearchParams((window.location.hash.split('?')[1] || window.location.search.slice(1)));
+                const hashQuery = (window.location.hash.split('?')[1]) || '';
+                const params = new URLSearchParams(window.location.search || hashQuery);
                 const token = params.get('token');
                 if (token) {
-                    const input = document.getElementById('manual-tracking-token-input');
-                    if (input) input.value = token;
+                    const inputEl = document.getElementById('manual-tracking-token-input');
+                    if (inputEl) inputEl.value = token;
                     await fetchPublicTracking(token);
                 }
             } else {
                 if (homeView) homeView.classList.remove('view-hidden');
+            }
+        }
+
+        // Lock background body scroll without jumping on iOS Safari / Android Chrome
+        let savedScrollY = 0;
+        let isBodyLocked = false;
+        function setBodyScrollLock(locked) {
+            if (locked && !isBodyLocked) {
+                savedScrollY = window.scrollY || window.pageYOffset || 0;
+                isBodyLocked = true;
+                document.body.style.position = 'fixed';
+                document.body.style.top = `-${savedScrollY}px`;
+                document.body.style.left = '0';
+                document.body.style.right = '0';
+                document.body.style.width = '100%';
+                document.body.style.overflow = 'hidden';
+            } else if (!locked && isBodyLocked) {
+                isBodyLocked = false;
+                document.body.style.position = '';
+                document.body.style.top = '';
+                document.body.style.left = '';
+                document.body.style.right = '';
+                document.body.style.width = '';
+                document.body.style.overflow = '';
+                window.scrollTo({ top: savedScrollY, behavior: 'instant' });
             }
         }
 
@@ -3302,15 +3295,6 @@
             }).join('');
         }
 
-        // Lock background body scroll when mobile drawers/modals are open
-        function setBodyScrollLock(locked) {
-            if (locked) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
-        }
-
         function selectDeliveryZone(zoneId) {
             state.selectedZoneId = zoneId;
             renderDeliveryZones();
@@ -3404,9 +3388,12 @@
                 const isLiked = state.wishlist.includes(product.id);
                 const isInStock = product.status === 'in-stock';
                 const isLastOne = product.maxQty === 1;
+                const hasDiscount = Boolean(product.oldPrice && product.oldPrice > product.price);
 
                 let badgeClass = 'bg-white/90 backdrop-blur-md text-obsidian';
-                if (isLastOne) {
+                if (hasDiscount) {
+                    badgeClass = 'bg-red-600 text-white shadow-sm';
+                } else if (isLastOne) {
                     badgeClass = 'bg-obsidian text-amber-200';
                 } else if (!isInStock) {
                     badgeClass = 'bg-graphite/90 backdrop-blur-md text-alabaster';
@@ -3414,13 +3401,16 @@
                     badgeClass = 'bg-white/90 backdrop-blur-md text-emerald-900';
                 }
 
-                const badgeHTML = `<span class="px-3 py-1 rounded-pill text-[10px] uppercase tracking-[0.14em] font-semibold ${badgeClass}">${product.badge}</span>`;
+                const badgeHTML = `<span class="px-3 py-1 rounded-pill text-[10px] uppercase tracking-[0.14em] font-bold ${badgeClass}">${product.badge}</span>`;
 
                 const sizesHTML = product.sizes.map(sz => {
                     return `<span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-obsidian text-white">${sz}</span>`;
                 }).join('');
 
                 const ctaLabel = isInStock ? 'В корзину' : 'Забронировать';
+                const subtitleText = hasDiscount
+                    ? 'Срочная скидка • Отдаём по спеццене'
+                    : (isLastOne ? 'Цвет: Только чёрный (последняя)' : product.subtitle);
 
                 return `
                 <article class="product-card group flex flex-col justify-between reveal-on-scroll is-visible" style="animation-delay: ${idx * 60}ms">
@@ -3473,24 +3463,25 @@
                             <h3 class="font-display font-bold text-base sm:text-lg text-obsidian mt-1 group-hover:text-graphite transition-colors leading-snug">
                                 ${product.title}
                             </h3>
-                            <p class="text-xs text-stoneMuted mt-0.5 line-clamp-1">${isLastOne ? 'Цвет: Только чёрный (последняя)' : product.subtitle}</p>
+                            <p class="text-xs ${hasDiscount ? 'text-red-700 font-medium' : 'text-stoneMuted'} mt-0.5 line-clamp-1">${subtitleText}</p>
                         </div>
                     </div>
 
                     <!-- Price, Size Badge & Minimalist Add to Cart -->
                     <div class="mt-4 pt-3.5 border-t border-black/[0.06]">
                         <div class="flex items-center justify-between gap-2 mb-3">
-                            <div class="flex items-baseline gap-2">
-                                <span class="text-base font-bold text-obsidian">${formatPrice(product.price)}</span>
+                            <div class="flex items-baseline gap-2 flex-wrap">
+                                <span class="text-base sm:text-lg font-extrabold ${hasDiscount ? 'text-red-600' : 'text-obsidian'}">${formatPrice(product.price)}</span>
+                                ${hasDiscount ? `<span class="text-xs text-stoneMuted line-through decoration-red-500/70 decoration-1">${formatPrice(product.oldPrice)}</span>` : ''}
                             </div>
-                            <div class="flex items-center gap-1">
+                            <div class="flex items-center gap-1 shrink-0">
                                 ${sizesHTML}
                             </div>
                         </div>
 
                         <button 
                             onclick="quickAddToCart(${product.id}, this)" 
-                            class="w-full py-3 px-4 rounded-btn bg-milk hover:bg-obsidian text-obsidian hover:text-white text-xs uppercase tracking-[0.14em] font-semibold btn-luxury flex items-center justify-center gap-2"
+                            class="w-full py-3 px-4 rounded-btn ${hasDiscount ? 'bg-obsidian text-white hover:bg-graphite' : 'bg-milk hover:bg-obsidian text-obsidian hover:text-white'} text-xs uppercase tracking-[0.14em] font-semibold btn-luxury flex items-center justify-center gap-2"
                         >
                             <i class="ph ${isInStock ? 'ph-plus' : 'ph-clock'} text-sm"></i>
                             <span>${ctaLabel}</span>
@@ -3732,7 +3723,7 @@
 
             // Color / Last Piece Note
             const colorNoteEl = document.getElementById('pdp-color-note');
-            if (isLastOne || !isInStock) {
+            if (isLastOne || !isInStock || (product.oldPrice && product.oldPrice > product.price)) {
                 colorNoteEl.textContent = product.stockNote;
                 colorNoteEl.classList.remove('hidden');
             } else {
@@ -3744,19 +3735,23 @@
                 ? 'ADD TO CART — В КОРЗИНУ'
                 : 'ЗАБРОНИРОВАТЬ (В ПУТИ)';
 
+            const priceEl = document.getElementById('pdp-price');
             const oldPriceEl = document.getElementById('pdp-old-price');
-            if (product.oldPrice) {
+            if (product.oldPrice && product.oldPrice > product.price) {
+                priceEl.className = 'text-2xl sm:text-3xl font-extrabold text-red-600 tracking-tight';
                 oldPriceEl.textContent = formatPrice(product.oldPrice);
                 oldPriceEl.classList.remove('hidden');
             } else {
+                priceEl.className = 'text-2xl sm:text-3xl font-bold text-obsidian tracking-tight';
                 oldPriceEl.classList.add('hidden');
             }
 
             const badgeEl = document.getElementById('pdp-badge');
             if (product.badge) {
+                const hasDiscount = Boolean(product.oldPrice && product.oldPrice > product.price);
                 badgeEl.textContent = product.badge;
-                badgeEl.className = `absolute top-5 left-5 z-10 px-3.5 py-1.5 rounded-pill text-[11px] uppercase tracking-[0.16em] font-semibold ${
-                    isLastOne ? 'bg-obsidian text-amber-200' : (isInStock ? 'bg-white/90 backdrop-blur-md text-emerald-900' : 'bg-graphite/90 text-white')
+                badgeEl.className = `absolute top-5 left-5 z-10 px-3.5 py-1.5 rounded-pill text-[11px] uppercase tracking-[0.16em] font-bold ${
+                    hasDiscount ? 'bg-red-600 text-white shadow-sm' : (isLastOne ? 'bg-obsidian text-amber-200' : (isInStock ? 'bg-white/90 backdrop-blur-md text-emerald-900' : 'bg-graphite/90 text-white'))
                 }`;
             } else {
                 badgeEl.classList.add('hidden');
@@ -3860,16 +3855,22 @@
         function renderRelatedProducts(currentProduct) {
             const related = PRODUCTS.filter(p => p.id !== currentProduct.id).slice(0, 4);
             const container = document.getElementById('pdp-related-grid');
-            container.innerHTML = related.map(item => `
+            container.innerHTML = related.map(item => {
+                const hasDisc = Boolean(item.oldPrice && item.oldPrice > item.price);
+                return `
                 <div onclick="openProductModal(${item.id})" class="group cursor-pointer">
                     <div class="product-card-img-wrapper aspect-[4/5] mb-3">
                         <img src="${item.images[0]}" alt="${item.title}" class="product-img-primary w-full h-full object-cover">
                     </div>
                     <span class="text-[10px] uppercase tracking-[0.14em] text-stoneMuted">${item.statusLabel}</span>
                     <h4 class="font-display font-bold text-sm text-obsidian mt-0.5 group-hover:underline">${item.title}</h4>
-                    <p class="text-xs font-semibold text-obsidian mt-1">${formatPrice(item.price)}</p>
+                    <div class="flex items-baseline gap-2 mt-1">
+                        <span class="text-xs font-bold ${hasDisc ? 'text-red-600' : 'text-obsidian'}">${formatPrice(item.price)}</span>
+                        ${hasDisc ? `<span class="text-[11px] text-stoneMuted line-through">${formatPrice(item.oldPrice)}</span>` : ''}
+                    </div>
                 </div>
-            `).join('');
+            `;
+            }).join('');
         }
 
         // Smooth View Switching (Home <-> PDP)
@@ -3905,17 +3906,18 @@
         function toggleCart(open) {
             const overlay = document.getElementById('cart-overlay');
             const drawer = document.getElementById('cart-drawer');
+            if (!overlay || !drawer) return;
             if (open) {
                 setBodyScrollLock(true);
                 overlay.classList.remove('pointer-events-none', 'opacity-0');
                 overlay.classList.add('opacity-100');
-                drawer.classList.remove('translate-x-[110%]');
+                drawer.classList.remove('translate-x-full');
                 drawer.classList.add('translate-x-0');
             } else {
                 setBodyScrollLock(false);
                 overlay.classList.add('pointer-events-none', 'opacity-0');
                 overlay.classList.remove('opacity-100');
-                drawer.classList.add('translate-x-[110%]');
+                drawer.classList.add('translate-x-full');
                 drawer.classList.remove('translate-x-0');
             }
         }
@@ -4010,7 +4012,10 @@
                                     <span class="px-2.5 text-xs font-semibold">${cartItem.qty}</span>
                                     <button onclick="updateCartQty(${idx}, 1)" class="w-7 h-7 flex items-center justify-center text-xs hover:bg-black/5">+</button>
                                 </div>
-                                <span class="text-xs sm:text-sm font-bold text-obsidian">${formatPrice(itemTotal)}</span>
+                                <div class="flex items-baseline gap-1.5">
+                                    ${product.oldPrice && product.oldPrice > product.price ? `<span class="text-[11px] text-stoneMuted line-through">${formatPrice(product.oldPrice * cartItem.qty)}</span>` : ''}
+                                    <span class="text-xs sm:text-sm font-bold ${product.oldPrice && product.oldPrice > product.price ? 'text-red-600' : 'text-obsidian'}">${formatPrice(itemTotal)}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -4039,7 +4044,7 @@
             if (overlay && drawer) {
                 overlay.classList.add('pointer-events-none', 'opacity-0');
                 overlay.classList.remove('opacity-100');
-                drawer.classList.add('translate-x-[115%]');
+                drawer.classList.add('translate-x-full');
                 drawer.classList.remove('translate-x-0');
             }
             setBodyScrollLock(true);
@@ -4049,14 +4054,13 @@
             setOrderDeliveryMode(state.deliveryMode);
             updateCheckoutSummary();
             modal.classList.remove('hidden');
-            modal.classList.add('flex');
+            modal.scrollTop = 0;
         }
 
         function closeCheckoutModal() {
             setBodyScrollLock(false);
             const modal = document.getElementById('checkout-modal-overlay');
             modal.classList.add('hidden');
-            modal.classList.remove('flex');
         }
 
         function setOrderDeliveryMode(mode) {
@@ -4285,6 +4289,8 @@
 
             document.getElementById('checkout-form-container').classList.add('hidden');
             document.getElementById('checkout-success-container').classList.remove('hidden');
+            const modal = document.getElementById('checkout-modal-overlay');
+            if (modal) modal.scrollTop = 0;
         }
 
         function copyOrderTemplate() {
@@ -4492,20 +4498,27 @@
         function toggleMobileMenu() {
             const overlay = document.getElementById('mobile-menu-overlay');
             const drawer = document.getElementById('mobile-menu-drawer');
+            if (!overlay || !drawer) return;
             const isOpen = drawer.classList.contains('translate-x-0');
             if (!isOpen) {
                 setBodyScrollLock(true);
                 overlay.classList.remove('pointer-events-none', 'opacity-0');
                 overlay.classList.add('opacity-100');
-                drawer.classList.remove('-translate-x-[110%]');
+                drawer.classList.remove('-translate-x-full');
                 drawer.classList.add('translate-x-0');
             } else {
                 setBodyScrollLock(false);
                 overlay.classList.add('pointer-events-none', 'opacity-0');
                 overlay.classList.remove('opacity-100');
-                drawer.classList.add('-translate-x-[110%]');
+                drawer.classList.add('-translate-x-full');
                 drawer.classList.remove('translate-x-0');
             }
+        }
+
+        function handleNewsletter(event) {
+            event.preventDefault();
+            event.target.reset();
+            showToast('Вы подписаны на уведомления о новых дропах ATLAS STORE');
         }
 
         function openSizeGuideModal() {
