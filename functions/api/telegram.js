@@ -8,7 +8,7 @@ export async function onRequest(context) {
     const BOT_TOKEN = env.TELEGRAM_BOT_TOKEN;
     const OWNER_ID = Number(env.OWNER_TELEGRAM_ID);
     const SUPABASE_URL = (env.SUPABASE_URL || '').replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '');
-    const SUPABASE_SERVICE_KEY = env.SUPABASE_SERVICE_ROLE_KEY;
+    const SUPABASE_SERVICE_KEY = (env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
 
     const tgSend = async (chatId, text, replyMarkup = null) => {
         const body = { chat_id: chatId, text, parse_mode: 'HTML' };
@@ -32,22 +32,29 @@ export async function onRequest(context) {
 
     const sbQuery = async (path, method = 'GET', body = null) => {
         if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
-            throw new Error('Не заданы SUPABASE_URL или SUPABASE_SERVICE_ROLE_KEY в Cloudflare');
+            throw new Error(`Ключи не заданы: URL=${Boolean(SUPABASE_URL)}, KEY=${Boolean(SUPABASE_SERVICE_KEY)}`);
         }
-        const opts = {
-            method,
-            headers: {
-                apikey: SUPABASE_SERVICE_KEY,
-                Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`,
-                'Content-Type': 'application/json',
-                Prefer: 'return=representation'
-            }
+        const headers = {
+            apikey: SUPABASE_SERVICE_KEY,
+            'Content-Type': 'application/json',
+            Prefer: 'return=representation'
         };
+        if (SUPABASE_SERVICE_KEY.startsWith('eyJ')) {
+            headers.Authorization = `Bearer ${SUPABASE_SERVICE_KEY}`;
+        }
+        const opts = { method, headers };
         if (body) opts.body = JSON.stringify(body);
+
         const r = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, opts);
-        const data = await r.json();
+        const rawText = await r.text();
+        let data;
+        try {
+            data = rawText ? JSON.parse(rawText) : [];
+        } catch (_) {
+            throw new Error(`Ответ не JSON (${r.status}): ${rawText.slice(0, 120)}`);
+        }
         if (!r.ok) {
-            throw new Error(data.message || data.error || `Ошибка Supabase (${r.status})`);
+            throw new Error(data.message || data.hint || `Ошибка базы (${r.status})`);
         }
         return data;
     };
