@@ -8,7 +8,7 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://atlasaktobe.store/">
 
-    <!-- Favicon & Google Search Icon (192x192 PNG — стандарт Google Search) -->
+    <!-- Favicon & Google Search Icon -->
     <link rel="icon" type="image/png" href="/favicon.png" sizes="192x192">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="192x192" href="/favicon.png">
@@ -23,7 +23,7 @@
     <meta name="geo.placename" content="Aktobe">
     <meta name="theme-color" content="#09090B">
 
-    <!-- Open Graph / Telegram / WhatsApp / Social Preview -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://atlasaktobe.store/">
     <meta property="og:site_name" content="ATLAS STORE">
@@ -31,9 +31,6 @@
     <meta property="og:title" content="ATLAS STORE | Official Store">
     <meta property="og:description" content="ATLAS STORE — официальный интернет-магазин в Актобе.">
     <meta property="og:image" content="https://atlasaktobe.store/favicon.png">
-    <meta property="og:image:secure_url" content="https://atlasaktobe.store/favicon.png">
-    <meta property="og:image:type" content="image/png">
-    <meta property="og:image:alt" content="ATLAS STORE | Official Store">
 
     <!-- Twitter / X Card -->
     <meta name="twitter:card" content="summary_large_image">
@@ -158,7 +155,6 @@
             font-variant-numeric: tabular-nums;
         }
 
-        /* Аккуратные фиолетово-жёлтые обводки в духе GTA VI */
         .gta-accent-line {
             background: linear-gradient(90deg, #9333EA 0%, #EC4899 50%, #FACC15 100%);
         }
@@ -185,7 +181,6 @@
             border: 1.5px solid transparent;
         }
 
-        /* BUTTONS, MAGNETIC HOVER & RIPPLE MICROINTERACTIONS */
         .btn-luxury {
             position: relative;
             overflow: hidden;
@@ -210,7 +205,6 @@
             }
         }
 
-        /* NAVIGATION ANIMATED UNDERLINE & SCROLLED GLASS STATE */
         .header-scrolled {
             background-color: rgba(9, 9, 11, 0.96) !important;
             box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.85);
@@ -247,7 +241,6 @@
             color: #FFFFFF;
         }
 
-        /* PRODUCT CARDS — ZOOM & REVEAL */
         .product-card-img-wrapper {
             position: relative;
             overflow: hidden;
@@ -268,7 +261,6 @@
             }
         }
 
-        /* HERO WORD-BY-WORD BLUR REVEAL & AMBIENT DEPTH */
         @keyframes fadeUpBlurLuxury {
             from {
                 opacity: 0;
@@ -304,7 +296,6 @@
             animation: ambientOrbDrift 12s ease-in-out infinite;
         }
 
-        /* SCROLL REVEAL (BLUR TO FOCUS + STAGGER) */
         .reveal-on-scroll {
             opacity: 0;
             transform: translateY(20px);
@@ -366,7 +357,7 @@
 
     <!-- Top Announcement Bar -->
     <div class="bg-[#111114] text-zinc-200 text-[11px] sm:text-xs tracking-[0.12em] uppercase py-2.5 px-4 text-center font-medium">
-        <span>СКИДКИ НА ШАПКИ CORTEIZ, MEA CULPA &amp; STUSSY — ПО <strong class="text-amber-300 font-bold">2 490 ₸</strong> • ДОСТАВКА ПО АКТОБЕ ОТ 500 ₸ • <button onclick="scrollToCatalog()" class="underline decoration-purple-400 underline-offset-4 hover:text-white transition-colors uppercase min-h-0">СМОТРЕТЬ</button></span>
+        <span>БЕСПЛАТНАЯ ДОСТАВКА ПРИ ЗАКАЗЕ ОТ 2 ТОВАРОВ • СКИДКИ НА ШАПКИ ДО -58% • <button onclick="scrollToCatalog()" class="underline decoration-purple-400 underline-offset-4 hover:text-white transition-colors uppercase min-h-0">СМОТРЕТЬ</button></span>
     </div>
     <div class="h-[2px] w-full gta-accent-line"></div>
 
@@ -381,7 +372,7 @@
                 <button onclick="toggleMobileMenu()" class="lg:hidden w-11 h-11 rounded-btn bg-white/[0.07] border border-purple-400/30 flex items-center justify-center text-white hover:bg-white/15 btn-luxury" aria-label="Открыть меню">
                     <i class="ph ph-list text-xl"></i>
                 </button>
-                <a href="#" onclick="switchView('home'); resetAllFilters(); return false;" class="inline-flex items-center gap-3 select-none group min-h-[44px]">
+                <a href="#" onclick="navigateToRoute('/'); resetAllFilters(); return false;" class="inline-flex items-center gap-3 select-none group min-h-[44px]">
                     <img
                         src="https://lh3.googleusercontent.com/d/1TtxTEXGSgmhpq5Hvi3-QhoyliLdPIP0E"
                         onerror="this.onerror=null; this.src='/favicon.png';"
@@ -408,8 +399,9 @@
                 <button onclick="scrollToReviews()" class="nav-link-underline px-4 py-2 rounded-pill text-xs uppercase tracking-[0.12em] font-medium text-zinc-400 hover:text-white transition-all duration-300">
                     Отзывы
                 </button>
-                <button onclick="openTrackingModal()" class="nav-link-underline px-4 py-2 rounded-pill text-xs uppercase tracking-[0.12em] font-medium text-zinc-400 hover:text-white transition-all duration-300">
-                    Отслеживание
+                <button onclick="openTrackingModal()" class="nav-link-underline px-4 py-2 rounded-pill text-xs uppercase tracking-[0.12em] font-medium text-zinc-400 hover:text-white transition-all duration-300 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Отслеживание</span>
                 </button>
             </nav>
 
@@ -495,7 +487,7 @@
                     <i class="ph ph-check-circle text-emerald-400"></i>
                 </button>
                 <button onclick="navigateAndStatus('in-transit'); toggleMobileMenu();" class="w-full text-left px-3 py-3 rounded-btn hover:bg-white/10 text-base font-medium flex items-center justify-between transition-colors">
-                    <span>В пути (Предзаказ)</span>
+                    <span>В пути (Бронь)</span>
                     <i class="ph ph-clock text-amber-400"></i>
                 </button>
                 <button onclick="toggleMobileMenu(); scrollToDelivery();" class="w-full text-left px-3 py-3 rounded-btn hover:bg-white/10 text-base font-medium flex items-center justify-between transition-colors">
@@ -508,7 +500,7 @@
                 </button>
                 <button onclick="toggleMobileMenu(); openTrackingModal();" class="w-full text-left px-3 py-3 rounded-btn hover:bg-white/10 text-base font-medium flex items-center justify-between transition-colors">
                     <span>Отслеживание заказа</span>
-                    <i class="ph ph-package text-zinc-400"></i>
+                    <i class="ph ph-package text-emerald-400"></i>
                 </button>
             </div>
         </div>
@@ -530,14 +522,12 @@
         <section class="max-w-[1440px] mx-auto px-4 sm:px-8 pt-4 sm:pt-6 pb-12 sm:pb-16">
             <div id="hero-interactive-banner" class="relative rounded-banner overflow-hidden gta-banner-border min-h-[460px] sm:min-h-[550px] lg:min-h-[610px] flex items-end p-6 sm:p-12 lg:p-16">
                 
-                <!-- Subtle Violet & Amber Ambient Parallax Layer -->
                 <div id="hero-parallax-layer" class="absolute inset-0 pointer-events-none transition-transform duration-300 ease-out">
                     <div class="hero-orb-slow absolute -top-24 -right-24 w-[480px] h-[480px] rounded-full bg-[radial-gradient(circle,rgba(168,85,247,0.16),transparent_68%)]"></div>
                     <div class="absolute -bottom-24 -left-24 w-[420px] h-[420px] rounded-full bg-[radial-gradient(circle,rgba(250,204,21,0.12),transparent_68%)]"></div>
                     <div class="absolute inset-x-0 bottom-0 h-[1.5px] gta-accent-line opacity-60"></div>
                 </div>
 
-                <!-- Architectural Editorial Content -->
                 <div class="relative z-10 w-full flex flex-col lg:flex-row lg:items-end justify-between gap-8">
                     <div class="max-w-2xl">
                         <div class="hero-stagger inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-pill bg-white/[0.06] border border-purple-400/35 text-zinc-200 text-[11px] uppercase tracking-[0.2em] mb-5">
@@ -564,14 +554,14 @@
                             <button onclick="navigateAndStatus('in-stock')" class="bg-white/[0.07] hover:bg-white/[0.12] text-white border border-white/15 px-7 py-4 rounded-pill text-xs sm:text-sm uppercase tracking-[0.16em] font-medium btn-luxury">
                                 <span>В наличии сейчас</span>
                             </button>
-                            <button onclick="openTrackingModal()" class="bg-transparent hover:bg-white/[0.07] text-zinc-400 hover:text-white border border-white/10 px-6 py-4 rounded-pill text-xs uppercase tracking-[0.14em] font-medium btn-luxury flex items-center gap-2">
-                                <i class="ph ph-package text-base"></i>
+                            <button onclick="openTrackingModal()" class="bg-transparent hover:bg-white/[0.07] text-zinc-300 hover:text-white border border-white/15 px-6 py-4 rounded-pill text-xs uppercase tracking-[0.14em] font-medium btn-luxury flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                                 <span>Отслеживание заказа</span>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Mini Featured Highlight Card inside Hero (ID 5 = Chrome Hearts Black) -->
+                    <!-- Mini Featured Highlight Card -->
                     <div class="hero-stagger delay-400 hidden xl:flex items-center gap-4 bg-[#18181C] border border-purple-400/35 hover:border-amber-300/70 p-4 rounded-card max-w-xs text-white cursor-pointer transition-all duration-300" onclick="openProductModal(5)">
                         <img 
                             src="https://lh3.googleusercontent.com/d/18tO5RfiQIEQX_mZialDC3OYbYOUDlqRr" 
@@ -607,8 +597,8 @@
                         <i class="ph ph-truck text-xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-xs uppercase tracking-[0.16em] font-semibold text-white">Бронь позиций в пути</h3>
-                        <p class="text-xs text-zinc-400 mt-1.5 leading-relaxed">Позиции со статусом «В пути» можно забронировать заранее — мы закрепим экземпляр за вами.</p>
+                        <h3 class="text-xs uppercase tracking-[0.16em] font-semibold text-white">Бесплатная доставка от 2 позиций</h3>
+                        <p class="text-xs text-zinc-400 mt-1.5 leading-relaxed">При заказе от 2 любых товаров доставка курьером по всему Актобе бесплатная (0 ₸).</p>
                     </div>
                 </div>
                 <div class="dark-card rounded-card p-6 flex items-start gap-4">
@@ -616,8 +606,8 @@
                         <i class="ph ph-credit-card text-xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-xs uppercase tracking-[0.16em] font-semibold text-white">Удобная оплата и доставка</h3>
-                        <p class="text-xs text-zinc-400 mt-1.5 leading-relaxed">Оплата через Kaspi, Freedom или Halyk. Быстрая отправка курьером по Актобе от 500 ₸.</p>
+                        <h3 class="text-xs uppercase tracking-[0.16em] font-semibold text-white">Удобная оплата и живой трекинг</h3>
+                        <p class="text-xs text-zinc-400 mt-1.5 leading-relaxed">Оплата через Kaspi, Freedom или Halyk. Статус курьера обновляется в реальном времени по коду заказа.</p>
                     </div>
                 </div>
             </div>
@@ -626,7 +616,6 @@
         <!-- 3. CATALOG SECTION & INTERACTIVE FILTERS -->
         <section id="catalog-section" class="max-w-[1440px] mx-auto px-4 sm:px-8 py-8 sm:py-12">
             
-            <!-- Section Header -->
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-white/10 reveal-on-scroll">
                 <div>
                     <span class="text-xs uppercase tracking-[0.2em] text-zinc-400 block mb-2">ATLAS STORE / АССОРТИМЕНТ</span>
@@ -635,7 +624,6 @@
                     </h2>
                 </div>
 
-                <!-- Filter & Sort Controls Bar -->
                 <div class="flex flex-wrap items-center gap-3">
                     <button onclick="toggleFilterPanel()" id="filter-toggle-btn" class="px-5 py-3 rounded-btn bg-[#121215] border border-white/12 hover:border-white/30 text-xs uppercase tracking-[0.14em] font-semibold text-white flex items-center gap-2.5 btn-luxury">
                         <i class="ph ph-sliders-horizontal text-base"></i>
@@ -689,22 +677,22 @@
                     <div>
                         <div class="flex justify-between items-center mb-3">
                             <label class="text-[11px] uppercase tracking-[0.18em] text-zinc-400 font-semibold">Максимальная цена</label>
-                            <span id="price-filter-label" class="text-xs font-bold text-white tabular-nums">До 15 000 ₸</span>
+                            <span id="price-filter-label" class="text-xs font-bold text-white tabular-nums">До 20 000 ₸</span>
                         </div>
                         <input 
                             id="price-range-slider"
                             type="range" 
                             min="2000" 
-                            max="15000" 
+                            max="20000" 
                             step="500" 
-                            value="15000"
+                            value="20000"
                             oninput="updatePriceFilter(this.value)"
                             class="w-full accent-white cursor-pointer h-1.5 bg-white/15 rounded-lg"
                         >
                         <div class="flex justify-between text-[11px] text-zinc-400 mt-1.5 tabular-nums">
-                            <span>2 490 ₸</span>
-                            <span>8 000 ₸</span>
-                            <span>15 000 ₸</span>
+                            <span>2 000 ₸</span>
+                            <span>10 000 ₸</span>
+                            <span>20 000 ₸</span>
                         </div>
                     </div>
 
@@ -836,7 +824,7 @@
                         DELIVERY
                     </h2>
                     <p class="text-xs sm:text-sm text-zinc-400 mt-2 max-w-2xl leading-relaxed">
-                        Выберите удобный способ получения: стандартная курьерская доставка по районам Актобе, самостоятельный вызов Express-курьера или бесплатный самовывоз после оплаты.
+                        При заказе <strong class="text-white">от 2 товаров — доставка бесплатная (0 ₸)</strong> в любой район Актобе. При заказе 1 товара действует фиксированный тариф района.
                     </p>
                 </div>
                 <span id="selected-zone-summary" class="self-start md:self-auto px-4 py-2 rounded-pill bg-white/[0.08] border border-white/10 text-xs font-semibold text-white tabular-nums">
@@ -847,24 +835,23 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-8">
                 <div class="lg:col-span-7 space-y-3">
                     <div class="flex items-center justify-between mb-2">
-                        <h3 class="text-xs uppercase tracking-[0.16em] font-bold text-white">Районы и тарифы магазина</h3>
-                        <span class="text-[11px] text-zinc-400">Тариф фиксирован магазином</span>
+                        <h3 class="text-xs uppercase tracking-[0.16em] font-bold text-white">Районы и тарифы (при заказе 1 товара)</h3>
+                        <span class="text-[11px] text-emerald-400 font-semibold">От 2 товаров — 0 ₸</span>
                     </div>
                     <div id="delivery-zones-list" class="space-y-3"></div>
                 </div>
 
                 <div class="lg:col-span-5 flex flex-col gap-5">
-                    <!-- GOOD LUCK DELIVERY -->
-                    <div class="bg-[#121215] text-alabaster rounded-banner p-6 sm:p-7 border border-purple-400/40 shadow-[0_0_30px_-12px_rgba(168,85,247,0.35)]">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-pill bg-purple-500/15 border border-purple-400/30 text-amber-300 text-[10px] uppercase tracking-[0.18em] font-semibold mb-3">
-                            <i class="ph-fill ph-sparkle"></i>
-                            <span>SPECIAL OFFER</span>
+                    <!-- FREE DELIVERY FROM 2 ITEMS -->
+                    <div class="bg-[#121215] text-alabaster rounded-banner p-6 sm:p-7 border border-emerald-400/40 shadow-[0_0_30px_-12px_rgba(52,211,153,0.3)]">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-pill bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-[10px] uppercase tracking-[0.18em] font-semibold mb-3">
+                            <i class="ph-fill ph-truck"></i>
+                            <span>FREE DELIVERY</span>
                         </div>
-                        <h3 class="font-extrabold text-xl sm:text-2xl text-white">GOOD LUCK DELIVERY</h3>
+                        <h3 class="font-extrabold text-xl sm:text-2xl text-white">БЕСПЛАТНАЯ ДОСТАВКА ОТ 2 ТОВАРОВ</h3>
                         <ul class="mt-3 space-y-2 text-xs text-zinc-300 leading-relaxed">
-                            <li class="flex items-start gap-2"><i class="ph ph-check-circle text-emerald-400 text-base shrink-0 mt-0.5"></i><span>При покупке <strong>от 2 товаров</strong> доступна бесплатная стандартная доставка.</span></li>
-                            <li class="flex items-start gap-2"><i class="ph ph-map-pin text-amber-300 text-base shrink-0 mt-0.5"></i><span>Действует в ограниченной зоне (Авиагородок, Батыс-2, 11 и 12 мкр).</span></li>
-                            <li class="flex items-start gap-2"><i class="ph ph-shield-check text-zinc-400 text-base shrink-0 mt-0.5"></i><span>Возможность бесплатной доставки подтверждается продавцом.</span></li>
+                            <li class="flex items-start gap-2"><i class="ph ph-check-circle text-emerald-400 text-base shrink-0 mt-0.5"></i><span>Добавьте в корзину <strong>2 или более любых товара</strong>, и доставка по Актобе станет 0 ₸ автоматически.</span></li>
+                            <li class="flex items-start gap-2"><i class="ph ph-map-pin text-emerald-400 text-base shrink-0 mt-0.5"></i><span>Действует на все районы города без ограничений.</span></li>
                         </ul>
                     </div>
 
@@ -1017,7 +1004,7 @@
                         </button>
                         <div id="acc-shipping" class="accordion-content">
                             <p class="text-xs text-zinc-400 leading-relaxed pt-3 pb-1">
-                                Позиции «В наличии» отправляем в день заказа курьером по Актобе от 500 ₸ или по всему Казахстану. Позиции «В пути» можно забронировать в корзине. Оплата: Kaspi, Freedom, Halyk.
+                                Позиции «В наличии» отправляем в день заказа курьером по Актобе от 500 ₸ (от 2 товаров — бесплатно). Позиции «В пути» можно забронировать в корзине. Оплата: Kaspi, Freedom, Halyk.
                             </p>
                         </div>
                     </div>
@@ -1064,9 +1051,9 @@
         </div>
 
         <div class="px-5 py-2.5 bg-white/[0.04] border-b border-white/[0.06] shrink-0">
-            <p id="free-shipping-text" class="text-[11px] uppercase tracking-[0.08em] text-zinc-300 font-medium">GOOD LUCK DELIVERY: добавьте от 2 товаров для бесплатной доставки</p>
+            <p id="free-shipping-text" class="text-[11px] uppercase tracking-[0.08em] text-zinc-300 font-medium">Добавьте от 2 товаров для бесплатной доставки (0 ₸)</p>
             <div class="w-full h-1 bg-white/10 rounded-full mt-1.5 overflow-hidden">
-                <div id="free-shipping-bar" class="h-full bg-white transition-all duration-500 w-0"></div>
+                <div id="free-shipping-bar" class="h-full bg-emerald-400 transition-all duration-500 w-0"></div>
             </div>
         </div>
 
@@ -1133,6 +1120,18 @@
                         <div id="checkout-selected-items" class="space-y-1.5 text-xs"></div>
                     </div>
 
+                    <!-- PROMOCODE INPUT -->
+                    <div class="bg-[#18181C] border border-white/10 rounded-card p-4">
+                        <label class="block text-[11px] uppercase tracking-[0.14em] text-zinc-400 font-semibold mb-2">Промокод на скидку</label>
+                        <div class="flex gap-2">
+                            <input id="checkout-promo-input" type="text" placeholder="Введите промокод..." class="flex-1 bg-[#09090B] border border-white/15 rounded-btn px-3.5 py-2.5 text-sm text-white uppercase placeholder-zinc-500 focus:outline-none focus:border-white">
+                            <button type="button" onclick="applyCheckoutPromo()" class="px-5 py-2.5 rounded-btn bg-white/15 hover:bg-white hover:text-obsidian text-xs uppercase tracking-wider font-semibold transition-colors">
+                                Применить
+                            </button>
+                        </div>
+                        <p id="checkout-promo-status" class="hidden text-xs mt-2 font-medium"></p>
+                    </div>
+
                     <div>
                         <label class="block text-[11px] uppercase tracking-[0.14em] text-zinc-400 font-semibold mb-2">Способ получения *</label>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -1141,7 +1140,7 @@
                                     <span class="text-xs uppercase tracking-[0.1em] font-bold text-white">Стандарт</span>
                                     <i class="ph-fill ph-check-circle text-white text-base"></i>
                                 </div>
-                                <p class="text-[11px] text-zinc-400 mt-1">Тариф по выбранному району</p>
+                                <p class="text-[11px] text-zinc-400 mt-1">От 2 товаров — 0 ₸</p>
                             </button>
 
                             <button type="button" id="delivery-mode-express-btn" onclick="setOrderDeliveryMode('express')" class="text-left p-4 rounded-card border border-white/15 bg-[#18181C]/60 hover:bg-[#18181C] transition-all">
@@ -1213,6 +1212,10 @@
                             <span>Товары (<span id="checkout-items-count">0</span> шт.):</span>
                             <span id="checkout-items-subtotal" class="tabular-nums">0 ₸</span>
                         </div>
+                        <div id="checkout-discount-row" class="hidden flex justify-between text-emerald-400 font-medium">
+                            <span>Скидка по промокоду:</span>
+                            <span id="checkout-discount-amount" class="tabular-nums">-0 ₸</span>
+                        </div>
                         <div class="flex justify-between text-zinc-400">
                             <span>Доставка (<span id="checkout-delivery-label">Стандартная</span>):</span>
                             <span id="checkout-delivery-fee" class="text-white font-semibold tabular-nums">500 ₸</span>
@@ -1224,7 +1227,7 @@
                     </div>
 
                     <div class="space-y-2.5">
-                        <button type="submit" class="w-full bg-white hover:bg-zinc-200 text-obsidian py-4 rounded-btn text-xs uppercase tracking-[0.18em] font-semibold btn-luxury flex items-center justify-center gap-2">
+                        <button id="submit-order-btn" type="submit" class="w-full bg-white hover:bg-zinc-200 text-obsidian py-4 rounded-btn text-xs uppercase tracking-[0.18em] font-semibold btn-luxury flex items-center justify-center gap-2">
                             <span>Оформить и отправить в WhatsApp</span>
                             <i class="ph ph-whatsapp-logo text-base text-emerald-600"></i>
                         </button>
@@ -1238,13 +1241,13 @@
             <!-- Order Confirmation & WhatsApp Template View -->
             <div id="checkout-success-container" class="hidden py-4">
                 <div class="text-center">
-                    <div class="w-16 h-16 rounded-full bg-white/10 text-white flex items-center justify-center mx-auto mb-4 border border-white/15">
-                        <i class="ph ph-whatsapp-logo text-3xl text-emerald-400"></i>
+                    <div class="w-16 h-16 rounded-full bg-emerald-500/15 text-emerald-400 flex items-center justify-center mx-auto mb-4 border border-emerald-400/30">
+                        <i class="ph ph-check-circle text-3xl"></i>
                     </div>
-                    <span class="text-[11px] uppercase tracking-[0.2em] text-zinc-400 font-semibold">ШАБЛОН ЗАКАЗА СФОРМИРОВАН</span>
-                    <h3 class="text-2xl sm:text-3xl font-bold text-white mt-1">Заказ <span id="order-number-display">#ATL-0000</span></h3>
+                    <span class="text-[11px] uppercase tracking-[0.2em] text-zinc-400 font-semibold">ЗАКАЗ ЗАРЕГИСТРИРОВАН В СИСТЕМЕ</span>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white mt-1">Код заказа: <span id="order-number-display" class="text-amber-300">#ATL-0000</span></h3>
                     <p class="text-xs sm:text-sm text-zinc-400 mt-2 max-w-md mx-auto leading-relaxed">
-                        Отправьте готовый шаблон заказа нам в WhatsApp. Отслеживание статуса и трек-номер отправляются вручную менеджером в чате.
+                        Отправьте готовый чек в WhatsApp для оплаты. Следить за статусом курьера в реальном времени можно по вашему коду во вкладке <strong>«Отслеживание»</strong>.
                     </p>
                 </div>
 
@@ -1262,10 +1265,10 @@
                 <div class="mt-6 flex flex-col sm:flex-row gap-3">
                     <a id="whatsapp-direct-link" href="https://wa.me/77064449457" target="_blank" rel="noopener noreferrer" class="flex-1 py-4 bg-white hover:bg-zinc-200 text-obsidian rounded-btn text-xs uppercase tracking-[0.16em] font-semibold btn-luxury flex items-center justify-center gap-2">
                         <i class="ph ph-whatsapp-logo text-lg text-emerald-600"></i>
-                        <span>Открыть WhatsApp и отправить</span>
+                        <span>Открыть WhatsApp</span>
                     </a>
-                    <button type="button" onclick="finishOrderAndReset()" class="px-6 py-4 bg-white/10 hover:bg-white/20 text-white rounded-btn text-xs uppercase tracking-[0.14em] font-semibold btn-luxury">
-                        Готово
+                    <button type="button" onclick="goToLiveTrackingAfterOrder()" class="px-6 py-4 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 border border-emerald-400/30 rounded-btn text-xs uppercase tracking-[0.14em] font-semibold btn-luxury">
+                        Отследить заказ
                     </button>
                 </div>
             </div>
@@ -1350,9 +1353,9 @@
                         <li><button onclick="navigateAndFilter('all')" class="footer-link-anim min-h-0">Весь ассортимент</button></li>
                         <li><button onclick="navigateAndFilter('clothing')" class="footer-link-anim min-h-0">Essentials Hoodie &amp; Pants</button></li>
                         <li><button onclick="navigateAndFilter('headwear')" class="footer-link-anim min-h-0">Шапки и балаклавы</button></li>
-                        <li><button onclick="scrollToDelivery()" class="footer-link-anim min-h-0">Delivery &amp; Good Luck Delivery</button></li>
+                        <li><button onclick="scrollToDelivery()" class="footer-link-anim min-h-0">Доставка (бесплатно от 2 шт.)</button></li>
                         <li><button onclick="scrollToReviews()" class="footer-link-anim min-h-0">Отзывы покупателей</button></li>
-                        <li><button onclick="openTrackingModal()" class="footer-link-anim min-h-0">Отслеживание заказа</button></li>
+                        <li><button onclick="openTrackingModal()" class="footer-link-anim min-h-0">Отслеживание заказа (Live)</button></li>
                     </ul>
                 </div>
 
@@ -1386,7 +1389,7 @@
     </footer>
 
     <!-- ========================================== -->
-    <!-- PUBLIC CUSTOMER ORDER TRACKING VIEW (/track)-->
+    <!-- LIVE CUSTOMER ORDER TRACKING VIEW (#/track)-->
     <!-- ========================================== -->
     <section id="view-track" class="view-section view-hidden max-w-3xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
         <div class="mb-6 flex items-center justify-between">
@@ -1394,18 +1397,18 @@
                 <i class="ph ph-arrow-left text-base"></i>
                 <span>На витрину ATLAS STORE</span>
             </button>
-            <span class="text-[11px] uppercase tracking-[0.18em] text-zinc-400 font-semibold">LIVE ORDER TRACKING</span>
+            <span class="text-[11px] uppercase tracking-[0.18em] text-zinc-400 font-semibold">REALTIME TRACKER</span>
         </div>
 
-        <div class="bg-[#121215] border border-white/10 rounded-banner p-6 sm:p-10 shadow-sm text-white">
+        <div class="gta-banner-border rounded-banner p-6 sm:p-10 shadow-xl text-white">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
                 <div>
-                    <span class="text-[10px] uppercase tracking-[0.22em] text-zinc-400 font-semibold">ATLAS STORE • TRACKING</span>
+                    <span class="text-[10px] uppercase tracking-[0.22em] text-zinc-400 font-semibold">ATLAS STORE • LIVE ДОСТАВКА</span>
                     <h1 class="font-bold text-2xl sm:text-3xl text-white mt-1">Отслеживание заказа</h1>
                 </div>
                 <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-pill bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-[11px] font-semibold">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span>Live Updates</span>
+                    <span>Обновляется в реальном времени</span>
                 </div>
             </div>
 
@@ -1413,581 +1416,118 @@
                 <input
                     id="manual-tracking-token-input"
                     type="text"
-                    placeholder="Введите номер заказа (например, #ATL-1234)..."
-                    class="flex-1 bg-[#18181C] border border-white/15 rounded-btn px-4 py-3 text-xs sm:text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-white font-mono"
+                    placeholder="Введите код заказа (например, ATL-4821)..."
+                    class="flex-1 bg-[#18181C] border border-white/15 rounded-btn px-4 py-3 text-sm text-white uppercase placeholder-zinc-500 focus:outline-none focus:border-white font-mono"
                 >
                 <button type="submit" class="px-6 py-3 bg-white hover:bg-zinc-200 text-obsidian rounded-btn text-xs uppercase tracking-[0.15em] font-semibold btn-luxury">
-                    Проверить статус
+                    Найти заказ
                 </button>
             </form>
 
             <div id="public-tracking-result" class="mt-8">
                 <div class="bg-[#18181C] border border-white/[0.08] rounded-card p-6 text-center text-xs text-zinc-400">
-                    Введите номер вашего заказа или уточните статус напрямую в WhatsApp +7 706 444-94-57.
+                    Введите код вашего заказа, чтобы увидеть статус оплаты и передвижение курьера в реальном времени.
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ========================================== -->
-    <!-- PRIVATE OWNER ADMIN DASHBOARD (#/admin)    -->
-    <!-- ========================================== -->
-    <section id="view-admin" class="view-section view-hidden min-h-screen bg-[#09090B] text-white">
-        <div id="admin-auth-gate" class="max-w-md mx-auto px-4 py-14 sm:py-20">
-            <div class="bg-[#121215] border border-white/10 rounded-banner p-7 sm:p-10 shadow-xl">
-                <div class="flex items-center justify-between pb-5 border-b border-white/10">
-                    <div>
-                        <span class="text-[10px] uppercase tracking-[0.22em] text-zinc-400 font-semibold">HARDWARE KEYFILE • SHA-256 VERIFIED</span>
-                        <h1 class="font-bold text-xl sm:text-2xl text-white mt-0.5">ATLAS STORE ADMIN</h1>
-                    </div>
-                    <button onclick="navigateToRoute('/')" class="w-9 h-9 rounded-btn bg-white/10 hover:bg-white/20 flex items-center justify-center text-white" title="На сайт">
-                        <i class="ph ph-x text-base"></i>
-                    </button>
-                </div>
-
-                <div id="supabase-config-banner" class="hidden mt-5 p-4 rounded-card bg-[#18181C] border border-white/10 text-xs text-zinc-300 space-y-2">
-                    <p class="font-bold text-white">Подключение базы (необязательно):</p>
-                    <div class="pt-1 space-y-2">
-                        <input id="cfg-supabase-url" type="url" placeholder="https://xxxxx.supabase.co" class="w-full bg-[#09090B] border border-white/15 rounded-btn px-3 py-2 text-xs text-white">
-                        <input id="cfg-supabase-anon" type="text" placeholder="anon public key..." class="w-full bg-[#09090B] border border-white/15 rounded-btn px-3 py-2 text-xs text-white">
-                        <button type="button" onclick="saveSupabaseClientConfig()" class="w-full py-2.5 bg-white text-obsidian rounded-btn text-[11px] uppercase tracking-wider font-semibold">
-                            Сохранить ключи Supabase
-                        </button>
-                    </div>
-                </div>
-
-                <div id="admin-login-form" class="mt-6 space-y-4">
-                    <div class="p-3.5 rounded-card bg-[#18181C] border border-white/[0.08] text-xs text-zinc-300 leading-relaxed">
-                        <strong class="text-white block mb-0.5">Защищённый вход только по файлу-ключу</strong>
-                        Доступ открывается только при проверке SHA-256 подписи вашего личного файла <code class="font-mono text-white">atlas-owner-key.json</code>.
-                    </div>
-
-                    <label class="block cursor-pointer border-2 border-dashed border-white/25 hover:border-white rounded-card p-6 text-center bg-[#18181C]/60 hover:bg-[#18181C] transition-all group">
-                        <div class="w-12 h-12 rounded-full bg-white text-obsidian flex items-center justify-center mx-auto mb-2.5 group-hover:scale-105 transition-transform">
-                            <i class="ph ph-file-lock text-2xl"></i>
-                        </div>
-                        <span class="block text-xs uppercase tracking-[0.14em] font-bold text-white">Выбрать файл-ключ (Keyfile)</span>
-                        <span class="block text-[11px] text-zinc-400 mt-1">Загрузите atlas-owner-key.json с вашего устройства</span>
-                        <input type="file" accept=".json,.key,.atlas" onchange="handleKeyfileUpload(event)" class="hidden">
-                    </label>
-
-                    <div id="initial-keyfile-issue-box" class="p-4 rounded-card bg-amber-500/10 border border-amber-400/30 text-xs text-amber-200 space-y-2.5">
-                        <p class="font-bold">Первичная выдача ключа владельца:</p>
-                        <button type="button" onclick="issueInitialOwnerKeyfile()" class="w-full py-3 bg-white hover:bg-zinc-200 text-obsidian rounded-btn text-[11px] uppercase tracking-[0.14em] font-semibold btn-luxury flex items-center justify-center gap-2">
-                            <i class="ph ph-download-simple text-base"></i>
-                            <span>Сгенерировать и скачать файл-ключ (1 раз)</span>
-                        </button>
-                    </div>
-
-                    <div class="flex items-center justify-end pt-1">
-                        <button type="button" onclick="resetSupabaseClientConfig()" class="text-[11px] text-zinc-400 hover:text-white underline">
-                            Настроить Supabase URL
-                        </button>
-                    </div>
-
-                    <div id="admin-login-error" class="hidden p-3 rounded-btn bg-red-500/15 border border-red-400/30 text-xs text-red-200 font-medium"></div>
-                </div>
-            </div>
-        </div>
-
-        <div id="admin-dashboard-shell" class="hidden max-w-[1440px] mx-auto px-4 sm:px-8 py-6 sm:py-10">
-            <div class="bg-[#121215] border border-white/10 text-white rounded-banner p-5 sm:p-7 flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
-                <div class="flex items-center gap-3.5">
-                    <div class="w-11 h-11 rounded-btn bg-white/10 flex items-center justify-center shrink-0">
-                        <i class="ph ph-crown text-xl text-amber-300"></i>
-                    </div>
-                    <div>
-                        <span class="text-[10px] uppercase tracking-[0.2em] text-zinc-400">OWNER CONTROL CENTER</span>
-                        <h1 class="font-bold text-xl sm:text-2xl tracking-tight mt-0.5">ATLAS STORE — Панель владельца</h1>
-                    </div>
-                </div>
-
-                <div class="flex flex-wrap items-center gap-2.5">
-                    <span id="admin-owner-email-badge" class="px-3.5 py-2 rounded-pill bg-white/10 text-xs text-zinc-200 font-mono"></span>
-                    <button onclick="navigateToRoute('/')" class="px-4 py-2 rounded-btn bg-white/10 hover:bg-white/20 text-xs font-semibold transition-colors">Витрина</button>
-                    <button onclick="handleAdminSignOut()" class="px-4 py-2 rounded-btn bg-red-500/20 hover:bg-red-500/30 text-red-200 text-xs font-semibold transition-colors flex items-center gap-1.5">
-                        <i class="ph ph-sign-out text-sm"></i>
-                        <span>Выйти</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                <aside class="lg:col-span-3 bg-[#121215] border border-white/10 rounded-banner p-3 sm:p-4 lg:sticky lg:top-24">
-                    <nav class="flex lg:flex-col gap-1.5 overflow-x-auto no-scrollbar">
-                        <button onclick="switchOwnerSection('overview')" data-admin-nav="overview" class="admin-nav-btn shrink-0 flex items-center gap-3 px-4 py-3 rounded-btn text-xs uppercase tracking-[0.12em] font-semibold bg-white text-obsidian">
-                            <i class="ph ph-chart-line-up text-base"></i><span>Overview</span>
-                        </button>
-                        <button onclick="switchOwnerSection('orders')" data-admin-nav="orders" class="admin-nav-btn shrink-0 flex items-center gap-3 px-4 py-3 rounded-btn text-xs uppercase tracking-[0.12em] font-medium text-zinc-300 hover:bg-white/10">
-                            <i class="ph ph-shopping-bag text-base"></i><span>Заказы</span>
-                        </button>
-                        <button onclick="switchOwnerSection('products')" data-admin-nav="products" class="admin-nav-btn shrink-0 flex items-center gap-3 px-4 py-3 rounded-btn text-xs uppercase tracking-[0.12em] font-medium text-zinc-300 hover:bg-white/10">
-                            <i class="ph ph-t-shirt text-base"></i><span>Товары</span>
-                        </button>
-                        <button onclick="switchOwnerSection('inventory')" data-admin-nav="inventory" class="admin-nav-btn shrink-0 flex items-center gap-3 px-4 py-3 rounded-btn text-xs uppercase tracking-[0.12em] font-medium text-zinc-300 hover:bg-white/10">
-                            <i class="ph ph-warehouse text-base"></i><span>Склад</span>
-                        </button>
-                        <button onclick="switchOwnerSection('delivery-pricing')" data-admin-nav="delivery-pricing" class="admin-nav-btn shrink-0 flex items-center gap-3 px-4 py-3 rounded-btn text-xs uppercase tracking-[0.12em] font-medium text-zinc-300 hover:bg-white/10">
-                            <i class="ph ph-map-pin-line text-base"></i><span>Тарифы зон</span>
-                        </button>
-                        <button onclick="switchOwnerSection('settings')" data-admin-nav="settings" class="admin-nav-btn shrink-0 flex items-center gap-3 px-4 py-3 rounded-btn text-xs uppercase tracking-[0.12em] font-medium text-zinc-300 hover:bg-white/10">
-                            <i class="ph ph-gear text-base"></i><span>Настройки</span>
-                        </button>
-                    </nav>
-                </aside>
-
-                <div class="lg:col-span-9 space-y-6">
-                    <div id="admin-sec-overview" class="admin-section space-y-6">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-                            <div class="bg-[#121215] border border-white/10 rounded-card p-5">
-                                <span class="text-[10px] uppercase tracking-[0.18em] text-zinc-400 font-semibold">Общая выручка</span>
-                                <p id="kpi-total-revenue" class="font-bold text-2xl text-white mt-2 tabular-nums">0 ₸</p>
-                            </div>
-                            <div class="bg-[#121215] border border-white/10 rounded-card p-5">
-                                <span class="text-[10px] uppercase tracking-[0.18em] text-zinc-400 font-semibold">Заказы сегодня</span>
-                                <p id="kpi-orders-today" class="font-bold text-2xl text-white mt-2">0</p>
-                            </div>
-                            <div class="bg-[#121215] border border-white/10 rounded-card p-5">
-                                <span class="text-[10px] uppercase tracking-[0.18em] text-zinc-400 font-semibold">Всего заказов</span>
-                                <p id="kpi-total-orders" class="font-bold text-2xl text-white mt-2">0</p>
-                            </div>
-                            <div class="bg-[#121215] border border-white/10 rounded-card p-5">
-                                <span class="text-[10px] uppercase tracking-[0.18em] text-zinc-400 font-semibold">Товаров в наличии</span>
-                                <p id="kpi-in-stock" class="font-bold text-2xl text-white mt-2">0 шт.</p>
-                            </div>
-                        </div>
-                        <div class="bg-[#121215] border border-white/10 rounded-banner p-6">
-                            <h3 class="font-bold text-base text-white mb-4">Последние заказы</h3>
-                            <div id="overview-recent-orders" class="space-y-2.5 text-xs"></div>
-                        </div>
-                    </div>
-
-                    <div id="admin-sec-orders" class="admin-section hidden space-y-4">
-                        <div class="bg-[#121215] border border-white/10 rounded-banner p-5 sm:p-6">
-                            <h2 class="font-bold text-xl text-white">Управление заказами</h2>
-                        </div>
-                        <div id="owner-orders-list" class="space-y-4"></div>
-                    </div>
-
-                    <div id="admin-sec-products" class="admin-section hidden space-y-5">
-                        <div class="bg-[#121215] border border-white/10 rounded-banner p-5 sm:p-6 flex items-center justify-between gap-4">
-                            <h2 class="font-bold text-xl text-white">Управление каталогом</h2>
-                            <button onclick="openAdminProductEditor(null)" class="px-5 py-3 bg-white text-obsidian rounded-btn text-xs uppercase tracking-[0.14em] font-semibold">Добавить товар</button>
-                        </div>
-
-                        <div id="admin-product-editor-card" class="hidden bg-[#121215] border border-white/25 rounded-banner p-6 space-y-4">
-                            <div class="flex items-center justify-between pb-3 border-b border-white/10">
-                                <h3 class="font-bold text-lg text-white">Редактор товара</h3>
-                                <button onclick="closeAdminProductEditor()" class="w-8 h-8 rounded-btn bg-white/10 flex items-center justify-center"><i class="ph ph-x"></i></button>
-                            </div>
-                            <form onsubmit="saveAdminProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                                <input type="hidden" id="edit-prod-id">
-                                <div>
-                                    <label class="block uppercase tracking-wider text-zinc-400 font-semibold mb-1">Название *</label>
-                                    <input id="edit-prod-title" required type="text" class="w-full bg-[#18181C] border border-white/15 rounded-btn px-3.5 py-2.5 text-sm text-white">
-                                </div>
-                                <div>
-                                    <label class="block uppercase tracking-wider text-zinc-400 font-semibold mb-1">Цена (₸) *</label>
-                                    <input id="edit-prod-price" required type="number" min="0" class="w-full bg-[#18181C] border border-white/15 rounded-btn px-3.5 py-2.5 text-sm text-white">
-                                </div>
-                                <div>
-                                    <label class="block uppercase tracking-wider text-zinc-400 font-semibold mb-1">Категория</label>
-                                    <select id="edit-prod-category" class="w-full bg-[#18181C] border border-white/15 rounded-btn px-3.5 py-2.5 text-sm text-white">
-                                        <option value="clothing">Одежда</option>
-                                        <option value="headwear">Головные уборы</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block uppercase tracking-wider text-zinc-400 font-semibold mb-1">Статус</label>
-                                    <select id="edit-prod-status" class="w-full bg-[#18181C] border border-white/15 rounded-btn px-3.5 py-2.5 text-sm text-white">
-                                        <option value="in-stock">В наличии</option>
-                                        <option value="in-transit">В пути</option>
-                                    </select>
-                                </div>
-                                <div class="sm:col-span-2">
-                                    <label class="block uppercase tracking-wider text-zinc-400 font-semibold mb-1">Ссылки на фото (по одной на строку)</label>
-                                    <textarea id="edit-prod-images" rows="2" class="w-full bg-[#18181C] border border-white/15 rounded-btn px-3.5 py-2 text-xs font-mono text-white"></textarea>
-                                </div>
-                                <div class="sm:col-span-2 flex justify-end">
-                                    <button type="submit" class="px-6 py-3 bg-white text-obsidian rounded-btn uppercase tracking-wider font-semibold">Сохранить</button>
-                                </div>
-                            </form>
-                        </div>
-
-                        <div id="owner-products-list" class="space-y-3"></div>
-                    </div>
-
-                    <div id="admin-sec-inventory" class="admin-section hidden space-y-5">
-                        <div class="bg-[#121215] border border-white/10 rounded-banner p-5 sm:p-6">
-                            <h2 class="font-bold text-xl text-white">Складской учёт</h2>
-                        </div>
-                        <div id="owner-inventory-list" class="space-y-3"></div>
-                    </div>
-
-                    <div id="admin-sec-delivery-pricing" class="admin-section hidden space-y-5">
-                        <div class="bg-[#121215] border border-white/10 rounded-banner p-5 sm:p-6">
-                            <h2 class="font-bold text-xl text-white">Тарифы доставки по районам</h2>
-                        </div>
-                        <div id="owner-zones-list" class="space-y-3"></div>
-                    </div>
-
-                    <div id="admin-sec-settings" class="admin-section hidden">
-                        <div class="bg-[#121215] border border-white/10 rounded-banner p-6 sm:p-8 space-y-5">
-                            <h2 class="font-bold text-xl text-white">Настройки магазина</h2>
-                            <form onsubmit="saveOwnerStoreSettings(event)" class="space-y-4 text-xs">
-                                <div>
-                                    <label class="block uppercase tracking-wider text-zinc-400 font-semibold mb-1">WhatsApp номер магазина</label>
-                                    <input id="set-store-whatsapp" type="text" value="77064449457" class="w-full bg-[#18181C] border border-white/15 rounded-btn px-3.5 py-2.5 text-sm text-white">
-                                </div>
-                                <div class="flex flex-wrap gap-2.5">
-                                    <button type="button" onclick="downloadBackupOwnerKeyfile()" class="px-4 py-3 bg-white/10 text-white rounded-btn uppercase tracking-wider font-semibold">Скачать копию Keyfile</button>
-                                    <button type="submit" class="px-6 py-3 bg-white text-obsidian rounded-btn uppercase tracking-wider font-semibold">Сохранить</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- APPLICATION LOGIC                          -->
+    <!-- APPLICATION LOGIC (SUPABASE REALTIME)      -->
     <!-- ========================================== -->
     <script>
-        let supabaseClient = null;
-        try {
-            const sbUrl = localStorage.getItem('atlas_sb_url') || '';
-            const sbAnon = localStorage.getItem('atlas_sb_anon') || '';
-            if (sbUrl && sbAnon && window.supabase) {
-                supabaseClient = window.supabase.createClient(sbUrl, sbAnon);
-            }
-        } catch (_) {}
+        const SUPABASE_URL = 'https://awcmbonnfuiabaxevihg.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_ifBTWl-gmasEzTcYIz2HDw_BLYGoJZh';
+        const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        const OWNER_ACCESS_KEY_STORAGE = 'atlas_owner_verified';
-        const OWNER_KEY_HASH_STORAGE = 'atlas_owner_key_sha256';
-        const OWNER_SESSION_RAW_KEY = 'atlas_owner_active_secret';
-
-        async function sha256Hex(text) {
-            const data = new TextEncoder().encode(text);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-            return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
-        function syncInitialKeyfileBoxVisibility() {
-            const box = document.getElementById('initial-keyfile-issue-box');
-            if (!box) return;
-            box.classList.toggle('hidden', Boolean(localStorage.getItem(OWNER_KEY_HASH_STORAGE)));
-        }
-
-        async function checkOwnerSessionAndMfa() {
-            const authGate = document.getElementById('admin-auth-gate');
-            const dashboardShell = document.getElementById('admin-dashboard-shell');
-            syncInitialKeyfileBoxVisibility();
-
-            if (sessionStorage.getItem(OWNER_ACCESS_KEY_STORAGE) !== 'true') {
-                authGate.classList.remove('hidden');
-                dashboardShell.classList.add('hidden');
-                return;
-            }
-            state.isVerifiedOwner = true;
-            authGate.classList.add('hidden');
-            dashboardShell.classList.remove('hidden');
-            document.getElementById('admin-owner-email-badge').textContent = 'KEYFILE VERIFIED • +7 706 444-94-57';
-            await loadOwnerDashboardData();
-        }
-
-        function showAdminLoginError(msg) {
-            const box = document.getElementById('admin-login-error');
-            box.textContent = msg;
-            box.classList.remove('hidden');
-        }
-
-        async function issueInitialOwnerKeyfile() {
-            if (localStorage.getItem(OWNER_KEY_HASH_STORAGE)) {
-                syncInitialKeyfileBoxVisibility();
-                return;
-            }
-            const randomBytes = new Uint8Array(32);
-            crypto.getRandomValues(randomBytes);
-            const secretToken = 'ATL-' + Array.from(randomBytes).map(b => b.toString(16).padStart(2, '0')).join('');
-            const hash = await sha256Hex(secretToken);
-            localStorage.setItem(OWNER_KEY_HASH_STORAGE, hash);
-            sessionStorage.setItem(OWNER_SESSION_RAW_KEY, secretToken);
-            syncInitialKeyfileBoxVisibility();
-            triggerKeyfileDownload(secretToken);
-            showToast('Личный файл-ключ создан и скачан!');
-        }
-
-        function triggerKeyfileDownload(secretToken) {
-            const keyData = JSON.stringify({
-                store: 'ATLAS STORE',
-                role: 'owner',
-                key_version: '2.0-sha256',
-                secret_token: secretToken,
-                issued_at: new Date().toISOString()
-            }, null, 2);
-            const blob = new Blob([keyData], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'atlas-owner-key.json';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-
-        function downloadBackupOwnerKeyfile() {
-            const activeSecret = sessionStorage.getItem(OWNER_SESSION_RAW_KEY);
-            if (!activeSecret) {
-                showToast('Перезайдите по файлу-ключу для резервной копии');
-                return;
-            }
-            triggerKeyfileDownload(activeSecret);
-            showToast('Копия atlas-owner-key.json скачана');
-        }
-
-        function handleKeyfileUpload(event) {
-            const file = event.target.files?.[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = async (ev) => {
-                try {
-                    const parsed = JSON.parse(String(ev.target?.result || '').trim());
-                    const extractedToken = String(parsed.secret_token || '').trim();
-                    if (!extractedToken.startsWith('ATL-')) {
-                        showAdminLoginError('Некорректный формат файла-ключа.');
-                        return;
-                    }
-                    const uploadedHash = await sha256Hex(extractedToken);
-                    const storedHash = localStorage.getItem(OWNER_KEY_HASH_STORAGE);
-                    if (!storedHash) {
-                        localStorage.setItem(OWNER_KEY_HASH_STORAGE, uploadedHash);
-                        syncInitialKeyfileBoxVisibility();
-                    } else if (uploadedHash !== storedHash) {
-                        showAdminLoginError('Подпись файла-ключа не совпадает.');
-                        return;
-                    }
-                    document.getElementById('admin-login-error').classList.add('hidden');
-                    sessionStorage.setItem(OWNER_ACCESS_KEY_STORAGE, 'true');
-                    sessionStorage.setItem(OWNER_SESSION_RAW_KEY, extractedToken);
-                    await checkOwnerSessionAndMfa();
-                    showToast('Подпись файла-ключа подтверждена');
-                } catch (_) {
-                    showAdminLoginError('Ошибка чтения файла-ключа.');
-                }
-            };
-            reader.readAsText(file);
-        }
-
-        function handleAdminSignOut() {
-            sessionStorage.removeItem(OWNER_ACCESS_KEY_STORAGE);
-            sessionStorage.removeItem(OWNER_SESSION_RAW_KEY);
-            state.isVerifiedOwner = false;
-            document.getElementById('admin-dashboard-shell').classList.add('hidden');
-            document.getElementById('admin-auth-gate').classList.remove('hidden');
-            showToast('Сессия владельца завершена');
-        }
-
-        let DELIVERY_ZONES = [
-            { id: 'aviagorodok', name: 'Авиагородок', price: 500, priceLabel: '500 ₸', isFrom: false, goodLuckEligible: true, isActive: true, note: 'Входит в зону Good Luck Delivery' },
-            { id: 'batys2', name: 'Батыс-2', price: 500, priceLabel: '500 ₸', isFrom: false, goodLuckEligible: true, isActive: true, note: 'Входит в зону Good Luck Delivery' },
-            { id: 'mkr12', name: '12-й микрорайон', price: 500, priceLabel: '500 ₸', isFrom: false, goodLuckEligible: true, isActive: true, note: 'Входит в зону Good Luck Delivery' },
-            { id: 'mkr11', name: '11-й микрорайон', price: 500, priceLabel: '500 ₸', isFrom: false, goodLuckEligible: true, isActive: true, note: 'Входит в зону Good Luck Delivery' },
-            { id: 'other', name: 'Другие районы города', price: 1000, priceLabel: '1 000 ₸', isFrom: false, goodLuckEligible: false, isActive: true, note: 'За пределами бесплатной зоны • Стандартный тариф' }
+        const DELIVERY_ZONES = [
+            { id: 'aviagorodok', name: 'Авиагородок', price: 500, priceLabel: '500 ₸' },
+            { id: 'batys2', name: 'Батыс-2', price: 500, priceLabel: '500 ₸' },
+            { id: 'mkr12', name: '12-й микрорайон', price: 500, priceLabel: '500 ₸' },
+            { id: 'mkr11', name: '11-й микрорайон', price: 500, priceLabel: '500 ₸' },
+            { id: 'other', name: 'Другие районы города', price: 1000, priceLabel: '1 000 ₸' }
         ];
 
         let PRODUCTS = [
             {
-                id: 1,
-                title: 'Essentials Hoodie',
-                subtitle: 'Fear of God Essentials • Плотный флис',
-                category: 'clothing',
-                categoryLabel: 'Одежда',
-                price: 13490,
-                oldPrice: null,
-                status: 'in-transit',
-                statusLabel: 'В пути',
-                stockNote: 'Едет в новой поставке • Доступно к брони',
-                badge: 'В пути',
-                sizes: ['M (170–180 см)'],
-                selectedSize: 'M (170–180 см)',
-                maxQty: 5,
-                popularity: 100,
-                isActive: true,
-                description: 'Культовое худи Fear of God Essentials из плотного премиального хлопкового флиса. Фирменный свободный крой Relaxed Fit в размере M (оптимально на рост 170–180 см).',
+                id: 1, title: 'Essentials Hoodie', subtitle: 'Fear of God Essentials • Плотный флис',
+                category: 'clothing', categoryLabel: 'Одежда', price: 13490, oldPrice: null,
+                status: 'in-transit', statusLabel: 'В пути', stockNote: 'Едет в новой поставке • Доступно к брони',
+                badge: 'В пути', sizes: ['M (170–180 см)'], selectedSize: 'M (170–180 см)',
+                maxQty: 5, popularity: 100,
+                description: 'Культовое худи Fear of God Essentials из плотного премиального хлопкового флиса.',
                 composition: '80% плотный хлопок, 20% полиэстер (тяжёлый флис 480 г/м²).',
-                images: [
-                    'https://lh3.googleusercontent.com/d/1KkknDn8WOGoq1QVg9jgKZFtID2-Le75P',
-                    'https://lh3.googleusercontent.com/d/1i6T-0uQZ09Vht4b84lXotfNERkTBojHD',
-                    'https://lh3.googleusercontent.com/d/1aITSGogbvC4f2kGLA7OqZOyCyxCK5Mx4'
-                ]
+                images: ['https://lh3.googleusercontent.com/d/1KkknDn8WOGoq1QVg9jgKZFtID2-Le75P', 'https://lh3.googleusercontent.com/d/1i6T-0uQZ09Vht4b84lXotfNERkTBojHD', 'https://lh3.googleusercontent.com/d/1aITSGogbvC4f2kGLA7OqZOyCyxCK5Mx4']
             },
             {
-                id: 2,
-                title: 'Essentials Pants',
-                subtitle: 'Fear of God Essentials • Свободный крой',
-                category: 'clothing',
-                categoryLabel: 'Одежда',
-                price: 12990,
-                oldPrice: null,
-                status: 'in-transit',
-                statusLabel: 'В пути',
-                stockNote: 'Едет в новой поставке • Доступно к брони',
-                badge: 'В пути',
-                sizes: ['M (170–180 см)'],
-                selectedSize: 'M (170–180 см)',
-                maxQty: 5,
-                popularity: 98,
-                isActive: true,
-                description: 'Фирменные спортивные брюки Fear of God Essentials с эластичным поясом и удлинёнными шнурками. Размер M рассчитан на рост 170–180 см.',
+                id: 2, title: 'Essentials Pants', subtitle: 'Fear of God Essentials • Свободный крой',
+                category: 'clothing', categoryLabel: 'Одежда', price: 12990, oldPrice: null,
+                status: 'in-transit', statusLabel: 'В пути', stockNote: 'Едет в новой поставке • Доступно к брони',
+                badge: 'В пути', sizes: ['M (170–180 см)'], selectedSize: 'M (170–180 см)',
+                maxQty: 5, popularity: 98,
+                description: 'Фирменные спортивные брюки Fear of God Essentials с эластичным поясом.',
                 composition: '80% хлопок, 20% полиэстер, фирменный силиконовый патч.',
-                images: [
-                    'https://lh3.googleusercontent.com/d/1HInWlkgUitKtP3HZz0yRBu6BG7YD_Bg_',
-                    'https://lh3.googleusercontent.com/d/1qn_hE3n7PolLEt6mjWriAB_pmlTj-WWQ',
-                    'https://lh3.googleusercontent.com/d/1A8E-eeEe7IMp1VSIlpb58AsLjJxggYZr'
-                ]
+                images: ['https://lh3.googleusercontent.com/d/1HInWlkgUitKtP3HZz0yRBu6BG7YD_Bg_', 'https://lh3.googleusercontent.com/d/1qn_hE3n7PolLEt6mjWriAB_pmlTj-WWQ', 'https://lh3.googleusercontent.com/d/1A8E-eeEe7IMp1VSIlpb58AsLjJxggYZr']
             },
             {
-                id: 3,
-                title: 'Шапка-ушанка Patagonia',
-                subtitle: 'Утеплённая зимняя ушанка • Fleece Lining',
-                category: 'headwear',
-                categoryLabel: 'Головные уборы',
-                price: 6990,
-                oldPrice: null,
-                status: 'in-transit',
-                statusLabel: 'В пути',
-                stockNote: 'Едет в новой поставке • Доступно к брони',
-                badge: 'В пути',
-                sizes: ['ONE SIZE'],
-                selectedSize: 'ONE SIZE',
-                maxQty: 5,
-                popularity: 95,
-                isActive: true,
-                description: 'Тёплая зимняя шапка-ушанка Patagonia с мягкой подкладкой из густого флиса и ветрозащитным верхом.',
+                id: 3, title: 'Шапка-ушанка Patagonia', subtitle: 'Утеплённая зимняя ушанка • Fleece Lining',
+                category: 'headwear', categoryLabel: 'Головные уборы', price: 6990, oldPrice: null,
+                status: 'in-transit', statusLabel: 'В пути', stockNote: 'Едет в новой поставке • Доступно к брони',
+                badge: 'В пути', sizes: ['ONE SIZE'], selectedSize: 'ONE SIZE',
+                maxQty: 5, popularity: 95,
+                description: 'Тёплая зимняя шапка-ушанка Patagonia с мягкой подкладкой из густого флиса.',
                 composition: 'Ветрозащитный нейлон, мягкий утепляющий флис.',
-                images: [
-                    'https://lh3.googleusercontent.com/d/1AfKB24H-CcJpef9y9afuUn3mltCs6gOL',
-                    'https://lh3.googleusercontent.com/d/1qIERRjtq-SwFgIJMsRDXr5nCqGCUReTP',
-                    'https://lh3.googleusercontent.com/d/1pQ6UHkn3qXK-vVZ3bQgemRjKR9vg11_3'
-                ]
+                images: ['https://lh3.googleusercontent.com/d/1AfKB24H-CcJpef9y9afuUn3mltCs6gOL', 'https://lh3.googleusercontent.com/d/1qIERRjtq-SwFgIJMsRDXr5nCqGCUReTP', 'https://lh3.googleusercontent.com/d/1pQ6UHkn3qXK-vVZ3bQgemRjKR9vg11_3']
             },
             {
-                id: 4,
-                title: 'Nike Nocta Balaclava',
-                subtitle: 'Nike x Drake NOCTA • Технологичный трикотаж',
-                category: 'headwear',
-                categoryLabel: 'Головные уборы',
-                price: 6990,
-                oldPrice: null,
-                status: 'in-transit',
-                statusLabel: 'В пути',
-                stockNote: 'Едет в новой поставке • Доступно к брони',
-                badge: 'В пути',
-                sizes: ['ONE SIZE'],
-                selectedSize: 'ONE SIZE',
-                maxQty: 5,
-                popularity: 94,
-                isActive: true,
-                description: 'Балаклава из коллаборации Nike x Drake NOCTA с анатомической посадкой и светоотражающим брендингом.',
+                id: 4, title: 'Nike Nocta Balaclava', subtitle: 'Nike x Drake NOCTA • Технологичный трикотаж',
+                category: 'headwear', categoryLabel: 'Головные уборы', price: 6990, oldPrice: null,
+                status: 'in-transit', statusLabel: 'В пути', stockNote: 'Едет в новой поставке • Доступно к брони',
+                badge: 'В пути', sizes: ['ONE SIZE'], selectedSize: 'ONE SIZE',
+                maxQty: 5, popularity: 94,
+                description: 'Балаклава из коллаборации Nike x Drake NOCTA с анатомической посадкой.',
                 composition: 'Эластичный технологичный трикотаж с влагоотведением.',
-                images: [
-                    'https://lh3.googleusercontent.com/d/15plvlNHmAHqmLXAIMNQ5JPzt6CqirNTL'
-                ]
+                images: ['https://lh3.googleusercontent.com/d/15plvlNHmAHqmLXAIMNQ5JPzt6CqirNTL']
             },
             {
-                id: 5,
-                title: 'Chrome Hearts Black',
-                subtitle: 'Вязаная бини с вышивкой • Только чёрный цвет',
-                category: 'headwear',
-                categoryLabel: 'Головные уборы',
-                price: 7990,
-                oldPrice: null,
-                status: 'in-stock',
-                statusLabel: 'В наличии',
-                stockNote: 'Цвет: Только чёрный (последняя штука в наличии)',
-                badge: 'Осталась 1 шт.',
-                sizes: ['ONE SIZE'],
-                selectedSize: 'ONE SIZE',
-                maxQty: 1,
-                popularity: 99,
-                isActive: true,
-                description: 'Плотная вязаная бини Chrome Hearts с фирменной готической вышивкой. В наличии последний экземпляр — строго в чёрном цвете.',
+                id: 5, title: 'Chrome Hearts Black', subtitle: 'Вязаная бини с вышивкой • Только чёрный цвет',
+                category: 'headwear', categoryLabel: 'Головные уборы', price: 7990, oldPrice: null,
+                status: 'in-stock', statusLabel: 'В наличии', stockNote: 'Цвет: Только чёрный (последняя штука в наличии)',
+                badge: 'Осталась 1 шт.', sizes: ['ONE SIZE'], selectedSize: 'ONE SIZE',
+                maxQty: 1, popularity: 99,
+                description: 'Плотная вязаная бини Chrome Hearts с фирменной готической вышивкой.',
                 composition: '100% плотный акрилово-хлопковый трикотаж.',
-                images: [
-                    'https://lh3.googleusercontent.com/d/18tO5RfiQIEQX_mZialDC3OYbYOUDlqRr'
-                ]
+                images: ['https://lh3.googleusercontent.com/d/18tO5RfiQIEQX_mZialDC3OYbYOUDlqRr']
             },
             {
-                id: 6,
-                title: 'Mea Culpa Black',
-                subtitle: 'Вязаная бини Mea Culpa • Скидка -50%',
-                category: 'headwear',
-                categoryLabel: 'Головные уборы',
-                price: 2490,
-                oldPrice: 4990,
-                status: 'in-stock',
-                statusLabel: 'В наличии',
-                stockNote: 'Скидка -50% • Только чёрный (последняя штука)',
-                badge: '-50%',
-                sizes: ['ONE SIZE'],
-                selectedSize: 'ONE SIZE',
-                maxQty: 1,
-                popularity: 97,
-                isActive: true,
-                description: 'Фирменная шапка-бини Mea Culpa с контрастным графическим принтом. Доступна со скидкой -50% — в наличии последняя штука в чёрном цвете.',
+                id: 6, title: 'Mea Culpa Black', subtitle: 'Вязаная бини Mea Culpa • Скидка -50%',
+                category: 'headwear', categoryLabel: 'Головные уборы', price: 2490, oldPrice: 4990,
+                status: 'in-stock', statusLabel: 'В наличии', stockNote: 'Скидка -50% • Только чёрный (последняя штука)',
+                badge: '-50%', sizes: ['ONE SIZE'], selectedSize: 'ONE SIZE',
+                maxQty: 1, popularity: 97,
+                description: 'Фирменная шапка-бини Mea Culpa с контрастным графическим принтом.',
                 composition: '100% мягкий трикотаж двойной вязки.',
-                images: [
-                    'https://lh3.googleusercontent.com/d/1PkoPmfkuJxgN31Y8SybFzBF8MD_cWYFr'
-                ]
+                images: ['https://lh3.googleusercontent.com/d/1PkoPmfkuJxgN31Y8SybFzBF8MD_cWYFr']
             },
             {
-                id: 7,
-                title: 'Corteiz Beanie',
-                subtitle: 'CRTZ RTW • Скидка -58%',
-                category: 'headwear',
-                categoryLabel: 'Головные уборы',
-                price: 2490,
-                oldPrice: 5990,
-                status: 'in-stock',
-                statusLabel: 'В наличии',
-                stockNote: 'Скидка -58% • В наличии, отправка сегодня',
-                badge: '-58%',
-                sizes: ['ONE SIZE'],
-                selectedSize: 'ONE SIZE',
-                maxQty: 5,
-                popularity: 96,
-                isActive: true,
-                description: 'Классическая бини с отворотом от лондонского бренда Corteiz (CRTZ RTW) с фирменной вышивкой. Акционная цена 2 490 ₸.',
+                id: 7, title: 'Corteiz Beanie', subtitle: 'CRTZ RTW • Скидка -58%',
+                category: 'headwear', categoryLabel: 'Головные уборы', price: 2490, oldPrice: 5990,
+                status: 'in-stock', statusLabel: 'В наличии', stockNote: 'Скидка -58% • В наличии, отправка сегодня',
+                badge: '-58%', sizes: ['ONE SIZE'], selectedSize: 'ONE SIZE',
+                maxQty: 5, popularity: 96,
+                description: 'Классическая бини с отворотом от лондонского бренда Corteiz (CRTZ RTW).',
                 composition: '100% плотная вязка.',
-                images: [
-                    'https://lh3.googleusercontent.com/d/1qkF6nuwSlOP0gqD6nR8Ob9FPigEPNLKv'
-                ]
+                images: ['https://lh3.googleusercontent.com/d/1qkF6nuwSlOP0gqD6nR8Ob9FPigEPNLKv']
             },
             {
-                id: 8,
-                title: 'Stussy Beanie',
-                subtitle: 'Stüssy Stock Logo • Скидка -50%',
-                category: 'headwear',
-                categoryLabel: 'Головные уборы',
-                price: 2490,
-                oldPrice: 4990,
-                status: 'in-stock',
-                statusLabel: 'В наличии',
-                stockNote: 'Скидка -50% • В наличии, отправка сегодня',
-                badge: '-50%',
-                sizes: ['ONE SIZE'],
-                selectedSize: 'ONE SIZE',
-                maxQty: 5,
-                popularity: 95,
-                isActive: true,
-                description: 'Классическая шапка-бини Stüssy с вышитым логотипом Stock Logo на отвороте. Акционная цена 2 490 ₸.',
+                id: 8, title: 'Stussy Beanie', subtitle: 'Stüssy Stock Logo • Скидка -50%',
+                category: 'headwear', categoryLabel: 'Головные уборы', price: 2490, oldPrice: 4990,
+                status: 'in-stock', statusLabel: 'В наличии', stockNote: 'Скидка -50% • В наличии, отправка сегодня',
+                badge: '-50%', sizes: ['ONE SIZE'], selectedSize: 'ONE SIZE',
+                maxQty: 5, popularity: 95,
+                description: 'Классическая шапка-бини Stüssy с вышитым логотипом Stock Logo на отвороте.',
                 composition: '100% мягкий трикотаж.',
-                images: [
-                    'https://lh3.googleusercontent.com/d/1VPjsYa6lECcBzGAsHF4CNqsn7_pZ6Wbf'
-                ]
+                images: ['https://lh3.googleusercontent.com/d/1VPjsYa6lECcBzGAsHF4CNqsn7_pZ6Wbf']
             }
         ];
 
@@ -1995,23 +1535,63 @@
             category: 'all',
             statusFilter: 'all',
             size: 'ALL',
-            maxPrice: 15000,
+            maxPrice: 20000,
             searchQuery: '',
             sortBy: 'featured',
             cart: JSON.parse(localStorage.getItem('atlas_cart_saved') || '[]'),
             selectedZoneId: 'aviagorodok',
             deliveryMode: 'standard',
+            appliedPromo: null,
             currentPdpId: 1,
             currentPdpSize: 'M (170–180 см)',
-            isVerifiedOwner: false,
-            orders: JSON.parse(localStorage.getItem('atlas_local_orders') || '[]'),
-            storeSettings: {
-                store_name: 'ATLAS STORE',
-                whatsapp_phone: '77064449457',
-                good_luck_min_items: 2,
-                is_store_open: true
-            }
+            lastOrderCode: localStorage.getItem('atlas_last_order_code') || '',
+            activeTrackingChannel: null
         };
+
+        function mapDbProduct(row) {
+            const sizes = Array.isArray(row.sizes) && row.sizes.length ? row.sizes : ['ONE SIZE'];
+            return {
+                id: Number(row.id),
+                title: row.title,
+                subtitle: row.subtitle || 'ATLAS STORE',
+                category: row.category,
+                categoryLabel: row.category_label,
+                price: Number(row.price),
+                oldPrice: row.old_price ? Number(row.old_price) : null,
+                status: row.status,
+                statusLabel: row.status_label,
+                stockNote: row.stock_note || '',
+                badge: row.badge || row.status_label,
+                sizes,
+                selectedSize: sizes[0],
+                maxQty: Number(row.max_qty ?? 5),
+                popularity: Number(row.popularity ?? 90),
+                description: row.description || row.title,
+                composition: row.composition || '',
+                images: Array.isArray(row.images) && row.images.length ? row.images : ['https://placehold.co/800x1000/18181C/FFFFFF?text=ATLAS']
+            };
+        }
+
+        async function loadProductsFromSupabase() {
+            try {
+                const { data, error } = await sb.from('products').select('*').order('id', { ascending: true });
+                if (!error && data && data.length > 0) {
+                    PRODUCTS = data.map(mapDbProduct);
+                    applyFiltersAndRender();
+                    updateCartUI();
+                }
+            } catch (e) {
+                console.warn('Offline fallback products used', e);
+            }
+        }
+
+        function subscribeProductsRealtime() {
+            sb.channel('realtime-products')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, () => {
+                    loadProductsFromSupabase();
+                })
+                .subscribe();
+        }
 
         function formatPrice(amount) {
             return Number(amount || 0).toLocaleString('ru-RU') + ' ₸';
@@ -2028,7 +1608,6 @@
 
         function getCurrentRoute() {
             const hash = window.location.hash || '';
-            if (hash.startsWith('#/admin')) return '/admin';
             if (hash.startsWith('#/track')) return '/track';
             return '/';
         }
@@ -2043,16 +1622,17 @@
             const route = getCurrentRoute();
             document.getElementById('view-home')?.classList.add('view-hidden');
             document.getElementById('view-pdp')?.classList.add('view-hidden');
-            document.getElementById('view-admin')?.classList.add('view-hidden');
             document.getElementById('view-track')?.classList.add('view-hidden');
 
-            if (route === '/admin') {
-                document.getElementById('view-admin')?.classList.remove('view-hidden');
-                document.title = 'ATLAS STORE | Official Store — Admin';
-                await checkOwnerSessionAndMfa();
-            } else if (route === '/track') {
+            if (route === '/track') {
                 document.getElementById('view-track')?.classList.remove('view-hidden');
-                document.title = 'ATLAS STORE | Official Store — Отслеживание';
+                document.title = 'ATLAS STORE | Отслеживание заказа';
+                const hashQuery = window.location.hash.split('code=')[1];
+                const initialCode = hashQuery ? decodeURIComponent(hashQuery) : state.lastOrderCode;
+                if (initialCode) {
+                    document.getElementById('manual-tracking-token-input').value = initialCode;
+                    await trackOrderLive(initialCode);
+                }
             } else {
                 document.getElementById('view-home')?.classList.remove('view-hidden');
                 document.title = 'ATLAS STORE | Official Store';
@@ -2061,199 +1641,159 @@
 
         window.addEventListener('hashchange', renderActiveRoute);
 
-        function saveSupabaseClientConfig() {
-            const url = document.getElementById('cfg-supabase-url').value.trim().replace(/\/+$/, '');
-            const anon = document.getElementById('cfg-supabase-anon').value.trim();
-            if (!url || !anon) return;
-            localStorage.setItem('atlas_sb_url', url);
-            localStorage.setItem('atlas_sb_anon', anon);
-            if (window.supabase) supabaseClient = window.supabase.createClient(url, anon);
-            document.getElementById('supabase-config-banner').classList.add('hidden');
-            showToast('Supabase подключён');
-        }
+        // ==========================================
+        // LIVE 4-STAGE ORDER TRACKING
+        // ==========================================
+        const ORDER_STAGES = [
+            {
+                key: 'awaiting_payment',
+                title: 'Ожидание оплаты',
+                desc: 'Заказ оформлен. Ожидаем подтверждение перевода (Kaspi / Freedom / Halyk).',
+                icon: 'ph-clock'
+            },
+            {
+                key: 'paid',
+                title: 'Оплачен • Готовится к выезду',
+                desc: 'Оплата получена. Упаковываем ваш заказ и передаём курьеру.',
+                icon: 'ph-check-circle'
+            },
+            {
+                key: 'in_transit',
+                title: 'В пути к вам',
+                desc: 'Курьер выехал по вашему адресу в Актобе.',
+                icon: 'ph-car-profile'
+            },
+            {
+                key: 'delivered',
+                title: 'Приехали / Доставлен',
+                desc: 'Курьер на месте или заказ успешно вручён. Спасибо за покупку!',
+                icon: 'ph-flag-checkered'
+            }
+        ];
 
-        function resetSupabaseClientConfig() {
-            const banner = document.getElementById('supabase-config-banner');
-            if (banner) banner.classList.toggle('hidden');
-        }
+        function renderOrderTrackerCard(order) {
+            const resultEl = document.getElementById('public-tracking-result');
+            if (!order) {
+                resultEl.innerHTML = `<div class="p-5 rounded-card bg-[#18181C] border border-red-400/30 text-xs text-red-200 text-center">Заказ с таким кодом не найден. Проверьте правильность номера (например, ATL-4821).</div>`;
+                return;
+            }
 
-        async function loadOwnerDashboardData() {
-            const savedProds = localStorage.getItem('atlas_local_products');
-            if (savedProds) { try { PRODUCTS = JSON.parse(savedProds); } catch (_) {} }
-            const savedZones = localStorage.getItem('atlas_local_zones');
-            if (savedZones) { try { DELIVERY_ZONES = JSON.parse(savedZones); } catch (_) {} }
-            state.orders = JSON.parse(localStorage.getItem('atlas_local_orders') || '[]');
+            const currentIdx = Math.max(0, ORDER_STAGES.findIndex(s => s.key === order.status));
+            const itemsList = (order.items || [])
+                .map(i => `<div class="flex justify-between text-xs py-1 border-b border-white/[0.06] last:border-none"><span>${i.title} (${i.size}) × ${i.qty}</span><span class="tabular-nums font-semibold">${formatPrice(i.price * i.qty)}</span></div>`)
+                .join('');
 
-            const totalRev = state.orders.reduce((s, o) => s + Number(o.grand_total_kzt || 0), 0);
-            document.getElementById('kpi-total-revenue').textContent = formatPrice(totalRev);
-            document.getElementById('kpi-total-orders').textContent = state.orders.length;
-            document.getElementById('kpi-in-stock').textContent = PRODUCTS.filter(p => p.status === 'in-stock').length + ' поз.';
-
-            document.getElementById('overview-recent-orders').innerHTML = state.orders.slice(0, 5).map(o => `
-                <div class="flex items-center justify-between p-3 rounded-btn bg-[#18181C] border border-white/[0.08]">
-                    <span><strong>${o.order_number}</strong> • ${o.customer_name}</span>
-                    <span class="font-bold tabular-nums">${formatPrice(o.grand_total_kzt)}</span>
-                </div>
-            `).join('') || '<p class="text-zinc-400">Заказов пока нет.</p>';
-
-            document.getElementById('owner-orders-list').innerHTML = state.orders.map(o => `
-                <div class="bg-[#121215] border border-white/10 rounded-card p-5 text-xs space-y-1">
-                    <div class="flex justify-between font-bold">
-                        <span>${o.order_number} • ${o.customer_name} (${o.customer_phone})</span>
-                        <span>${formatPrice(o.grand_total_kzt)}</span>
-                    </div>
-                    <p class="text-zinc-400">${o.delivery_address || 'Самовывоз'}</p>
-                </div>
-            `).join('') || '<div class="bg-[#121215] rounded-card p-6 text-xs text-zinc-400">Заказов пока нет.</div>';
-
-            document.getElementById('owner-products-list').innerHTML = PRODUCTS.map(p => `
-                <div class="bg-[#121215] border border-white/10 rounded-card p-4 flex items-center justify-between gap-4 text-xs">
-                    <div class="flex items-center gap-3">
-                        <img src="${p.images[0] || ''}" class="w-12 h-14 object-cover rounded-btn bg-[#18181C]">
-                        <div>
-                            <div class="font-bold text-sm text-white">${p.title}</div>
-                            <div class="text-zinc-400 tabular-nums">${formatPrice(p.price)} • ${p.statusLabel}</div>
+            const timelineHtml = ORDER_STAGES.map((stage, idx) => {
+                const isDone = idx <= currentIdx;
+                const isCurrent = idx === currentIdx;
+                return `
+                    <div class="flex items-start gap-4 relative ${idx < ORDER_STAGES.length - 1 ? 'pb-6' : ''}">
+                        ${idx < ORDER_STAGES.length - 1 ? `<div class="absolute left-5 top-10 bottom-0 w-0.5 ${idx < currentIdx ? 'bg-emerald-400' : 'bg-white/10'}"></div>` : ''}
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 z-10 transition-all duration-500 ${
+                            isCurrent
+                                ? 'bg-emerald-400 text-obsidian shadow-[0_0_20px_rgba(52,211,153,0.6)] scale-110'
+                                : (isDone ? 'bg-emerald-500/25 text-emerald-300 border border-emerald-400/40' : 'bg-[#121215] text-zinc-500 border border-white/10')
+                        }">
+                            <i class="ph-bold ${stage.icon} text-lg"></i>
+                        </div>
+                        <div class="pt-1">
+                            <div class="flex items-center gap-2">
+                                <h4 class="font-bold text-sm sm:text-base ${isDone ? 'text-white' : 'text-zinc-500'}">${stage.title}</h4>
+                                ${isCurrent ? '<span class="px-2 py-0.5 rounded-pill bg-emerald-500/20 text-emerald-300 text-[10px] uppercase tracking-wider font-bold animate-pulse">Сейчас</span>' : ''}
+                            </div>
+                            <p class="text-xs mt-0.5 leading-relaxed ${isDone ? 'text-zinc-300' : 'text-zinc-500'}">${stage.desc}</p>
                         </div>
                     </div>
-                    <button onclick="openAdminProductEditor(${p.id})" class="px-3.5 py-2 rounded-btn bg-white/10 hover:bg-white hover:text-obsidian font-semibold">Редактировать</button>
-                </div>
-            `).join('');
+                `;
+            }).join('');
 
-            document.getElementById('owner-inventory-list').innerHTML = PRODUCTS.map(p => `
-                <div class="bg-[#121215] border border-white/10 rounded-card p-4 flex items-center justify-between text-xs">
-                    <span class="font-bold">${p.title}</span>
-                    <div class="flex items-center gap-2">
-                        <button onclick="adjustLocalStock(${p.id}, -1)" class="w-8 h-8 rounded-btn bg-white/10 font-bold">-</button>
-                        <span class="font-bold px-2">${p.maxQty} шт.</span>
-                        <button onclick="adjustLocalStock(${p.id}, 1)" class="w-8 h-8 rounded-btn bg-white/10 font-bold">+</button>
+            resultEl.innerHTML = `
+                <div class="bg-[#18181C] border border-white/10 rounded-card p-5 sm:p-7 space-y-6">
+                    <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/10">
+                        <div>
+                            <span class="text-[10px] uppercase tracking-[0.2em] text-zinc-400">КОД ЗАКАЗА</span>
+                            <div class="font-extrabold text-2xl text-amber-300 font-mono">${order.order_number}</div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[10px] uppercase tracking-[0.2em] text-zinc-400 block">СУММА ЗАКАЗА</span>
+                            <span class="font-bold text-lg text-white tabular-nums">${formatPrice(order.grand_total)}</span>
+                        </div>
+                    </div>
+
+                    <div>${timelineHtml}</div>
+
+                    <div class="pt-4 border-t border-white/10 space-y-2">
+                        <span class="text-[10px] uppercase tracking-[0.18em] text-zinc-400 font-semibold block">Детали заказа</span>
+                        <div class="text-xs text-zinc-300">📍 ${order.delivery_address || 'Самовывоз'} • 💳 ${order.payment_method}</div>
+                        <div class="bg-[#121215] rounded-btn p-3 border border-white/[0.06]">${itemsList}</div>
                     </div>
                 </div>
-            `).join('');
-
-            document.getElementById('owner-zones-list').innerHTML = DELIVERY_ZONES.map(z => `
-                <div class="bg-[#121215] border border-white/10 rounded-card p-4 flex items-center justify-between gap-3 text-xs">
-                    <span class="font-bold">${z.name}</span>
-                    <div class="flex items-center gap-2">
-                        <input id="zone-price-input-${z.id}" type="number" value="${z.price}" class="w-24 bg-[#18181C] border border-white/15 rounded-btn px-2.5 py-1.5 font-semibold text-white">
-                        <button onclick="saveOwnerZonePrice('${z.id}')" class="px-3.5 py-1.5 rounded-btn bg-white text-obsidian font-semibold">Сохранить</button>
-                    </div>
-                </div>
-            `).join('');
+            `;
         }
 
-        function switchOwnerSection(secName) {
-            document.querySelectorAll('.admin-section').forEach(el => el.classList.add('hidden'));
-            document.getElementById('admin-sec-' + secName)?.classList.remove('hidden');
-            document.querySelectorAll('.admin-nav-btn').forEach(btn => {
-                btn.className = btn.dataset.adminNav === secName
-                    ? 'admin-nav-btn shrink-0 flex items-center gap-3 px-4 py-3 rounded-btn text-xs uppercase tracking-[0.12em] font-semibold bg-white text-obsidian'
-                    : 'admin-nav-btn shrink-0 flex items-center gap-3 px-4 py-3 rounded-btn text-xs uppercase tracking-[0.12em] font-medium text-zinc-300 hover:bg-white/10';
-            });
-        }
+        async function trackOrderLive(rawCode) {
+            const clean = rawCode.trim().toUpperCase();
+            if (!clean) return;
+            const formattedCode = clean.startsWith('#') ? clean : '#' + clean;
 
-        function openAdminProductEditor(id) {
-            document.getElementById('admin-product-editor-card').classList.remove('hidden');
-            const p = PRODUCTS.find(x => x.id === id);
-            document.getElementById('edit-prod-id').value = p ? p.id : '';
-            document.getElementById('edit-prod-title').value = p ? p.title : '';
-            document.getElementById('edit-prod-price').value = p ? p.price : '';
-            document.getElementById('edit-prod-category').value = p ? p.category : 'headwear';
-            document.getElementById('edit-prod-status').value = p ? p.status : 'in-stock';
-            document.getElementById('edit-prod-images').value = p ? (p.images || []).join('\n') : '';
-        }
+            state.lastOrderCode = formattedCode;
+            localStorage.setItem('atlas_last_order_code', formattedCode);
 
-        function closeAdminProductEditor() {
-            document.getElementById('admin-product-editor-card').classList.add('hidden');
-        }
+            const { data } = await sb
+                .from('orders')
+                .select('*')
+                .eq('order_number', formattedCode)
+                .maybeSingle();
 
-        function saveAdminProduct(e) {
-            e.preventDefault();
-            const idVal = Number(document.getElementById('edit-prod-id').value);
-            const title = document.getElementById('edit-prod-title').value.trim();
-            const price = Number(document.getElementById('edit-prod-price').value);
-            const category = document.getElementById('edit-prod-category').value;
-            const status = document.getElementById('edit-prod-status').value;
-            const images = document.getElementById('edit-prod-images').value.split('\n').map(s => s.trim()).filter(Boolean);
+            renderOrderTrackerCard(data);
 
-            if (idVal) {
-                const idx = PRODUCTS.findIndex(p => p.id === idVal);
-                if (idx !== -1) {
-                    PRODUCTS[idx] = { ...PRODUCTS[idx], title, price, category, status, statusLabel: status === 'in-stock' ? 'В наличии' : 'В пути', images: images.length ? images : PRODUCTS[idx].images };
-                }
-            } else {
-                const newId = PRODUCTS.reduce((m, p) => Math.max(m, p.id), 0) + 1;
-                PRODUCTS.push({
-                    id: newId, title, subtitle: 'ATLAS STORE', category,
-                    categoryLabel: category === 'clothing' ? 'Одежда' : 'Головные уборы',
-                    price, oldPrice: null, status, statusLabel: status === 'in-stock' ? 'В наличии' : 'В пути',
-                    stockNote: '', badge: status === 'in-stock' ? 'В наличии' : 'В пути',
-                    sizes: ['ONE SIZE'], selectedSize: 'ONE SIZE', maxQty: 5, popularity: 90,
-                    isActive: true, description: title, composition: '',
-                    images: images.length ? images : ['https://placehold.co/800x1000/18181C/FFFFFF?text=ATLAS']
-                });
+            if (state.activeTrackingChannel) {
+                sb.removeChannel(state.activeTrackingChannel);
             }
-            localStorage.setItem('atlas_local_products', JSON.stringify(PRODUCTS));
-            closeAdminProductEditor();
-            loadOwnerDashboardData();
-            applyFiltersAndRender();
-            showToast('Товар сохранён');
-        }
 
-        function adjustLocalStock(id, delta) {
-            const p = PRODUCTS.find(x => x.id === id);
-            if (!p) return;
-            p.maxQty = Math.max(0, (p.maxQty || 1) + delta);
-            localStorage.setItem('atlas_local_products', JSON.stringify(PRODUCTS));
-            loadOwnerDashboardData();
-            applyFiltersAndRender();
-        }
-
-        function saveOwnerZonePrice(zoneId) {
-            const val = Number(document.getElementById('zone-price-input-' + zoneId).value);
-            const z = DELIVERY_ZONES.find(x => x.id === zoneId);
-            if (z) {
-                z.price = val;
-                z.priceLabel = formatPrice(val);
-                localStorage.setItem('atlas_local_zones', JSON.stringify(DELIVERY_ZONES));
-                renderDeliveryZones();
-                showToast('Тариф обновлён');
-            }
-        }
-
-        function saveOwnerStoreSettings(e) {
-            e.preventDefault();
-            state.storeSettings.whatsapp_phone = document.getElementById('set-store-whatsapp').value.trim();
-            showToast('Настройки сохранены');
+            state.activeTrackingChannel = sb
+                .channel('track-' + formattedCode)
+                .on(
+                    'postgres_changes',
+                    {
+                        event: 'UPDATE',
+                        schema: 'public',
+                        table: 'orders',
+                        filter: `order_number=eq.${formattedCode}`
+                    },
+                    (payload) => {
+                        renderOrderTrackerCard(payload.new);
+                        showToast('Статус вашего заказа обновился!');
+                    }
+                )
+                .subscribe();
         }
 
         function submitManualTrackingToken(e) {
             e.preventDefault();
-            const token = document.getElementById('manual-tracking-token-input').value.trim();
-            const resultEl = document.getElementById('public-tracking-result');
-            const localOrder = state.orders.find(o => o.order_number.toLowerCase() === token.toLowerCase());
-            if (localOrder) {
-                resultEl.innerHTML = `
-                    <div class="bg-[#18181C] border border-white/10 text-white rounded-card p-5 flex items-center justify-between">
-                        <div>
-                            <span class="text-[10px] uppercase tracking-wider text-zinc-400">НОМЕР ЗАКАЗА</span>
-                            <div class="font-bold text-xl">${localOrder.order_number}</div>
-                        </div>
-                        <span class="px-3.5 py-1.5 rounded-pill bg-white/15 text-xs font-semibold">Принят в обработку</span>
-                    </div>
-                `;
-            } else {
-                resultEl.innerHTML = `<div class="p-4 rounded-card bg-[#18181C] border border-white/10 text-xs text-zinc-300">Заказ не найден. Уточните статус в WhatsApp +7 706 444-94-57.</div>`;
-            }
+            const val = document.getElementById('manual-tracking-token-input').value;
+            trackOrderLive(val);
         }
 
-        // Render Interactive Delivery Zones List
+        // ==========================================
+        // DELIVERY & PROMOCODES
+        // ==========================================
+        function getTotalCartQty() {
+            return state.cart.reduce((acc, item) => acc + item.qty, 0);
+        }
+
         function renderDeliveryZones() {
             const listEl = document.getElementById('delivery-zones-list');
             const summaryEl = document.getElementById('selected-zone-summary');
             const zoneSelectEl = document.getElementById('order-delivery-zone');
             const activeZone = DELIVERY_ZONES.find(z => z.id === state.selectedZoneId) || DELIVERY_ZONES[0];
+            const totalQty = getTotalCartQty();
 
-            if (summaryEl) summaryEl.textContent = `Выбрано: ${activeZone.name} (${activeZone.priceLabel})`;
+            if (summaryEl) {
+                summaryEl.textContent = totalQty >= 2
+                    ? `Выбрано: ${activeZone.name} (0 ₸ — от 2 товаров)`
+                    : `Выбрано: ${activeZone.name} (${activeZone.priceLabel})`;
+            }
             if (zoneSelectEl && zoneSelectEl.value !== state.selectedZoneId) zoneSelectEl.value = state.selectedZoneId;
             if (!listEl) return;
 
@@ -2275,19 +1815,11 @@
                                 ${isSelected ? '<span class="w-2 h-2 rounded-full bg-obsidian"></span>' : ''}
                             </div>
                             <div>
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <span class="font-bold text-sm sm:text-base">${zone.name}</span>
-                                    ${zone.goodLuckEligible
-                                        ? `<span class="px-2 py-0.5 rounded-pill text-[10px] uppercase tracking-wider font-semibold ${
-                                            isSelected ? 'bg-white/15 text-amber-200' : 'bg-emerald-500/15 text-emerald-300'
-                                        }">Good Luck Zone</span>`
-                                        : ''
-                                    }
-                                </div>
-                                <p class="text-[11px] mt-0.5 text-zinc-400">${zone.note}</p>
+                                <span class="font-bold text-sm sm:text-base">${zone.name}</span>
+                                <p class="text-[11px] mt-0.5 text-zinc-400">При заказе от 2 товаров — бесплатно (0 ₸)</p>
                             </div>
                         </div>
-                        <span class="font-bold text-sm sm:text-base shrink-0 tabular-nums">${zone.priceLabel}</span>
+                        <span class="font-bold text-sm sm:text-base shrink-0 tabular-nums">${totalQty >= 2 ? '0 ₸' : zone.priceLabel}</span>
                     </div>
                 `;
             }).join('');
@@ -2297,6 +1829,7 @@
             state.selectedZoneId = zoneId;
             renderDeliveryZones();
             updateCheckoutSummary();
+            updateCartUI();
         }
 
         function continueToDeliveryOrder() {
@@ -2306,6 +1839,39 @@
                 return;
             }
             openCheckoutModal();
+        }
+
+        async function applyCheckoutPromo() {
+            const input = document.getElementById('checkout-promo-input');
+            const statusEl = document.getElementById('checkout-promo-status');
+            const code = input.value.trim().toUpperCase();
+
+            if (!code) {
+                state.appliedPromo = null;
+                statusEl.classList.add('hidden');
+                updateCheckoutSummary();
+                return;
+            }
+
+            const { data, error } = await sb
+                .from('promocodes')
+                .select('*')
+                .eq('code', code)
+                .eq('is_active', true)
+                .maybeSingle();
+
+            statusEl.classList.remove('hidden');
+            if (error || !data) {
+                state.appliedPromo = null;
+                statusEl.className = 'text-xs mt-2 font-medium text-red-400';
+                statusEl.textContent = 'Промокод не найден или недействителен.';
+            } else {
+                state.appliedPromo = data;
+                statusEl.className = 'text-xs mt-2 font-medium text-emerald-400';
+                const label = data.discount_type === 'percent' ? `${data.discount_value}%` : `${data.discount_value} ₸`;
+                statusEl.textContent = `Промокод ${data.code} применён! Скидка: ${label}`;
+            }
+            updateCheckoutSummary();
         }
 
         function initScrollRevealObserver() {
@@ -2320,7 +1886,9 @@
             document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
         }
 
-        // Render Product Catalog Grid
+        // ==========================================
+        // CATALOG RENDER & FILTERS
+        // ==========================================
         function applyFiltersAndRender() {
             const sortSelect = document.getElementById('sort-select');
             if (sortSelect) state.sortBy = sortSelect.value;
@@ -2367,30 +1935,33 @@
             emptyState.classList.add('hidden');
 
             grid.innerHTML = filtered.map((product, idx) => {
-                const isInStock = product.status === 'in-stock';
+                const isSoldOut = product.maxQty <= 0;
+                const isInStock = product.status === 'in-stock' && !isSoldOut;
                 const isLastOne = product.maxQty === 1;
                 const hasDiscount = Boolean(product.oldPrice && product.oldPrice > product.price);
 
                 let badgeClass = 'bg-white text-obsidian';
-                if (hasDiscount) {
+                let badgeText = product.badge;
+                if (isSoldOut) {
+                    badgeClass = 'bg-zinc-800 text-zinc-400 border border-white/10';
+                    badgeText = 'Распродано';
+                } else if (hasDiscount) {
                     badgeClass = 'bg-amber-500 text-obsidian';
                 } else if (isLastOne) {
                     badgeClass = 'bg-[#09090B]/90 text-amber-300 border border-amber-400/30';
                 } else if (!isInStock) {
                     badgeClass = 'bg-[#09090B]/85 backdrop-blur-md text-zinc-200 border border-white/10';
-                } else {
-                    badgeClass = 'bg-white text-obsidian';
                 }
 
-                const badgeHTML = `<span class="px-3 py-1 rounded-pill text-[10px] uppercase tracking-[0.14em] font-bold ${badgeClass}">${product.badge}</span>`;
+                const badgeHTML = `<span class="px-3 py-1 rounded-pill text-[10px] uppercase tracking-[0.14em] font-bold ${badgeClass}">${badgeText}</span>`;
                 const sizesHTML = product.sizes.map(sz => `<span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white/[0.08] text-zinc-200 border border-white/10">${sz}</span>`).join('');
-                const ctaLabel = isInStock ? 'В корзину' : 'Забронировать';
+                const ctaLabel = isSoldOut ? 'Нет в наличии' : (isInStock ? 'В корзину' : 'Забронировать');
                 const subtitleText = hasDiscount
                     ? `Скидка ${product.badge} • В наличии`
                     : (isLastOne ? 'Цвет: Только чёрный (последняя)' : product.subtitle);
 
                 return `
-                <article class="product-card dark-card reveal-on-scroll rounded-card p-3.5 sm:p-4 flex flex-col justify-between text-white" style="transition-delay: ${Math.min(idx * 55, 320)}ms">
+                <article class="product-card dark-card reveal-on-scroll rounded-card p-3.5 sm:p-4 flex flex-col justify-between text-white ${isSoldOut ? 'opacity-65' : ''}" style="transition-delay: ${Math.min(idx * 55, 320)}ms">
                     <div>
                         <div onclick="openProductModal(${product.id})" class="product-card-img-wrapper aspect-[4/5] cursor-pointer mb-4">
                             <img 
@@ -2413,18 +1984,12 @@
                             <div class="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between z-10">
                                 ${badgeHTML}
                             </div>
-
-                            <div class="absolute bottom-3.5 left-3.5 right-3.5 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 pointer-events-none hidden sm:flex justify-center">
-                                <span class="px-4 py-2 rounded-pill bg-black/80 border border-white/15 backdrop-blur-md text-white text-[11px] uppercase tracking-[0.14em] font-medium">
-                                    ${product.images.length > 1 ? `Смотреть фото (${product.images.length})` : 'Подробнее о товаре'}
-                                </span>
-                            </div>
                         </div>
 
                         <div onclick="openProductModal(${product.id})" class="cursor-pointer">
                             <div class="flex items-center justify-between text-[11px] uppercase tracking-[0.12em]">
                                 <span class="text-zinc-400">${product.categoryLabel}</span>
-                                <span class="${isInStock ? 'text-emerald-400 font-semibold' : 'text-amber-400 font-medium'}">${product.statusLabel}</span>
+                                <span class="${isSoldOut ? 'text-zinc-500' : (isInStock ? 'text-emerald-400 font-semibold' : 'text-amber-400 font-medium')}">${isSoldOut ? 'Нет в наличии' : product.statusLabel}</span>
                             </div>
                             <h3 class="font-bold text-base sm:text-lg text-white mt-1 group-hover:text-zinc-300 transition-colors leading-snug">
                                 ${product.title}
@@ -2443,10 +2008,11 @@
                         </div>
 
                         <button 
+                            ${isSoldOut ? 'disabled' : ''}
                             onclick="quickAddToCart(${product.id}, this)" 
-                            class="w-full py-3 px-4 rounded-btn ${hasDiscount ? 'bg-white text-obsidian hover:bg-zinc-200' : 'bg-white/[0.08] hover:bg-white text-white hover:text-obsidian border border-white/10'} text-xs uppercase tracking-[0.14em] font-semibold btn-luxury flex items-center justify-center gap-2"
+                            class="w-full py-3 px-4 rounded-btn ${isSoldOut ? 'bg-white/5 text-zinc-500 cursor-not-allowed' : (hasDiscount ? 'bg-white text-obsidian hover:bg-zinc-200' : 'bg-white/[0.08] hover:bg-white text-white hover:text-obsidian border border-white/10')} text-xs uppercase tracking-[0.14em] font-semibold btn-luxury flex items-center justify-center gap-2"
                         >
-                            <i class="ph ${isInStock ? 'ph-plus' : 'ph-clock'} text-sm"></i>
+                            <i class="ph ${isSoldOut ? 'ph-x-circle' : (isInStock ? 'ph-plus' : 'ph-clock')} text-sm"></i>
                             <span>${ctaLabel}</span>
                         </button>
                     </div>
@@ -2458,7 +2024,7 @@
 
         function quickAddToCart(productId, btnElement) {
             const product = PRODUCTS.find(p => p.id === productId);
-            if (!product) return;
+            if (!product || product.maxQty <= 0) return;
             const added = addItemToCartState(product.id, product.selectedSize);
             if (added && btnElement) {
                 const originalHTML = btnElement.innerHTML;
@@ -2471,11 +2037,11 @@
 
         function addItemToCartState(productId, size) {
             const product = PRODUCTS.find(p => p.id === productId);
-            if (!product) return false;
+            if (!product || product.maxQty <= 0) return false;
             const existing = state.cart.find(item => item.productId === productId && item.size === size);
             if (existing) {
                 if (existing.qty >= product.maxQty) {
-                    showToast(`«${product.title}» — осталась последняя 1 шт., она уже в корзине`);
+                    showToast(`«${product.title}» — доступно максимум ${product.maxQty} шт.`);
                     return false;
                 }
                 existing.qty += 1;
@@ -2484,6 +2050,7 @@
             }
             saveCartToStorage();
             updateCartUI();
+            renderDeliveryZones();
             const actionWord = product.status === 'in-stock' ? 'в корзине' : 'в брони (в пути)';
             showToast(`«${product.title}» ${actionWord}`);
             return true;
@@ -2507,13 +2074,13 @@
         }
 
         function navigateAndFilter(category) {
-            switchView('home');
+            navigateToRoute('/');
             setQuickTab(category, 'all');
             setTimeout(scrollToCatalog, 100);
         }
 
         function navigateAndStatus(status) {
-            switchView('home');
+            navigateToRoute('/');
             setQuickTab('all', status);
             setTimeout(scrollToCatalog, 100);
         }
@@ -2538,7 +2105,7 @@
 
         function updateFilterIndicator() {
             const dot = document.getElementById('active-filter-indicator');
-            if (dot) dot.classList.toggle('hidden', state.size === 'ALL' && state.maxPrice >= 15000);
+            if (dot) dot.classList.toggle('hidden', state.size === 'ALL' && state.maxPrice >= 20000);
         }
 
         function handleSearch(query) {
@@ -2562,11 +2129,11 @@
             state.category = 'all';
             state.statusFilter = 'all';
             state.size = 'ALL';
-            state.maxPrice = 15000;
+            state.maxPrice = 20000;
             state.searchQuery = '';
             const slider = document.getElementById('price-range-slider');
-            if (slider) slider.value = 15000;
-            document.getElementById('price-filter-label').textContent = 'До 15 000 ₸';
+            if (slider) slider.value = 20000;
+            document.getElementById('price-filter-label').textContent = 'До 20 000 ₸';
             clearSearch();
             setSizeFilter('ALL');
             setQuickTab('all', 'all');
@@ -2585,7 +2152,8 @@
 
             state.currentPdpId = product.id;
             state.currentPdpSize = product.selectedSize || product.sizes[0];
-            const isInStock = product.status === 'in-stock';
+            const isSoldOut = product.maxQty <= 0;
+            const isInStock = product.status === 'in-stock' && !isSoldOut;
             const isLastOne = product.maxQty === 1;
             const hasDiscount = Boolean(product.oldPrice && product.oldPrice > product.price);
 
@@ -2596,20 +2164,26 @@
             document.getElementById('pdp-price').textContent = formatPrice(product.price);
 
             const stockPill = document.getElementById('pdp-stock-pill');
-            stockPill.className = isInStock
-                ? 'inline-flex items-center gap-1.5 text-xs text-emerald-300 font-semibold bg-emerald-500/15 px-3 py-1 rounded-pill'
-                : 'inline-flex items-center gap-1.5 text-xs text-amber-300 font-semibold bg-amber-500/15 px-3 py-1 rounded-pill';
-            stockPill.innerHTML = `<span class="w-1.5 h-1.5 rounded-full ${isInStock ? 'bg-emerald-400' : 'bg-amber-400'}"></span>${isInStock ? product.statusLabel : product.statusLabel + ' (Бронь)'}`;
+            stockPill.className = isSoldOut
+                ? 'inline-flex items-center gap-1.5 text-xs text-zinc-400 font-semibold bg-white/10 px-3 py-1 rounded-pill'
+                : (isInStock
+                    ? 'inline-flex items-center gap-1.5 text-xs text-emerald-300 font-semibold bg-emerald-500/15 px-3 py-1 rounded-pill'
+                    : 'inline-flex items-center gap-1.5 text-xs text-amber-300 font-semibold bg-amber-500/15 px-3 py-1 rounded-pill');
+            stockPill.innerHTML = `<span class="w-1.5 h-1.5 rounded-full ${isSoldOut ? 'bg-zinc-500' : (isInStock ? 'bg-emerald-400' : 'bg-amber-400')}"></span>${isSoldOut ? 'Распродано' : (isInStock ? product.statusLabel : product.statusLabel + ' (Бронь)')}`;
 
             const colorNoteEl = document.getElementById('pdp-color-note');
-            if (isLastOne || !isInStock || hasDiscount) {
+            if ((isLastOne || !isInStock || hasDiscount) && product.stockNote) {
                 colorNoteEl.textContent = product.stockNote;
                 colorNoteEl.classList.remove('hidden');
             } else {
                 colorNoteEl.classList.add('hidden');
             }
 
-            document.getElementById('pdp-cta-label').textContent = isInStock ? 'ADD TO CART — В КОРЗИНУ' : 'ЗАБРОНИРОВАТЬ (В ПУТИ)';
+            const ctaBtn = document.getElementById('pdp-add-to-cart-btn');
+            ctaBtn.disabled = isSoldOut;
+            document.getElementById('pdp-cta-label').textContent = isSoldOut
+                ? 'НЕТ В НАЛИЧИИ'
+                : (isInStock ? 'ADD TO CART — В КОРЗИНУ' : 'ЗАБРОНИРОВАТЬ (В ПУТИ)');
 
             const priceEl = document.getElementById('pdp-price');
             const oldPriceEl = document.getElementById('pdp-old-price');
@@ -2624,9 +2198,9 @@
 
             const badgeEl = document.getElementById('pdp-badge');
             if (product.badge) {
-                badgeEl.textContent = product.badge;
+                badgeEl.textContent = isSoldOut ? 'Распродано' : product.badge;
                 badgeEl.className = `absolute top-5 left-5 z-10 px-3.5 py-1.5 rounded-pill text-[11px] uppercase tracking-[0.16em] font-bold ${
-                    hasDiscount ? 'bg-amber-500 text-obsidian' : (isLastOne ? 'bg-black/90 text-amber-300' : (isInStock ? 'bg-white text-obsidian' : 'bg-black/85 text-white'))
+                    isSoldOut ? 'bg-zinc-800 text-zinc-400' : (hasDiscount ? 'bg-amber-500 text-obsidian' : (isLastOne ? 'bg-black/90 text-amber-300' : (isInStock ? 'bg-white text-obsidian' : 'bg-black/85 text-white')))
                 }`;
             } else {
                 badgeEl.classList.add('hidden');
@@ -2707,6 +2281,7 @@
         function switchView(viewName) {
             const homeView = document.getElementById('view-home');
             const pdpView = document.getElementById('view-pdp');
+            document.getElementById('view-track')?.classList.add('view-hidden');
             if (viewName === 'pdp') {
                 homeView.classList.add('view-hidden');
                 pdpView.classList.remove('view-hidden');
@@ -2750,23 +2325,25 @@
             const cartItem = state.cart[index];
             const product = PRODUCTS.find(p => p.id === cartItem.productId);
             if (delta > 0 && product && cartItem.qty >= product.maxQty) {
-                showToast(`«${product.title}» — осталась последняя 1 шт.`);
+                showToast(`«${product.title}» — доступно максимум ${product.maxQty} шт.`);
                 return;
             }
             cartItem.qty += delta;
             if (cartItem.qty <= 0) state.cart.splice(index, 1);
             saveCartToStorage();
             updateCartUI();
+            renderDeliveryZones();
         }
 
         function removeCartItem(index) {
             state.cart.splice(index, 1);
             saveCartToStorage();
             updateCartUI();
+            renderDeliveryZones();
         }
 
         function updateCartUI() {
-            const totalItems = state.cart.reduce((acc, item) => acc + item.qty, 0);
+            const totalItems = getTotalCartQty();
             const badgeEl = document.getElementById('cart-count-badge');
             badgeEl.textContent = totalItems;
             badgeEl.classList.add('scale-125');
@@ -2790,7 +2367,7 @@
                 footerEl.classList.add('hidden');
                 floatingBar.classList.add('translate-y-28', 'opacity-0', 'pointer-events-none');
                 document.getElementById('free-shipping-bar').style.width = '0%';
-                document.getElementById('free-shipping-text').textContent = 'GOOD LUCK DELIVERY: добавьте от 2 товаров для бесплатной доставки';
+                document.getElementById('free-shipping-text').textContent = 'Добавьте от 2 товаров для бесплатной доставки (0 ₸)';
                 return;
             }
 
@@ -2842,12 +2419,14 @@
             const progress = Math.min(100, Math.round((totalItems / 2) * 100));
             document.getElementById('free-shipping-bar').style.width = `${progress}%`;
             document.getElementById('free-shipping-text').textContent = totalItems >= 2
-                ? 'GOOD LUCK DELIVERY: доступна бесплатная доставка в зоне акции'
-                : 'Добавьте ещё 1 товар для участия в GOOD LUCK DELIVERY';
+                ? 'Бесплатная доставка активирована (0 ₸ по Актобе)!'
+                : 'Добавьте ещё 1 товар для бесплатной доставки (0 ₸)';
 
             const activeZone = DELIVERY_ZONES.find(z => z.id === state.selectedZoneId) || DELIVERY_ZONES[0];
             document.getElementById('cart-subtotal').textContent = formatPrice(subtotal);
-            document.getElementById('cart-shipping-cost').textContent = `${activeZone.name} (${activeZone.priceLabel})`;
+            document.getElementById('cart-shipping-cost').textContent = totalItems >= 2
+                ? '0 ₸ (Бесплатно от 2 шт.)'
+                : `${activeZone.name} (${activeZone.priceLabel})`;
             document.getElementById('cart-total').textContent = formatPrice(subtotal);
         }
 
@@ -2898,128 +2477,211 @@
             updateCheckoutSummary();
         }
 
+        function calculateCheckoutTotals() {
+            let subtotal = 0;
+            let totalQty = 0;
+            state.cart.forEach(cartItem => {
+                const p = PRODUCTS.find(prod => prod.id === cartItem.productId);
+                if (p) {
+                    subtotal += p.price * cartItem.qty;
+                    totalQty += cartItem.qty;
+                }
+            });
+
+            let discountAmount = 0;
+            if (state.appliedPromo) {
+                if (state.appliedPromo.discount_type === 'percent') {
+                    discountAmount = Math.round((subtotal * state.appliedPromo.discount_value) / 100);
+                } else {
+                    discountAmount = Math.min(subtotal, Number(state.appliedPromo.discount_value));
+                }
+            }
+
+            const zone = DELIVERY_ZONES.find(z => z.id === state.selectedZoneId) || DELIVERY_ZONES[0];
+            let deliveryFee = 0;
+            if (state.deliveryMode === 'standard') {
+                deliveryFee = totalQty >= 2 ? 0 : zone.price;
+            }
+
+            const grandTotal = Math.max(0, subtotal - discountAmount + deliveryFee);
+            return { subtotal, totalQty, discountAmount, deliveryFee, grandTotal, zone };
+        }
+
         function updateCheckoutSummary() {
             const itemsContainer = document.getElementById('checkout-selected-items');
             if (!itemsContainer) return;
 
-            let subtotal = 0;
-            let totalQty = 0;
             itemsContainer.innerHTML = state.cart.map(cartItem => {
                 const p = PRODUCTS.find(prod => prod.id === cartItem.productId);
                 if (!p) return '';
                 const sum = p.price * cartItem.qty;
-                subtotal += sum;
-                totalQty += cartItem.qty;
                 return `<div class="flex items-center justify-between py-1.5 border-b border-white/[0.07] last:border-none"><span class="font-medium text-white">${p.title} <span class="text-zinc-400">(${cartItem.size} × ${cartItem.qty})</span></span><span class="font-semibold text-white tabular-nums">${formatPrice(sum)}</span></div>`;
             }).join('') || '<p class="text-zinc-400">Корзина пуста</p>';
 
-            const zone = DELIVERY_ZONES.find(z => z.id === state.selectedZoneId) || DELIVERY_ZONES[0];
+            const { subtotal, totalQty, discountAmount, deliveryFee, grandTotal, zone } = calculateCheckoutTotals();
             const statusBox = document.getElementById('checkout-delivery-status-box');
             const labelEl = document.getElementById('checkout-delivery-label');
             const feeEl = document.getElementById('checkout-delivery-fee');
             const totalEl = document.getElementById('checkout-modal-total');
+            const discRow = document.getElementById('checkout-discount-row');
 
             document.getElementById('checkout-items-count').textContent = totalQty;
             document.getElementById('checkout-items-subtotal').textContent = formatPrice(subtotal);
 
+            if (discountAmount > 0) {
+                discRow.classList.remove('hidden');
+                document.getElementById('checkout-discount-amount').textContent = `-${formatPrice(discountAmount)}`;
+            } else {
+                discRow.classList.add('hidden');
+            }
+
             if (state.deliveryMode === 'pickup') {
                 labelEl.textContent = 'Самовывоз';
                 feeEl.textContent = '0 ₸ (Бесплатно)';
-                totalEl.textContent = formatPrice(subtotal);
                 statusBox.innerHTML = `<strong class="text-white block mb-1">САМОВЫВОЗ (0 ₸):</strong> Точный адрес отправляется продавцом сразу в WhatsApp после оплаты заказа.`;
             } else if (state.deliveryMode === 'express') {
                 labelEl.textContent = 'Express курьер';
                 feeEl.textContent = 'Оплачивается курьеру';
-                totalEl.textContent = formatPrice(subtotal);
                 statusBox.innerHTML = `<strong class="text-white block mb-1">EXPRESS DELIVERY:</strong> Вы самостоятельно вызываете курьера и оплачиваете доставку в сервисе.`;
             } else {
                 labelEl.textContent = `Стандартная (${zone.name})`;
-                feeEl.textContent = formatPrice(zone.price);
-                totalEl.textContent = formatPrice(subtotal + zone.price);
-                statusBox.innerHTML = (totalQty >= 2 && zone.goodLuckEligible)
-                    ? `<strong class="text-emerald-300 block mb-1">GOOD LUCK DELIVERY ДОСТУПНА:</strong> От 2 товаров в районе <strong>${zone.name}</strong> — бесплатную доставку подтвердит продавец.`
-                    : `<strong class="text-white block mb-1">СТАНДАРТНАЯ ДОСТАВКА (${zone.name}):</strong> Фиксированный тариф — <strong>${zone.priceLabel}</strong>.`;
+                feeEl.textContent = deliveryFee === 0 ? '0 ₸ (Бесплатно)' : formatPrice(deliveryFee);
+                statusBox.innerHTML = totalQty >= 2
+                    ? `<strong class="text-emerald-300 block mb-1">БЕСПЛАТНАЯ ДОСТАВКА (0 ₸):</strong> В корзине ${totalQty} шт. — доставка в район <strong>${zone.name}</strong> за счёт магазина.`
+                    : `<strong class="text-white block mb-1">СТАНДАРТНАЯ ДОСТАВКА (${zone.name}):</strong> Тариф — <strong>${zone.priceLabel}</strong>. Добавьте ещё 1 товар, чтобы получить доставку за 0 ₸.`;
             }
+
+            totalEl.textContent = formatPrice(grandTotal);
         }
 
-        function submitOrder(event) {
+        async function submitOrder(event) {
             event.preventDefault();
             if (state.cart.length === 0) return;
 
-            const randomOrder = '#ATL-' + Math.floor(1000 + Math.random() * 9000);
-            const name = document.getElementById('order-customer-name').value.trim();
-            const phone = document.getElementById('order-customer-phone').value.trim();
-            const address = document.getElementById('order-customer-address').value.trim();
-            const comment = document.getElementById('order-customer-comment').value.trim();
-            const payment = document.querySelector('input[name="payment"]:checked')?.value || 'Kaspi';
-            const zone = DELIVERY_ZONES.find(z => z.id === state.selectedZoneId) || DELIVERY_ZONES[0];
+            const btn = document.getElementById('submit-order-btn');
+            btn.disabled = true;
+            btn.innerHTML = `<span>Создаём заказ...</span>`;
 
-            let subtotal = 0;
-            const itemsLines = state.cart.map((cartItem, i) => {
-                const p = PRODUCTS.find(prod => prod.id === cartItem.productId);
-                const lineSum = p.price * cartItem.qty;
-                subtotal += lineSum;
-                return `${i + 1}. ${p.title} (${cartItem.size}) × ${cartItem.qty} — ${formatPrice(lineSum)}`;
-            }).join('\n');
+            try {
+                const orderNumber = '#ATL-' + Math.floor(1000 + Math.random() * 9000);
+                const name = document.getElementById('order-customer-name').value.trim();
+                const phone = document.getElementById('order-customer-phone').value.trim();
+                const address = document.getElementById('order-customer-address').value.trim();
+                const comment = document.getElementById('order-customer-comment').value.trim();
+                const payment = document.querySelector('input[name="payment"]:checked')?.value || 'Kaspi';
+                const { subtotal, discountAmount, deliveryFee, grandTotal, zone } = calculateCheckoutTotals();
 
-            const deliveryFee = state.deliveryMode === 'standard' ? zone.price : 0;
-            const grandTotal = subtotal + deliveryFee;
+                const structuredItems = state.cart.map(cartItem => {
+                    const p = PRODUCTS.find(prod => prod.id === cartItem.productId);
+                    return {
+                        id: p.id,
+                        title: p.title,
+                        size: cartItem.size,
+                        qty: cartItem.qty,
+                        price: p.price
+                    };
+                });
 
-            state.orders.unshift({
-                id: 'ord-' + Date.now(),
-                order_number: randomOrder,
-                customer_name: name,
-                customer_phone: phone,
-                delivery_address: state.deliveryMode === 'pickup' ? 'Самовывоз' : `${zone.name}, ${address}`,
-                grand_total_kzt: grandTotal,
-                created_at: new Date().toISOString()
-            });
-            localStorage.setItem('atlas_local_orders', JSON.stringify(state.orders));
+                const fullDeliveryAddress = state.deliveryMode === 'pickup'
+                    ? 'Самовывоз'
+                    : `${zone.name}, ${address}${state.deliveryMode === 'express' ? ' (Express курьер)' : ''}`;
 
-            const templateLines = [
-                `ЗАКАЗ ${randomOrder} — ATLAS STORE`,
-                ``,
-                `Товары:`,
-                itemsLines,
-                ``,
-                `Способ получения: ${state.deliveryMode === 'pickup' ? 'Самовывоз (0 ₸)' : (state.deliveryMode === 'express' ? 'Express курьер' : `Доставка (${zone.name} — ${zone.priceLabel})`)}`,
-                state.deliveryMode !== 'pickup' ? `Адрес: ${address}` : null,
-                `Итого к оплате: ${formatPrice(grandTotal)}`,
-                `Оплата: ${payment}`,
-                `Покупатель: ${name} (${phone})`,
-                comment ? `Комментарий: ${comment}` : null
-            ].filter(Boolean).join('\n');
+                const orderPayload = {
+                    order_number: orderNumber,
+                    customer_name: name,
+                    customer_phone: phone,
+                    delivery_mode: state.deliveryMode,
+                    delivery_zone: zone.name,
+                    delivery_address: fullDeliveryAddress,
+                    items: structuredItems,
+                    subtotal,
+                    discount_amount: discountAmount,
+                    promo_code: state.appliedPromo ? state.appliedPromo.code : null,
+                    delivery_fee: deliveryFee,
+                    grand_total: grandTotal,
+                    payment_method: payment,
+                    comment,
+                    status: 'awaiting_payment'
+                };
 
-            document.getElementById('order-number-display').textContent = randomOrder;
-            document.getElementById('whatsapp-order-preview').textContent = templateLines;
-            const storeWhatsAppPhone = state.storeSettings.whatsapp_phone || '77064449457';
-            document.getElementById('whatsapp-direct-link').href = `https://wa.me/${storeWhatsAppPhone}?text=${encodeURIComponent(templateLines)}`;
+                // Сохраняем заказ в Supabase
+                await sb.from('orders').insert([orderPayload]);
 
-            document.getElementById('checkout-form-container').classList.add('hidden');
-            document.getElementById('checkout-success-container').classList.remove('hidden');
-            document.getElementById('checkout-modal-overlay').scrollTop = 0;
+                // Отправляем уведомление с кнопками в Telegram-бот владельца
+                fetch('/api/notify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderPayload)
+                }).catch(() => {});
+
+                state.lastOrderCode = orderNumber;
+                localStorage.setItem('atlas_last_order_code', orderNumber);
+
+                const itemsLines = structuredItems
+                    .map((item, i) => `${i + 1}. ${item.title} (${item.size}) × ${item.qty} — ${formatPrice(item.price * item.qty)}`)
+                    .join('\n');
+
+                const trackLink = `https://atlasaktobe.store/#/track?code=${encodeURIComponent(orderNumber)}`;
+
+                const templateLines = [
+                    `ЗАКАЗ ${orderNumber} — ATLAS STORE`,
+                    ``,
+                    `Товары:`,
+                    itemsLines,
+                    ``,
+                    state.appliedPromo ? `Промокод ${state.appliedPromo.code}: -${formatPrice(discountAmount)}` : null,
+                    `Способ получения: ${state.deliveryMode === 'pickup' ? 'Самовывоз (0 ₸)' : (state.deliveryMode === 'express' ? 'Express курьер' : `Доставка (${zone.name} — ${deliveryFee === 0 ? 'Бесплатно' : formatPrice(deliveryFee)})`)}`,
+                    state.deliveryMode !== 'pickup' ? `Адрес: ${address}` : null,
+                    `Итого к оплате: ${formatPrice(grandTotal)}`,
+                    `Оплата: ${payment}`,
+                    `Покупатель: ${name} (${phone})`,
+                    comment ? `Комментарий: ${comment}` : null,
+                    ``,
+                    `Отслеживание заказа онлайн: ${trackLink}`
+                ].filter(Boolean).join('\n');
+
+                document.getElementById('order-number-display').textContent = orderNumber;
+                document.getElementById('whatsapp-order-preview').textContent = templateLines;
+                document.getElementById('whatsapp-direct-link').href = `https://wa.me/77064449457?text=${encodeURIComponent(templateLines)}`;
+
+                document.getElementById('checkout-form-container').classList.add('hidden');
+                document.getElementById('checkout-success-container').classList.remove('hidden');
+                document.getElementById('checkout-modal-overlay').scrollTop = 0;
+
+                // Очищаем корзину после фиксации заказа в базе
+                state.cart = [];
+                state.appliedPromo = null;
+                saveCartToStorage();
+                updateCartUI();
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<span>Оформить и отправить в WhatsApp</span><i class="ph ph-whatsapp-logo text-base text-emerald-600"></i>`;
+            }
         }
 
         function copyOrderTemplate() {
             const text = document.getElementById('whatsapp-order-preview').textContent;
-            const temp = document.createElement('textarea');
-            temp.value = text;
-            document.body.appendChild(temp);
-            temp.select();
-            document.execCommand('copy');
-            document.body.removeChild(temp);
-            showToast('Шаблон заказа скопирован');
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => showToast('Шаблон заказа скопирован'));
+            } else {
+                const temp = document.createElement('textarea');
+                temp.value = text;
+                document.body.appendChild(temp);
+                temp.select();
+                document.execCommand('copy');
+                document.body.removeChild(temp);
+                showToast('Шаблон заказа скопирован');
+            }
         }
 
-        function finishOrderAndReset() {
-            state.cart = [];
-            saveCartToStorage();
-            updateCartUI();
+        function goToLiveTrackingAfterOrder() {
             closeCheckoutModal();
-            switchView('home');
+            navigateToRoute('/track?code=' + encodeURIComponent(state.lastOrderCode));
         }
 
-        function openTrackingModal() { navigateToRoute('/track'); }
+        function openTrackingModal() {
+            navigateToRoute('/track');
+        }
 
         function toggleMobileSearch() {
             const bar = document.getElementById('mobile-search-bar');
@@ -3027,9 +2689,9 @@
             if (!bar.classList.contains('hidden')) document.getElementById('mobile-search-input').focus();
         }
 
-        function scrollToCatalog() { switchView('home'); document.getElementById('catalog-section')?.scrollIntoView({ behavior: 'smooth' }); }
-        function scrollToDelivery() { switchView('home'); document.getElementById('delivery-section')?.scrollIntoView({ behavior: 'smooth' }); }
-        function scrollToReviews() { switchView('home'); document.getElementById('reviews-section')?.scrollIntoView({ behavior: 'smooth' }); }
+        function scrollToCatalog() { navigateToRoute('/'); document.getElementById('catalog-section')?.scrollIntoView({ behavior: 'smooth' }); }
+        function scrollToDelivery() { navigateToRoute('/'); document.getElementById('delivery-section')?.scrollIntoView({ behavior: 'smooth' }); }
+        function scrollToReviews() { navigateToRoute('/'); document.getElementById('reviews-section')?.scrollIntoView({ behavior: 'smooth' }); }
 
         const CUSTOMER_REVIEWS = [
             { id: 1, name: 'Алихан С.', city: 'Актобе • Батыс-2', item: 'Chrome Hearts Black', text: 'Спасибо, всё получил. Качество понравилось, буду заказывать ещё.', photo: 'https://lh3.googleusercontent.com/d/18tO5RfiQIEQX_mZialDC3OYbYOUDlqRr' },
@@ -3218,6 +2880,8 @@
             updateCartUI();
             initScrollRevealObserver();
             initPremiumMotionEngine();
+            await loadProductsFromSupabase();
+            subscribeProductsRealtime();
             await renderActiveRoute();
         });
     </script>
