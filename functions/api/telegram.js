@@ -7,7 +7,7 @@ export async function onRequest(context) {
 
     const BOT_TOKEN = env.TELEGRAM_BOT_TOKEN;
     const OWNER_ID = Number(env.OWNER_TELEGRAM_ID);
-    const SUPABASE_URL = env.SUPABASE_URL;
+    const SUPABASE_URL = (env.SUPABASE_URL || '').replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '');
     const SUPABASE_SERVICE_KEY = env.SUPABASE_SERVICE_ROLE_KEY;
 
     const tgSend = async (chatId, text, replyMarkup = null) => {
@@ -31,6 +31,9 @@ export async function onRequest(context) {
     };
 
     const sbQuery = async (path, method = 'GET', body = null) => {
+        if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+            throw new Error('Не заданы SUPABASE_URL или SUPABASE_SERVICE_ROLE_KEY в Cloudflare');
+        }
         const opts = {
             method,
             headers: {
@@ -42,7 +45,11 @@ export async function onRequest(context) {
         };
         if (body) opts.body = JSON.stringify(body);
         const r = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, opts);
-        return r.json();
+        const data = await r.json();
+        if (!r.ok) {
+            throw new Error(data.message || data.error || `Ошибка Supabase (${r.status})`);
+        }
+        return data;
     };
 
     const statusKeyboard = (orderNumber) => ({
@@ -65,12 +72,14 @@ export async function onRequest(context) {
         delivered: '🏁 Приехали / Доставлен'
     };
 
+    let chatIdForError = null;
+
     try {
         const update = await request.json();
 
-        // Обработка нажатия кнопок под заказом
         if (update.callback_query) {
             const cb = update.callback_query;
+            chatIdForError = cb.message?.chat?.id;
             if (cb.from.id !== OWNER_ID) return new Response('OK', { status: 200 });
 
             const [, orderNumber, newStatus] = cb.data.split(':');
@@ -97,18 +106,18 @@ export async function onRequest(context) {
             return new Response('OK', { status: 200 });
         }
 
-        // Обработка команд с iPhone
         const msg = update.message;
         if (!msg || !msg.text) return new Response('OK', { status: 200 });
+        chatIdForError = msg.chat.id;
 
         if (msg.from.id !== OWNER_ID) {
-            await tgSend(msg.chat.id, `⛔ Доступ закрыт.`);
+            await tgSend(msg.chat.id, `⛔ Доступ закрыт. Ваш ID: <code>${msg.from.id}</code>`);
             return new Response('OK', { status: 200 });
         }
 
         const text = msg.text.trim();
         const parts = text.split(/\s+/);
-        const cmd = parts[0].toLowerCase();
+        const cmd = parts[0].toLowerCase().split('@')[0];
 
         if (cmd === '/start' || cmd === '/help') {
             await tgSend(
@@ -209,7 +218,9 @@ export async function onRequest(context) {
             }
         }
     } catch (err) {
-        console.error(err);
+        if (chatIdForError && BOT_TOKEN) {
+            await tgSend(chatIdForError, `⚠️ <b>Ошибка:</b> ${err.message}`);
+        }
     }
 
     return new Response(JSON.stringify({ ok: true }), {
