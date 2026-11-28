@@ -10,10 +10,15 @@ export async function onRequestPost(context) {
             .map(i => `• ${i.title} (${i.size}) × ${i.qty}`)
             .join('\n');
 
+        const addr = order.delivery_address || 'Самовывоз';
+        const gisLink = addr !== 'Самовывоз'
+            ? `\n🗺 <a href="https://2gis.kz/aktobe/search/${encodeURIComponent('Актобе ' + addr)}">Открыть адрес в 2GIS</a>`
+            : '';
+
         const text =
             `🔥 <b>НОВЫЙ ЗАКАЗ ${order.order_number}</b>\n\n` +
             `👤 <b>Клиент:</b> ${order.customer_name} (${order.customer_phone})\n` +
-            `🚚 <b>Доставка:</b> ${order.delivery_address || 'Самовывоз'}\n` +
+            `🚚 <b>Доставка:</b> ${addr}${gisLink}\n` +
             `📦 <b>Состав:</b>\n${itemsStr}\n` +
             (order.promo_code ? `🎟 <b>Промокод:</b> ${order.promo_code} (-${order.discount_amount} ₸)\n` : '') +
             `💰 <b>Итого:</b> ${order.grand_total} ₸ (${order.payment_method})\n` +
@@ -29,6 +34,9 @@ export async function onRequestPost(context) {
                 [
                     { text: '🚗 Выехал / В пути', callback_data: `st:${order.order_number}:in_transit` },
                     { text: '🏁 Приехали', callback_data: `st:${order.order_number}:delivered` }
+                ],
+                [
+                    { text: '❌ Отменить заказ (вернуть товар)', callback_data: `st:${order.order_number}:cancelled` }
                 ]
             ]
         };
@@ -40,6 +48,7 @@ export async function onRequestPost(context) {
                 chat_id: OWNER_ID,
                 text,
                 parse_mode: 'HTML',
+                disable_web_page_preview: true,
                 reply_markup: keyboard
             })
         });
