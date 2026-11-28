@@ -11,7 +11,7 @@ export async function onRequest(context) {
     const SUPABASE_SERVICE_KEY = (env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
 
     const tgSend = async (chatId, text, replyMarkup = null) => {
-        const body = { chat_id: chatId, text, parse_mode: 'HTML' };
+        const body = { chat_id: chatId, text, parse_mode: 'HTML', disable_web_page_preview: true };
         if (replyMarkup) body.reply_markup = replyMarkup;
         await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
             method: 'POST',
@@ -21,7 +21,7 @@ export async function onRequest(context) {
     };
 
     const tgEdit = async (chatId, messageId, text, replyMarkup = null) => {
-        const body = { chat_id: chatId, message_id: messageId, text, parse_mode: 'HTML' };
+        const body = { chat_id: chatId, message_id: messageId, text, parse_mode: 'HTML', disable_web_page_preview: true };
         if (replyMarkup) body.reply_markup = replyMarkup;
         await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/editMessageText`, {
             method: 'POST',
@@ -59,6 +59,19 @@ export async function onRequest(context) {
         return data;
     };
 
+    const restoreOrderStock = async (order) => {
+        if (!order || !Array.isArray(order.items)) return;
+        for (const item of order.items) {
+            const prods = await sbQuery(`products?id=eq.${Number(item.id)}&select=id,max_qty`);
+            if (prods.length) {
+                const currentQty = Number(prods[0].max_qty || 0);
+                await sbQuery(`products?id=eq.${Number(item.id)}`, 'PATCH', {
+                    max_qty: currentQty + Number(item.qty || 1)
+                });
+            }
+        }
+    };
+
     const statusKeyboard = (orderNumber) => ({
         inline_keyboard: [
             [
@@ -68,6 +81,9 @@ export async function onRequest(context) {
             [
                 { text: '🚗 Выехал / В пути', callback_data: `st:${orderNumber}:in_transit` },
                 { text: '🏁 Приехали', callback_data: `st:${orderNumber}:delivered` }
+            ],
+            [
+                { text: '❌ Отменить заказ (вернуть товар)', callback_data: `st:${orderNumber}:cancelled` }
             ]
         ]
     });
@@ -76,7 +92,26 @@ export async function onRequest(context) {
         awaiting_payment: '⏳ Ожидание оплаты',
         paid: '✅ Оплачен / Собирается',
         in_transit: '🚗 Выехал / В пути',
-        delivered: '🏁 Приехали / Доставлен'
+        delivered: '🏁 Приехали / Доставлен',
+        cancelled: '❌ Отменён (остатки возвращены)'
+    };
+
+    const formatOrderCard = (o) => {
+        const itemsStr = (o.items || []).map(i => `• ${i.title} (${i.size}) × ${i.qty}`).join('\n');
+        const addr = o.delivery_address || 'Самовывоз';
+        const gisLink = addr !== 'Самовывоз'
+            ? `\n🗺 <a href="https://2gis.kz/aktobe/search/${encodeURIComponent('Актобе ' + addr)}">Открыть адрес в 2GIS</a>`
+            : '';
+        return (
+            `🛍 <b>Заказ ${o.order_number}</b>\n` +
+            `👤 ${o.customer_name} (${o.customer_phone})\n` +
+            `📍 ${addr}${gisLink}\n` +
+            `${itemsStr}\n` +
+            (o.promo_code ? `🎟 Промокод: ${o.promo_code} (-${o.discount_amount} ₸)\n` : '') +
+            `💰 Итого: <b>${o.grand_total} ₸</b> (${o.payment_method})\n` +
+            (o.comment ? `💬 ${o.comment}\n` : '') +
+            `\n📌 Статус: <b>${STATUS_NAMES[o.status] || o.status}</b>`
+        );
     };
 
     let chatIdForError = null;
@@ -90,7 +125,14 @@ export async function onRequest(context) {
             if (cb.from.id !== OWNER_ID) return new Response('OK', { status: 200 });
 
             const [, orderNumber, newStatus] = cb.data.split(':');
-            await sbQuery(`orders?order_number=eq.${encodeURIComponent(orderNumber)}`, 'PATCH', {
+            const existingOrders = await sbQuery(`orders?order_number=eq.${encodeURIComponent(orderNumber)}`);
+            const currentOrder = existingOrders[0];
+
+            if (currentOrder && newStatus === 'cancelled' && currentOrder.status !== 'cancelled') {
+                await restoreOrderStock(currentOrder);
+            }
+
+            const updated = await sbQuery(`orders?order_number=eq.${encodeURIComponent(orderNumber)}`, 'PATCH', {
                 status: newStatus
             });
 
@@ -103,13 +145,14 @@ export async function onRequest(context) {
                 })
             });
 
-            const baseText = cb.message.text.split('\n\n📌 Статус:')[0];
-            await tgEdit(
-                cb.message.chat.id,
-                cb.message.message_id,
-                `${baseText}\n\n📌 Статус: <b>${STATUS_NAMES[newStatus]}</b>`,
-                statusKeyboard(orderNumber)
-            );
+            if (updated.length) {
+                await tgEdit(
+                    cb.message.chat.id,
+                    cb.message.message_id,
+                    formatOrderCard(updated[0]),
+                    statusKeyboard(orderNumber)
+                );
+            }
             return new Response('OK', { status: 200 });
         }
 
@@ -129,20 +172,26 @@ export async function onRequest(context) {
         if (cmd === '/start' || cmd === '/help') {
             await tgSend(
                 msg.chat.id,
-                `<b>ATLAS STORE — Пульт управления</b>\n\n` +
-                `📦 <b>Товары и цены:</b>\n` +
-                `<code>/list</code> — список всех товаров и их ID\n` +
-                `<code>/price 5 6990</code> — поставить цену 6990 ₸ товару #5\n` +
-                `<code>/sale 5 6990 8990</code> — сделать скидку (новая и старая цена)\n` +
-                `<code>/stock 5 3</code> — остаток в штуках\n` +
-                `<code>/status 5 in-stock</code> — наличие (<code>in-stock</code> или <code>in-transit</code>)\n\n` +
+                `<b>ATLAS STORE — Автономный пульт</b>\n\n` +
+                `📦 <b>Каталог, цены и фото:</b>\n` +
+                `<code>/list</code> — все товары, ID, цены и остатки\n` +
+                `<code>/price 5 6990</code> — новая цена 6990 ₸ товару #5\n` +
+                `<code>/sale 5 6990 8990</code> — скидка (новая и старая цена)\n` +
+                `<code>/stock 5 3</code> — остаток в штуках (<code>0</code> = распродано)\n` +
+                `<code>/status 5 in-stock</code> — наличие (<code>in-stock</code> / <code>in-transit</code>)\n` +
+                `<code>/photo 5 ССЫЛКА</code> — сменить главное фото товара #5\n` +
+                `<code>/add Название | Одежда | 14990 | M (170–180 см) | ССЫЛКА</code> — добавить товар\n` +
+                `<code>/del 9</code> — удалить товар #9\n\n` +
                 `🎟 <b>Промокоды:</b>\n` +
-                `<code>/promo ATLAS10 10%</code> — промокод на 10% скидки\n` +
-                `<code>/promo VIP1000 1000</code> — промокод на 1000 ₸\n` +
-                `<code>/delpromo ATLAS10</code> — удалить промокод\n` +
+                `<code>/promo ALIKHAN15 15%</code> — разовый промокод (сгорит сам после 1 заказа)\n` +
+                `<code>/promo SALE10 10% multi</code> — многоразовый промокод\n` +
+                `<code>/delpromo ALIKHAN15</code> — удалить промокод\n` +
                 `<code>/promos</code> — список активных промокодов\n\n` +
-                `🚚 <b>Доставка и заказы:</b>\n` +
-                `<code>/order ATL-1234</code> — открыть заказ и управлять статусом`
+                `🚚 <b>Заказы и касса:</b>\n` +
+                `<code>/orders</code> — активные заказы в работе\n` +
+                `<code>/order ATL-1234</code> — открыть заказ и кнопки статуса\n` +
+                `<code>/cancel ATL-1234</code> — отменить заказ и вернуть остатки\n` +
+                `<code>/stats</code> — статистика выручки`
             );
         } else if (cmd === '/list') {
             const products = await sbQuery('products?select=id,title,price,max_qty,status_label&order=id.asc');
@@ -181,28 +230,95 @@ export async function onRequest(context) {
                 badge: label
             });
             await tgSend(msg.chat.id, `🔄 Статус товара <b>#${id}</b>: <b>${label}</b>`);
+        } else if (cmd === '/photo' && parts.length >= 3) {
+            const id = Number(parts[1]);
+            const url = parts[2].trim();
+            await sbQuery(`products?id=eq.${id}`, 'PATCH', { images: [url] });
+            await tgSend(msg.chat.id, `🖼 Главное фото товара <b>#${id}</b> обновлено.`);
+        } else if (cmd === '/add') {
+            const rawPayload = text.replace(/^\/add\s*/i, '');
+            const fields = rawPayload.split('|').map(s => s.trim());
+            if (fields.length < 5) {
+                await tgSend(
+                    msg.chat.id,
+                    `Формат команды:\n<code>/add Название | Одежда | 14990 | M (170–180 см) | Ссылка_на_фото</code>\n(Категория: <code>Одежда</code> или <code>Головные уборы</code>)`
+                );
+                return new Response('OK', { status: 200 });
+            }
+            const [title, catRaw, priceRaw, sizeRaw, imgUrl] = fields;
+            const isClothing = catRaw.toLowerCase().includes('одежд');
+            const created = await sbQuery('products', 'POST', {
+                title,
+                subtitle: 'ATLAS STORE • Новое поступление',
+                category: isClothing ? 'clothing' : 'headwear',
+                category_label: isClothing ? 'Одежда' : 'Головные уборы',
+                price: Number(priceRaw),
+                status: 'in-stock',
+                status_label: 'В наличии',
+                badge: 'Новинка',
+                sizes: [sizeRaw],
+                max_qty: 3,
+                popularity: 95,
+                description: title,
+                images: [imgUrl]
+            });
+            await tgSend(msg.chat.id, `✅ Товар <b>#${created[0]?.id || ''} ${title}</b> добавлен в каталог (${priceRaw} ₸).`);
+        } else if (cmd === '/del' && parts.length >= 2) {
+            const id = Number(parts[1]);
+            await sbQuery(`products?id=eq.${id}`, 'DELETE');
+            await tgSend(msg.chat.id, `🗑 Товар <b>#${id}</b> удалён из каталога.`);
         } else if (cmd === '/promo' && parts.length >= 3) {
             const code = parts[1].toUpperCase();
             const rawVal = parts[2];
+            const isMulti = (parts[3] || '').toLowerCase() === 'multi';
             const isPercent = rawVal.endsWith('%');
             const val = Number(rawVal.replace('%', ''));
             await sbQuery('promocodes', 'POST', {
                 code,
                 discount_type: isPercent ? 'percent' : 'fixed',
                 discount_value: val,
-                is_active: true
+                is_active: true,
+                is_multi: isMulti
             });
-            await tgSend(msg.chat.id, `🎟 Промокод <b>${code}</b> создан (скидка ${rawVal})`);
+            await tgSend(
+                msg.chat.id,
+                `🎟 Промокод <b>${code}</b> создан (скидка ${rawVal}, ${isMulti ? 'многоразовый' : 'разовый — сгорит после 1 заказа'})`
+            );
         } else if (cmd === '/delpromo' && parts.length >= 2) {
             const code = parts[1].toUpperCase();
             await sbQuery(`promocodes?code=eq.${encodeURIComponent(code)}`, 'DELETE');
             await tgSend(msg.chat.id, `🗑 Промокод <b>${code}</b> удалён`);
         } else if (cmd === '/promos') {
-            const promos = await sbQuery('promocodes?select=*');
+            const promos = await sbQuery('promocodes?is_active=eq.true&select=*');
             const txt = promos.length
-                ? promos.map(p => `• <code>${p.code}</code> — ${p.discount_value}${p.discount_type === 'percent' ? '%' : ' ₸'}`).join('\n')
+                ? promos.map(p => `• <code>${p.code}</code> — ${p.discount_value}${p.discount_type === 'percent' ? '%' : ' ₸'} (${p.is_multi ? 'многоразовый' : 'разовый'})`).join('\n')
                 : 'Активных промокодов нет.';
             await tgSend(msg.chat.id, txt);
+        } else if (cmd === '/orders') {
+            const activeOrders = await sbQuery('orders?status=in.(awaiting_payment,paid,in_transit)&order=created_at.desc&limit=10');
+            if (!activeOrders.length) {
+                await tgSend(msg.chat.id, '✅ Активных заказов в работе сейчас нет.');
+            } else {
+                const lines = activeOrders.map(o =>
+                    `• <code>${o.order_number}</code> — <b>${o.grand_total} ₸</b> (${o.customer_name}, ${STATUS_NAMES[o.status] || o.status})`
+                ).join('\n');
+                await tgSend(msg.chat.id, `📋 <b>Активные заказы:</b>\n\n${lines}\n\nЧтобы открыть управление: <code>/order ATL-1234</code>`);
+            }
+        } else if (cmd === '/cancel' && parts.length >= 2) {
+            const raw = parts[1].toUpperCase();
+            const code = raw.startsWith('#') ? raw : '#' + raw;
+            const orders = await sbQuery(`orders?order_number=eq.${encodeURIComponent(code)}`);
+            if (!orders.length) {
+                await tgSend(msg.chat.id, `❌ Заказ <b>${code}</b> не найден.`);
+            } else {
+                if (orders[0].status !== 'cancelled') {
+                    await restoreOrderStock(orders[0]);
+                }
+                const updated = await sbQuery(`orders?order_number=eq.${encodeURIComponent(code)}`, 'PATCH', {
+                    status: 'cancelled'
+                });
+                await tgSend(msg.chat.id, formatOrderCard(updated[0]), statusKeyboard(code));
+            }
         } else if (cmd === '/order' && parts.length >= 2) {
             const raw = parts[1].toUpperCase();
             const code = raw.startsWith('#') ? raw : '#' + raw;
@@ -210,19 +326,20 @@ export async function onRequest(context) {
             if (!orders.length) {
                 await tgSend(msg.chat.id, `❌ Заказ <b>${code}</b> не найден.`);
             } else {
-                const o = orders[0];
-                const itemsStr = (o.items || []).map(i => `• ${i.title} (${i.size}) × ${i.qty}`).join('\n');
-                await tgSend(
-                    msg.chat.id,
-                    `🛍 <b>Заказ ${o.order_number}</b>\n` +
-                    `👤 ${o.customer_name} (${o.customer_phone})\n` +
-                    `📍 ${o.delivery_address || 'Самовывоз'}\n` +
-                    `${itemsStr}\n` +
-                    `💰 Итого: <b>${o.grand_total} ₸</b> (${o.payment_method})\n\n` +
-                    `📌 Статус: <b>${STATUS_NAMES[o.status] || o.status}</b>`,
-                    statusKeyboard(o.order_number)
-                );
+                await tgSend(msg.chat.id, formatOrderCard(orders[0]), statusKeyboard(orders[0].order_number));
             }
+        } else if (cmd === '/stats') {
+            const paidOrders = await sbQuery('orders?status=in.(paid,in_transit,delivered)&select=grand_total,created_at');
+            const totalSum = paidOrders.reduce((acc, o) => acc + Number(o.grand_total || 0), 0);
+            const todayStr = new Date().toISOString().slice(0, 10);
+            const todayOrders = paidOrders.filter(o => (o.created_at || '').startsWith(todayStr));
+            const todaySum = todayOrders.reduce((acc, o) => acc + Number(o.grand_total || 0), 0);
+            await tgSend(
+                msg.chat.id,
+                `📊 <b>Статистика ATLAS STORE</b>\n\n` +
+                `Сегодня: <b>${todayOrders.length} зак.</b> на <b>${todaySum.toLocaleString('ru-RU')} ₸</b>\n` +
+                `Всего оплачено: <b>${paidOrders.length} зак.</b> на <b>${totalSum.toLocaleString('ru-RU')} ₸</b>`
+            );
         }
     } catch (err) {
         if (chatIdForError && BOT_TOKEN) {
