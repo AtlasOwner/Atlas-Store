@@ -218,8 +218,15 @@ export async function onRequest(context) {
         } else if (cmd === '/stock' && parts.length >= 3) {
             const id = Number(parts[1]);
             const qty = Number(parts[2]);
-            await sbQuery(`products?id=eq.${id}`, 'PATCH', { max_qty: qty });
-            await tgSend(msg.chat.id, `📦 Остаток товара <b>#${id}</b>: <b>${qty} шт.</b>`);
+            const prods = await sbQuery(`products?id=eq.${id}&select=status`);
+            const baseStatus = prods[0]?.status || 'in-stock';
+            const label = qty <= 0 ? 'Распродано' : (baseStatus === 'in-stock' ? 'В наличии' : 'В пути');
+            await sbQuery(`products?id=eq.${id}`, 'PATCH', {
+                max_qty: qty,
+                status_label: label,
+                badge: label
+            });
+            await tgSend(msg.chat.id, `📦 Остаток товара <b>#${id}</b>: <b>${qty} шт.</b> (${label})`);
         } else if (cmd === '/status' && parts.length >= 3) {
             const id = Number(parts[1]);
             const st = parts[2] === 'in-stock' ? 'in-stock' : 'in-transit';
@@ -267,22 +274,30 @@ export async function onRequest(context) {
             const id = Number(parts[1]);
             await sbQuery(`products?id=eq.${id}`, 'DELETE');
             await tgSend(msg.chat.id, `🗑 Товар <b>#${id}</b> удалён из каталога.`);
-        } else if (cmd === '/promo' && parts.length >= 3) {
+        }} else if (cmd === '/promo' && parts.length >= 3) {
             const code = parts[1].toUpperCase();
             const rawVal = parts[2];
             const isMulti = (parts[3] || '').toLowerCase() === 'multi';
             const isPercent = rawVal.endsWith('%');
             const val = Number(rawVal.replace('%', ''));
-            await sbQuery('promocodes', 'POST', {
-                code,
-                discount_type: isPercent ? 'percent' : 'fixed',
-                discount_value: val,
-                is_active: true,
-                is_multi: isMulti
+            await fetch(`${SUPABASE_URL}/rest/v1/promocodes?on_conflict=code`, {
+                method: 'POST',
+                headers: {
+                    apikey: SUPABASE_SERVICE_KEY,
+                    'Content-Type': 'application/json',
+                    Prefer: 'resolution=merge-duplicates,return=representation'
+                },
+                body: JSON.stringify({
+                    code,
+                    discount_type: isPercent ? 'percent' : 'fixed',
+                    discount_value: val,
+                    is_active: true,
+                    is_multi: isMulti
+                })
             });
             await tgSend(
                 msg.chat.id,
-                `🎟 Промокод <b>${code}</b> создан (скидка ${rawVal}, ${isMulti ? 'многоразовый' : 'разовый — сгорит после 1 заказа'})`
+                `🎟 Промокод <b>${code}</b> активен (скидка ${rawVal}, ${isMulti ? 'многоразовый' : 'разовый — сгорит после 1 заказа'})`
             );
         } else if (cmd === '/delpromo' && parts.length >= 2) {
             const code = parts[1].toUpperCase();
