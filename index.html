@@ -1671,41 +1671,56 @@
             }
         ];
 
-        function renderOrderTrackerCard(order) {
+        function renderOrderTrackerCard(order) {function renderOrderTrackerCard(order) {
             const resultEl = document.getElementById('public-tracking-result');
             if (!order) {
                 resultEl.innerHTML = `<div class="p-5 rounded-card bg-[#18181C] border border-red-400/30 text-xs text-red-200 text-center">Заказ с таким кодом не найден. Проверьте правильность номера (например, ATL-4821).</div>`;
                 return;
             }
 
-            const currentIdx = Math.max(0, ORDER_STAGES.findIndex(s => s.key === order.status));
             const itemsList = (order.items || [])
                 .map(i => `<div class="flex justify-between text-xs py-1 border-b border-white/[0.06] last:border-none"><span>${i.title} (${i.size}) × ${i.qty}</span><span class="tabular-nums font-semibold">${formatPrice(i.price * i.qty)}</span></div>`)
                 .join('');
 
-            const timelineHtml = ORDER_STAGES.map((stage, idx) => {
-                const isDone = idx <= currentIdx;
-                const isCurrent = idx === currentIdx;
-                return `
-                    <div class="flex items-start gap-4 relative ${idx < ORDER_STAGES.length - 1 ? 'pb-6' : ''}">
-                        ${idx < ORDER_STAGES.length - 1 ? `<div class="absolute left-5 top-10 bottom-0 w-0.5 ${idx < currentIdx ? 'bg-emerald-400' : 'bg-white/10'}"></div>` : ''}
-                        <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 z-10 transition-all duration-500 ${
-                            isCurrent
-                                ? 'bg-emerald-400 text-obsidian shadow-[0_0_20px_rgba(52,211,153,0.6)] scale-110'
-                                : (isDone ? 'bg-emerald-500/25 text-emerald-300 border border-emerald-400/40' : 'bg-[#121215] text-zinc-500 border border-white/10')
-                        }">
-                            <i class="ph-bold ${stage.icon} text-lg"></i>
+            let statusBlockHtml = '';
+            if (order.status === 'cancelled') {
+                statusBlockHtml = `
+                    <div class="p-5 rounded-card bg-red-500/15 border border-red-400/30 flex items-center gap-4">
+                        <div class="w-11 h-11 rounded-full bg-red-500/20 text-red-300 flex items-center justify-center shrink-0">
+                            <i class="ph-bold ph-x-circle text-xl"></i>
                         </div>
-                        <div class="pt-1">
-                            <div class="flex items-center gap-2">
-                                <h4 class="font-bold text-sm sm:text-base ${isDone ? 'text-white' : 'text-zinc-500'}">${stage.title}</h4>
-                                ${isCurrent ? '<span class="px-2 py-0.5 rounded-pill bg-emerald-500/20 text-emerald-300 text-[10px] uppercase tracking-wider font-bold animate-pulse">Сейчас</span>' : ''}
-                            </div>
-                            <p class="text-xs mt-0.5 leading-relaxed ${isDone ? 'text-zinc-300' : 'text-zinc-500'}">${stage.desc}</p>
+                        <div>
+                            <h4 class="font-bold text-base text-red-200">Заказ отменён</h4>
+                            <p class="text-xs text-red-200/80 mt-0.5">Данный заказ был отменён. Если возникли вопросы, напишите нам в WhatsApp.</p>
                         </div>
                     </div>
                 `;
-            }).join('');
+            } else {
+                const currentIdx = Math.max(0, ORDER_STAGES.findIndex(s => s.key === order.status));
+                statusBlockHtml = ORDER_STAGES.map((stage, idx) => {
+                    const isDone = idx <= currentIdx;
+                    const isCurrent = idx === currentIdx;
+                    return `
+                        <div class="flex items-start gap-4 relative ${idx < ORDER_STAGES.length - 1 ? 'pb-6' : ''}">
+                            ${idx < ORDER_STAGES.length - 1 ? `<div class="absolute left-5 top-10 bottom-0 w-0.5 ${idx < currentIdx ? 'bg-emerald-400' : 'bg-white/10'}"></div>` : ''}
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 z-10 transition-all duration-500 ${
+                                isCurrent
+                                    ? 'bg-emerald-400 text-obsidian shadow-[0_0_20px_rgba(52,211,153,0.6)] scale-110'
+                                    : (isDone ? 'bg-emerald-500/25 text-emerald-300 border border-emerald-400/40' : 'bg-[#121215] text-zinc-500 border border-white/10')
+                            }">
+                                <i class="ph-bold ${stage.icon} text-lg"></i>
+                            </div>
+                            <div class="pt-1">
+                                <div class="flex items-center gap-2">
+                                    <h4 class="font-bold text-sm sm:text-base ${isDone ? 'text-white' : 'text-zinc-500'}">${stage.title}</h4>
+                                    ${isCurrent ? '<span class="px-2 py-0.5 rounded-pill bg-emerald-500/20 text-emerald-300 text-[10px] uppercase tracking-wider font-bold animate-pulse">Сейчас</span>' : ''}
+                                </div>
+                                <p class="text-xs mt-0.5 leading-relaxed ${isDone ? 'text-zinc-300' : 'text-zinc-500'}">${stage.desc}</p>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
 
             resultEl.innerHTML = `
                 <div class="bg-[#18181C] border border-white/10 rounded-card p-5 sm:p-7 space-y-6">
@@ -1720,7 +1735,7 @@
                         </div>
                     </div>
 
-                    <div>${timelineHtml}</div>
+                    <div>${statusBlockHtml}</div>
 
                     <div class="pt-4 border-t border-white/10 space-y-2">
                         <span class="text-[10px] uppercase tracking-[0.18em] text-zinc-400 font-semibold block">Детали заказа</span>
@@ -2606,6 +2621,22 @@
 
                 // Сохраняем заказ в Supabase
                 await sb.from('orders').insert([orderPayload]);
+                // Сжигаем одноразовый промокод после оформления
+                if (state.appliedPromo && !state.appliedPromo.is_multi) {
+                    await sb
+                        .from('promocodes')
+                        .update({ is_active: false })
+                        .eq('code', state.appliedPromo.code);
+                }
+
+                // Списываем купленное количество со склада
+                for (const item of structuredItems) {
+                    const prod = PRODUCTS.find(p => p.id === item.id);
+                    if (prod) {
+                        const nextQty = Math.max(0, Number(prod.maxQty || 0) - Number(item.qty || 1));
+                        await sb.from('products').update({ max_qty: nextQty }).eq('id', item.id);
+                    }
+                }
 
                 // Отправляем уведомление с кнопками в Telegram-бот владельца
                 fetch('/api/notify', {
